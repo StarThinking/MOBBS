@@ -1,0 +1,197 @@
+# begin crush map
+
+# devices
+device 0 osd.0
+device 1 osd.1
+device 2 osd.2
+device 3 osd.3
+device 4 osd.4
+device 5 osd.5
+device 6 osd.6
+device 7 osd.7
+device 8 osd.8
+device 9 osd.9
+device 10 osd.10
+device 11 osd.11
+
+# types
+type 0 osd
+type 1 host
+type 2 rack
+type 3 row
+type 4 room
+type 5 datacenter
+type 6 root
+
+# buckets
+host OSD-HDD-SERVER0 {
+	id -1		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.0 weight 1.000
+}
+host OSD-SSD-SERVER0 {
+	id -2		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.6 weight 1.000
+}
+host OSD-HDD-SERVER1 {
+	id -3		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.1 weight 1.000
+}
+host OSD-SSD-SERVER1 {
+	id -4		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.7 weight 1.000
+}
+host OSD-HDD-SERVER4 {
+	id -5		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins
+	item osd.4 weight 1.000
+}
+host OSD-SSD-SERVER4 {
+	id -6		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.10 weight 1.000
+}
+host OSD-HDD-SERVER5 {
+	id -7		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.5 weight 1.000
+}
+host OSD-SSD-SERVER5 {
+	id -8		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.11 weight 1.000
+}
+host OSD-HDD-SERVER2 {
+	id -9		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.2 weight 1.000
+}
+host OSD-SSD-SERVER2 {
+	id -10		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.8 weight 1.000
+}
+host OSD-HDD-SERVER3 {
+	id -11		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.3 weight 1.000
+}
+host OSD-SSD-SERVER3 {
+	id -12		# do not change unnecessarily
+	# weight 2.000
+	alg straw
+	hash 0	# rjenkins1
+	item osd.9 weight 1.000
+}
+rack hddrack {
+	id -13		# do not change unnecessarily
+	# weight 12.000
+	alg straw
+	hash 0	# rjenkins1
+	item OSD-HDD-SERVER0 weight 1.000
+	item OSD-HDD-SERVER1 weight 1.000
+	item OSD-HDD-SERVER4 weight 1.000
+	item OSD-HDD-SERVER5 weight 1.000
+	item OSD-HDD-SERVER2 weight 1.000
+	item OSD-HDD-SERVER3 weight 1.000
+}
+rack ssdrack {
+	id -14 		# do not change unnecessarily
+	# weight 12.000
+	alg straw
+	hash 0	# rjenkins1
+	item OSD-SSD-SERVER0 weight 1.000
+	item OSD-SSD-SERVER1 weight 1.000
+	item OSD-SSD-SERVER4 weight 1.000
+	item OSD-SSD-SERVER5 weight 1.000
+	item OSD-SSD-SERVER2 weight 1.000
+	item OSD-SSD-SERVER3 weight 1.000
+}
+root hdd {
+	id -15		# do not change unnecessarily
+	# weight 12.000
+	alg straw
+	hash 0	# rjenkins1
+	item hddrack weight 6.000
+}
+
+root ssd {
+	id -16		# do not change unnecessarily
+	# weight 12.000
+	alg straw
+	hash 0	# rjenkins1
+	item ssdrack weight 6.000
+}
+# rules
+rule data {
+	ruleset 0
+	type replicated
+	min_size 1
+	max_size 10
+	step take hdd
+	step chooseleaf firstn 0 type host
+	step emit
+}
+rule metadata {
+	ruleset 1
+	type replicated
+	min_size 1
+	max_size 10
+	step take hdd
+	step chooseleaf firstn 0 type host
+	step emit
+}
+rule rbd {
+	ruleset 2
+	type replicated
+	min_size 1
+	max_size 10
+	step take hdd
+	step chooseleaf firstn 0 type host
+	step emit
+}
+rule hdd {
+	ruleset 3
+	type replicated
+	min_size 1
+	max_size 10
+	step take hdd
+	step chooseleaf firstn 0 type host
+	step emit
+}
+rule ssd {
+	ruleset 4
+	type replicated
+	min_size 1
+	max_size 10
+	step take ssd
+	step chooseleaf firstn 0 type host
+	step emit
+}
+
+# end crush map
