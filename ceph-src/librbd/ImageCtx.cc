@@ -28,6 +28,274 @@ using librados::snap_t;
 using librados::IoCtx;
 
 namespace librbd {
+ 
+  // Extent
+
+  int ImageCtx::init_extentmap()
+  {
+    cout << "ImageCtx.cc: init_extentmap" << std::endl;
+
+    extent_map.extent_size = EXTENT_SIZE;
+    extent_map.map_size = (size / EXTENT_SIZE);
+   
+    cout << "ImageCtx.cc: extent_map map_size = " << extent_map.map_size << std::endl;
+
+    std::map<uint64_t, int> *p = &(extent_map.map);
+    for(int i = 0; i < extent_map.map_size; i++) {
+      (*p).insert( std::pair<uint64_t, int>(i, HDD_POOL));
+    }
+    return 0;
+  }
+
+  void ImageCtx::start_analyzer()
+  {
+    std::queue<AnalyzerOp> read_op_queue;
+    std::queue<AnalyzerOp> write_op_queue;
+    std::list<ImageHitMap> history_list;
+    int INTERVAL = 60;
+    analyzer = new Analyzer(read_op_queue, write_op_queue, history_list, INTERVAL, this);
+    pthread_t id;
+    int ret = pthread_create(&id, NULL, Analyzer::start, analyzer);
+    if(ret != 0) {
+      printf("Create pthread error!\n");
+      exit(1);
+    }
+  }
+
+  uint64_t ImageCtx::get_extent_id(uint64_t off) 
+  {
+    uint64_t id = off / extent_map.extent_size;
+    return id;
+  }
+
+  int ImageCtx::get_pool_decision(uint64_t off, size_t len)
+  {
+    std::map<uint64_t, int> *p = &(extent_map.map);
+    uint64_t extent_id = get_extent_id(off);
+    int pool = (*p)[extent_id];
+    return pool;
+  }
+  
+  // Extent
+
+  // Analyzer
+
+  Analyzer::Analyzer(std::queue<AnalyzerOp> read_op_queue, std::queue<AnalyzerOp> write_op_queue,
+           std::list<ImageHitMap> history_list, int INTERVAL, ImageCtx *ictx) 
+	   : read_op_queue(read_op_queue),  write_op_queue(write_op_queue), 
+	   history_list(history_list), INTERVAL(INTERVAL), ictx(ictx)
+  {}
+
+  void *Analyzer::start(void *arg)
+  {
+    //ExtentMap extent_map = *(ExtentMap *)arg;
+    Analyzer *analyzer = (Analyzer *)arg;
+    while(true) {
+      analyzer->handle_op_queue();
+      int interval = analyzer->INTERVAL;
+      sleep(interval);
+    }
+    return NULL;
+  }
+  
+  void Analyzer::handle_op_queue() 
+  {
+    printf("handle_queue\n");
+    std::map<uint64_t, uint64_t> read_map;
+    std::map<uint64_t, uint64_t> write_map;
+    ExtentMap current_extent_map = ictx->extent_map;
+    int i;
+
+    // init map
+    for(i=0; i<current_extent_map.map_size; i++) {
+      read_map.insert(std::pair<uint64_t, uint64_t>(i, 0));
+      write_map.insert(std::pair<uint64_t, uint64_t>(i, 0));
+    }
+
+    int read_queue_size = read_op_queue.size();
+    int write_queue_size = write_op_queue.size();
+
+    for(i=0; i<read_queue_size; i++) {
+      AnalyzerOp op = read_op_queue.front();
+      read_op_queue.pop();
+      uint64_t extent_id = op.get_off() / current_extent_map.extent_size;
+      read_map.at(extent_id) ++;
+    }
+
+    for(i=0; i<write_queue_size; i++) {
+      AnalyzerOp op = write_op_queue.front();
+      write_op_queue.pop();
+      uint64_t extent_id = op.get_off() / current_extent_map.extent_size;
+      write_map.at(extent_id) ++;
+    }
+
+    ImageHitMap *image_hit_map = new ImageHitMap(read_map, write_map, current_extent_map);
+
+    std::list<uint64_t> result_list = analyze(image_hit_map);
+
+    if(result_list.size() != 0) {
+       for(std::list<uint64_t>::iterator it =  result_list.begin(); it != result_list.end(); it++) {
+         uint64_t extent_id = *it;
+	 int from_pool = current_extent_map.map[extent_id];
+	 int to_pool;
+
+	 // set extent_map to migrating mode
+	 if(from_pool == HDD_POOL) {
+	   to_pool = SSD_POOL;
+           ictx->extent_map.map[extent_id] = HDD_TO_SSD;
+	 }
+	 else {
+	   to_pool = HDD_POOL;
+           ictx->extent_map.map[extent_id] = SSD_TO_HDD;
+	 }
+
+         // do migrate
+         ictx->do_migrate(extent_id, from_pool, to_pool);
+	 
+	 // set extent_map to to_pool
+	 ictx->extent_map.map[extent_id] = to_pool;
+	 image_hit_map->set_extent_pool(extent_id, to_pool);
+       }	 
+    } else {
+      printf("no need migration\n");
+    }
+
+    (*image_hit_map).print_map();
+    history_list.push_back(*image_hit_map);
+
+  }
+
+  std::list<uint64_t> Analyzer::analyze(ImageHitMap *image_hit_map)
+  {
+    printf("analyze\n");
+    std::list<uint64_t> result_list;
+    uint64_t id = 0;
+    result_list.push_back(id);
+    return result_list;
+  }
+
+  void Analyzer::add_read_op(AnalyzerOp op)
+  {
+    read_op_queue.push(op);
+  }
+
+  void Analyzer::add_write_op(AnalyzerOp op)
+  {
+    write_op_queue.push(op);
+  }
+
+  AnalyzerOp::AnalyzerOp(time_t time, uint64_t off, uint64_t len) :
+    time(time), off(off), len(len)
+  {}
+
+  uint64_t AnalyzerOp::get_off()
+  {
+    return off;
+  }
+
+  // Analyzer
+
+  // ImageHitMap
+
+  ImageHitMap::ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, ExtentMap extent_map) : read_map(read_map), write_map(write_map), extent_map(extent_map)
+  {}
+  
+  void ImageHitMap::print_map()
+  {
+    printf("\n---------ImageHitMap-----------\n");
+    printf("read ios = %ld\n", get_read_ios());
+    printf("write ios = %ld\n", get_write_ios());
+    printf("hdd_extents = %ld, ssd_extents = %ld\n", get_hdd_extent_num(), get_ssd_extent_num());
+    printf("\n---------ImageHitMap-----------\n");
+  }
+
+  uint64_t ImageHitMap::get_read_ios()
+  {
+    uint64_t op_num = 0;
+    for(std::map<uint64_t, uint64_t>::iterator it=read_map.begin(); it!=read_map.end(); it++) {
+      op_num += it->second;
+    }
+    return op_num;
+  }
+  
+  uint64_t ImageHitMap::get_write_ios()
+  {
+    uint64_t op_num = 0;
+    for(std::map<uint64_t, uint64_t>::iterator it=write_map.begin(); it!=write_map.end(); it++) {
+      op_num += it->second;
+    }
+    return op_num;
+  }
+
+  uint64_t ImageHitMap::get_hdd_extent_num()
+  {
+    uint64_t num = 0;
+    for(std::map<uint64_t, int>::iterator it=extent_map.map.begin(); it!=extent_map.map.end(); it++) {
+      if(it->second == HDD_POOL) {
+        num++;
+      }
+    }
+    return num;
+  }
+
+  uint64_t ImageHitMap::get_ssd_extent_num()
+  {
+    uint64_t num = 0;
+    for(std::map<uint64_t, int>::iterator it=extent_map.map.begin(); it!=extent_map.map.end(); it++) {
+      if(it->second == SSD_POOL) {
+        num++;
+      }
+    }
+    return num;
+  }
+
+  void ImageHitMap::set_extent_pool(uint64_t extent_id, int pool)
+  {
+    extent_map.map[extent_id] = pool;
+  }
+
+  // ImageHitMap
+
+  // Migrater
+  void ImageCtx::do_migrate(uint64_t extent_id, int from_pool, int to_pool)
+  {
+    printf("doing migrating... extent_id = %ld, from pool %d to pool %d\n", extent_id, from_pool, to_pool);
+    int obj_num = EXTENT_SIZE / (OBJECT_SIZE * 1024); 
+    uint64_t start_off = (extent_id * EXTENT_SIZE);
+    for(int i = 0; i < obj_num; i++) {
+      uint64_t off = start_off + OBJECT_SIZE*i*1024;
+      //printf("off = %ld\n", off);
+      object_t oid = map_object(off);
+      cout << "object id = " << oid << std::endl;
+    }
+  }
+
+  object_t ImageCtx::map_object(uint64_t off)
+  {
+    size_t len = OBJECT_SIZE;
+    vector<pair<uint64_t,uint64_t> > image_extents(1);
+    image_extents[0] = make_pair(off, len);
+
+    map<object_t,vector<ObjectExtent> > object_extents;
+    uint64_t buffer_ofs = 0;
+    for (vector<pair<uint64_t,uint64_t> >::const_iterator p = image_extents.begin();
+         p != image_extents.end(); ++p) {
+      uint64_t len = p->second;
+      int r = clip_io(this, p->first, &len);
+      Striper::file_to_extents(cct, format_string, &layout,
+                 p->first, len, 0, object_extents, buffer_ofs);
+      buffer_ofs += len;
+    }
+
+    for (map<object_t,vector<ObjectExtent> >::iterator p = object_extents.begin(); p != object_extents.end(); ++p) {
+      for (vector<ObjectExtent>::iterator q = p->second.begin(); q != p->second.end(); ++q) {
+        return q->oid;
+      }
+    }
+  }
+
+  // Migrater
+
   ImageCtx::ImageCtx(const string &image_name, const string &image_id,
 		     const char *snap, IoCtx& p0, IoCtx& p1, bool ro)
     : cct((CephContext*)p0.cct()),
@@ -103,6 +371,7 @@ namespace librbd {
     }
   }
 
+  
   ImageCtx::~ImageCtx() {
     perf_stop();
     if (object_cacher) {

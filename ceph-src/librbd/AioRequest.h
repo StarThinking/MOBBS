@@ -35,10 +35,10 @@ namespace librbd {
 
     void complete(int r)
     {
-      pthread_t tid = pthread_self();
-      cout << "pid: "<< tid << " AioRequest.h complete()" << std::endl; 
+      //pthread_t tid = pthread_self();
+      //cout << "pid: "<< tid << " AioRequest.h complete()" << std::endl; 
       if (should_complete(r)) {
-        cout << "pid: "<< tid << " AioRequest.h should_complete()" << std::endl; 
+        //cout << "pid: "<< tid << " AioRequest.h should_complete()" << std::endl; 
 	if (m_hide_enoent && r == -ENOENT)
 	  r = 0;
 	m_completion->complete(r);

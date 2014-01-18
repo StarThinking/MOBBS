@@ -23,6 +23,7 @@
 #include "librbd/LibrbdWriteback.h"
 #include "librbd/SnapInfo.h"
 #include "librbd/parent_types.h"
+#include "librbd/Extent.h"
 
 class CephContext;
 class PerfCounters;
@@ -31,7 +32,98 @@ namespace librbd {
 
   class WatchCtx;
 
+  // Extent
+
+  struct ExtentMap {
+    uint64_t extent_size;
+    int map_size;
+    std::map<uint64_t, int> map;
+  };
+
+  // Extent
+
+  // Analyzer
+
+  class AnalyzerOp;
+  class ImageHitMap;
+
+  class Analyzer
+  {
+  public:
+    Analyzer(std::queue<AnalyzerOp> read_op_queue, std::queue<AnalyzerOp> write_op_queue, 
+       std::list<ImageHitMap> history_list, int INTERVAL, ImageCtx *ictx);
+    static void *start(void *arg);
+    void add_read_op(AnalyzerOp op);
+    void add_write_op(AnalyzerOp op);
+    void handle_op_queue();
+    std::list<uint64_t> analyze(ImageHitMap *image_hit_map);
+  
+  private:
+    std::queue<AnalyzerOp> read_op_queue;
+    std::queue<AnalyzerOp> write_op_queue;
+    std::list<ImageHitMap> history_list;
+    int INTERVAL;
+    ImageCtx *ictx;
+  };
+
+  // Analyzer
+
+  // AnalyzerOp
+
+  class AnalyzerOp
+  {
+  public:
+    AnalyzerOp(time_t time, uint64_t off, uint64_t len);
+    uint64_t get_off();
+
+  private:
+    time_t time;
+    uint64_t off;
+    uint64_t len;
+  };
+
+  // AnalyzerOp
+
+  // ImageHitMap
+
+  class ImageHitMap
+  {
+  public:
+    ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, ExtentMap extent_map);
+    void print_map();
+    uint64_t get_read_ios();
+    uint64_t get_write_ios();
+    uint64_t get_hdd_extent_num();
+    uint64_t get_ssd_extent_num();
+    void set_extent_pool(uint64_t extent_id, int pool);
+
+  private:
+    std::map<uint64_t, uint64_t> read_map;
+    std::map<uint64_t, uint64_t> write_map;
+    ExtentMap extent_map; 
+  };
+
+  // ImageHitMap
+  
   struct ImageCtx {
+    // Extent
+    struct ExtentMap extent_map;
+
+    int init_extentmap();
+    void start_analyzer();
+    int get_pool_decision(uint64_t off, size_t len);
+    uint64_t get_extent_id(uint64_t off);
+    // Extent
+
+    Analyzer *analyzer;
+
+    // Migrater
+    
+    void do_migrate(uint64_t extent_id, int from_pool, int to_pool);
+    object_t map_object(uint64_t off);
+
+    // Migrater
+
     CephContext *cct;
     PerfCounters *perfcounter;
     struct rbd_obj_header_ondisk header;

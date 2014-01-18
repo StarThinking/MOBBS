@@ -66,6 +66,7 @@ typedef struct {
 
 void rbd_version(int *major, int *minor, int *extra);
 
+
 /* images */
 int rbd_list(rados_ioctx_t io, char *names, size_t *size);
 int rbd_create(rados_ioctx_t io, const char *name, uint64_t size, int *order);
@@ -375,6 +376,9 @@ int rbd_flush(rbd_image_t image);
  * @returns 0 on success, negative error code on failure
  */
 int rbd_aio_flush(rbd_image_t image, rbd_completion_t c);
+
+void rbd_callback_test(void(*ptr)());
+
 
 #ifdef __cplusplus
 }

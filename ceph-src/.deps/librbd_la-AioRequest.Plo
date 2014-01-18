@@ -1,15 +1,12 @@
-librbd_la-ImageCtx.lo: librbd/ImageCtx.cc /usr/include/errno.h \
+librbd_la-AioRequest.lo: librbd/AioRequest.cc common/ceph_context.h \
+ /usr/include/c++/4.6/iostream \
+ /usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h \
+ /usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/bits/predefs.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
- /usr/include/x86_64-linux-gnu/asm/errno.h \
- /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- common/ceph_context.h /usr/include/c++/4.6/iostream \
- /usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h \
- /usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h \
  /usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h \
  /usr/include/c++/4.6/ostream /usr/include/c++/4.6/ios \
  /usr/include/c++/4.6/iosfwd /usr/include/c++/4.6/bits/stringfwd.h \
@@ -565,19 +562,22 @@ librbd_la-ImageCtx.lo: librbd/ImageCtx.cc /usr/include/errno.h \
  /usr/include/x86_64-linux-gnu/bits/nan.h \
  /usr/include/x86_64-linux-gnu/bits/mathdef.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h common/strtol.h \
- log/Log.h common/Thread.h log/Entry.h common/PrebufferedStreambuf.h \
- log/EntryQueue.h log/SubsystemMap.h common/errno.h \
- common/perf_counters.h librbd/internal.h include/rbd/librbd.hpp \
+ /usr/include/x86_64-linux-gnu/bits/mathinline.h /usr/include/errno.h \
+ /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/x86_64-linux-gnu/asm/errno.h \
+ /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
+ common/strtol.h log/Log.h common/Thread.h log/Entry.h \
+ common/PrebufferedStreambuf.h log/EntryQueue.h log/SubsystemMap.h \
+ common/RWLock.h librbd/AioCompletion.h common/Cond.h common/Mutex.h \
+ common/Clock.h include/Context.h common/perf_counters.h \
+ include/rbd/librbd.hpp \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdbool.h \
  include/rbd/../rados/buffer.h include/rbd/../rados/librados.hpp \
  include/rbd/../rados/buffer.h include/rbd/../rados/librados.h \
  include/rbd/../rados/rados_types.h include/rbd/../rados/rados_types.hpp \
  include/rbd/librbd.h include/rbd/../rados/librados.h \
- include/rbd/features.h include/rbd_types.h librbd/WatchCtx.h \
- include/rados/librados.hpp librbd/ImageCtx.h common/RWLock.h \
- common/snap_types.h osdc/ObjectCacher.h include/lru.h include/Context.h \
- include/xlist.h common/Cond.h common/Mutex.h common/Clock.h \
+ include/rbd/features.h librbd/ImageCtx.h common/snap_types.h \
+ include/rbd_types.h osdc/ObjectCacher.h include/lru.h include/xlist.h \
  common/Finisher.h osdc/Objecter.h osd/OSDMap.h osd/osd_types.h \
  include/CompatSet.h include/interval_set.h os/hobject.h include/object.h \
  include/cmp.h json_spirit/json_spirit_value.h \
@@ -617,11 +617,19 @@ librbd_la-ImageCtx.lo: librbd/ImageCtx.cc /usr/include/errno.h \
  crush/builder.h include/err.h messages/MOSDOp.h osd/osd_types.h \
  common/admin_socket.h common/Timer.h include/rados/rados_types.h \
  include/rados/rados_types.hpp osdc/Striper.h cls/rbd/cls_rbd_client.h \
- cls/lock/cls_lock_types.h librbd/parent_types.h librbd/LibrbdWriteback.h \
+ cls/lock/cls_lock_types.h include/rados/librados.hpp \
+ librbd/parent_types.h librbd/LibrbdWriteback.h \
  /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
- osdc/WritebackHandler.h librbd/SnapInfo.h
+ osdc/WritebackHandler.h librbd/SnapInfo.h librbd/Extent.h \
+ librbd/internal.h osdc/Striper.h librbd/AioRequest.h
 
-/usr/include/errno.h:
+common/ceph_context.h:
+
+/usr/include/c++/4.6/iostream:
+
+/usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h:
+
+/usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h:
 
 /usr/include/features.h:
 
@@ -634,24 +642,6 @@ librbd_la-ImageCtx.lo: librbd/ImageCtx.cc /usr/include/errno.h \
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/x86_64-linux-gnu/bits/errno.h:
-
-/usr/include/linux/errno.h:
-
-/usr/include/x86_64-linux-gnu/asm/errno.h:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-common/ceph_context.h:
-
-/usr/include/c++/4.6/iostream:
-
-/usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h:
-
-/usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h:
 
 /usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h:
 
@@ -1985,6 +1975,18 @@ include/utime.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathinline.h:
 
+/usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/errno-base.h:
+
 common/strtol.h:
 
 log/Log.h:
@@ -1999,11 +2001,19 @@ log/EntryQueue.h:
 
 log/SubsystemMap.h:
 
-common/errno.h:
+common/RWLock.h:
+
+librbd/AioCompletion.h:
+
+common/Cond.h:
+
+common/Mutex.h:
+
+common/Clock.h:
+
+include/Context.h:
 
 common/perf_counters.h:
-
-librbd/internal.h:
 
 include/rbd/librbd.hpp:
 
@@ -2027,31 +2037,17 @@ include/rbd/../rados/librados.h:
 
 include/rbd/features.h:
 
-include/rbd_types.h:
-
-librbd/WatchCtx.h:
-
-include/rados/librados.hpp:
-
 librbd/ImageCtx.h:
 
-common/RWLock.h:
-
 common/snap_types.h:
+
+include/rbd_types.h:
 
 osdc/ObjectCacher.h:
 
 include/lru.h:
 
-include/Context.h:
-
 include/xlist.h:
-
-common/Cond.h:
-
-common/Mutex.h:
-
-common/Clock.h:
 
 common/Finisher.h:
 
@@ -2193,6 +2189,8 @@ cls/rbd/cls_rbd_client.h:
 
 cls/lock/cls_lock_types.h:
 
+include/rados/librados.hpp:
+
 librbd/parent_types.h:
 
 librbd/LibrbdWriteback.h:
@@ -2204,3 +2202,11 @@ librbd/LibrbdWriteback.h:
 osdc/WritebackHandler.h:
 
 librbd/SnapInfo.h:
+
+librbd/Extent.h:
+
+librbd/internal.h:
+
+osdc/Striper.h:
+
+librbd/AioRequest.h:

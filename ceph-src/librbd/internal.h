@@ -54,7 +54,7 @@ namespace librbd {
 
   struct AioCompletion;
   struct ImageCtx;
-
+ 
   class NoOpProgressContext : public ProgressContext
   {
   public:
@@ -176,7 +176,7 @@ namespace librbd {
 		   void *arg);
   ssize_t read(ImageCtx *ictx, uint64_t off, size_t len, char *buf);
   ssize_t read(ImageCtx *ictx, const vector<pair<uint64_t,uint64_t> >& image_extents,
-	       char *buf, bufferlist *pbl);
+	       char *buf, bufferlist *pbl, int pool);
   ssize_t write(ImageCtx *ictx, uint64_t off, size_t len, const char *buf);
   int discard(ImageCtx *ictx, uint64_t off, uint64_t len);
   int aio_write(ImageCtx *ictx, uint64_t off, size_t len, const char *buf,
@@ -185,7 +185,7 @@ namespace librbd {
   int aio_read(ImageCtx *ictx, uint64_t off, size_t len,
 	       char *buf, bufferlist *pbl, AioCompletion *c);
   int aio_read(ImageCtx *ictx, const vector<pair<uint64_t,uint64_t> >& image_extents,
-	       char *buf, bufferlist *pbl, AioCompletion *c);
+	       char *buf, bufferlist *pbl, AioCompletion *c, int pool);
   int aio_flush(ImageCtx *ictx, AioCompletion *c);
   int flush(ImageCtx *ictx);
   int _flush(ImageCtx *ictx);
@@ -209,6 +209,7 @@ namespace librbd {
   void rados_ctx_cb(rados_completion_t cb, void *arg);
   void rbd_req_cb(completion_t cb, void *arg);
   void rbd_ctx_cb(completion_t cb, void *arg);
+
 }
 
 #endif

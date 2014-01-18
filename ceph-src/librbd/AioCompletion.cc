@@ -21,8 +21,8 @@ namespace librbd {
   void AioCompletion::finish_adding_requests(CephContext *cct)
   {
     ldout(cct, 20) << "AioCompletion::finish_adding_requests " << (void*)this << " pending " << pending_count << dendl;
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid <<" AioCompletion.cc: finish_adding_requests " << (void*)this << " pending " << pending_count << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid <<" AioCompletion.cc: finish_adding_requests " << (void*)this << " pending " << pending_count << std::endl;
     lock.Lock();
     assert(building);
     building = false;
@@ -62,10 +62,10 @@ namespace librbd {
     ldout(cct, 20) << "AioCompletion::complete_request() "
 		   << (void *)this << " complete_cb=" << (void *)complete_cb
 		   << " pending " << pending_count << dendl;
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid << " AioCompletion.cc: complete_request() "
-		   << (void *)this << " complete_cb=" << (void *)complete_cb
-		   << " pending " << pending_count << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid << " AioCompletion.cc: complete_request() "
+		   //<< (void *)this << " complete_cb=" << (void *)complete_cb
+		   //<< " pending " << pending_count << std::endl;
     lock.Lock();
     if (rval >= 0) {
       if (r < 0 && r != -EEXIST)
@@ -84,8 +84,8 @@ namespace librbd {
 
   void C_AioRead::finish(int r)
   {
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid <<" AioCompletion.cc: C_AioRead::finish() " << this << " r = " << r << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid <<" AioCompletion.cc: C_AioRead::finish() " << this << " r = " << r << std::endl;
     ldout(m_cct, 10) << "C_AioRead::finish() " << this << " r = " << r << dendl;
     if (r >= 0 || r == -ENOENT) { // this was a sparse_read operation
       ldout(m_cct, 10) << " got " << m_req->m_ext_map

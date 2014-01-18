@@ -99,16 +99,16 @@ namespace librbd {
     }
 
     void complete() {
-      pthread_t t = pthread_self();
-      cout << "pid: " << t << " AioCompletion.h: complete" << std::endl;
+      //pthread_t t = pthread_self();
+      //cout << "pid: " << t << " AioCompletion.h: complete" << std::endl;
       utime_t elapsed;
       assert(lock.is_locked());
       elapsed = ceph_clock_now(ictx->cct) - start_time;
       if (complete_cb) {
-        pthread_t tid = pthread_self();
-        cout << "pid: " << tid << " AioCompletion.h: complete before complete_cb" << std::endl;
+        //pthread_t tid = pthread_self();
+        //cout << "pid: " << tid << " AioCompletion.h: complete before complete_cb" << std::endl;
 	complete_cb(rbd_comp, complete_arg);
-        cout << "pid: " << tid << " AioCompletion.h: complete after complete_cb" << std::endl;
+        //cout << "pid: " << tid << " AioCompletion.h: complete after complete_cb" << std::endl;
       }
       switch (aio_type) {
       case AIO_TYPE_READ:
@@ -128,8 +128,8 @@ namespace librbd {
     }
 
     void set_complete_cb(void *cb_arg, callback_t cb) {
-      pthread_t tid = pthread_self();
-      cout << "pid: " << tid  << " AioCompletion.h: set_complete_cb" << std::endl;
+      //pthread_t tid = pthread_self();
+      //cout << "pid: " << tid  << " AioCompletion.h: set_complete_cb" << std::endl;
       complete_cb = cb;
       complete_arg = cb_arg;
     }

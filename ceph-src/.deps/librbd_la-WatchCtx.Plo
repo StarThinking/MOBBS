@@ -620,8 +620,8 @@ librbd_la-WatchCtx.lo: librbd/WatchCtx.cc common/ceph_context.h \
  cls/lock/cls_lock_types.h include/rados/librados.hpp \
  librbd/parent_types.h librbd/LibrbdWriteback.h \
  /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
- osdc/WritebackHandler.h librbd/SnapInfo.h librbd/internal.h \
- librbd/WatchCtx.h
+ osdc/WritebackHandler.h librbd/SnapInfo.h librbd/Extent.h \
+ librbd/internal.h librbd/WatchCtx.h
 
 common/ceph_context.h:
 
@@ -2200,6 +2200,8 @@ librbd/LibrbdWriteback.h:
 osdc/WritebackHandler.h:
 
 librbd/SnapInfo.h:
+
+librbd/Extent.h:
 
 librbd/internal.h:
 

@@ -1,6 +1,5 @@
-librbd_la-LibrbdWriteback.lo: librbd/LibrbdWriteback.cc \
- /usr/include/errno.h /usr/include/features.h \
- /usr/include/x86_64-linux-gnu/bits/predefs.h \
+librbd_la-AioCompletion.lo: librbd/AioCompletion.cc /usr/include/errno.h \
+ /usr/include/features.h /usr/include/x86_64-linux-gnu/bits/predefs.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
@@ -568,21 +567,21 @@ librbd_la-LibrbdWriteback.lo: librbd/LibrbdWriteback.cc \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathinline.h common/strtol.h \
  log/Log.h common/Thread.h log/Entry.h common/PrebufferedStreambuf.h \
- log/EntryQueue.h log/SubsystemMap.h include/Context.h \
- include/rados/librados.hpp \
+ log/EntryQueue.h log/SubsystemMap.h librbd/AioRequest.h \
+ common/snap_types.h include/Context.h include/rados/librados.hpp \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdbool.h \
  include/rados/buffer.h include/rados/librados.h \
  include/rados/rados_types.h include/rados/rados_types.hpp \
- include/rbd/librbd.hpp include/rbd/../rados/buffer.h \
+ librbd/internal.h include/rbd/librbd.hpp include/rbd/../rados/buffer.h \
  include/rbd/../rados/librados.hpp include/rbd/librbd.h \
  include/rbd/../rados/librados.h include/rbd/features.h \
- librbd/AioRequest.h common/snap_types.h librbd/ImageCtx.h \
- common/RWLock.h include/rbd_types.h osdc/ObjectCacher.h include/lru.h \
- include/xlist.h common/Cond.h common/Mutex.h common/Clock.h \
- common/Finisher.h common/perf_counters.h osdc/Objecter.h osd/OSDMap.h \
- osd/osd_types.h include/CompatSet.h include/interval_set.h os/hobject.h \
- include/object.h include/cmp.h json_spirit/json_spirit_value.h \
- /usr/include/c++/4.6/cassert /usr/include/boost/cstdint.hpp \
+ include/rbd_types.h librbd/AioCompletion.h common/Cond.h common/Mutex.h \
+ common/Clock.h common/perf_counters.h librbd/ImageCtx.h common/RWLock.h \
+ osdc/ObjectCacher.h include/lru.h include/xlist.h common/Finisher.h \
+ osdc/Objecter.h osd/OSDMap.h osd/osd_types.h include/CompatSet.h \
+ include/interval_set.h os/hobject.h include/object.h include/cmp.h \
+ json_spirit/json_spirit_value.h /usr/include/c++/4.6/cassert \
+ /usr/include/boost/cstdint.hpp \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
@@ -620,7 +619,7 @@ librbd_la-LibrbdWriteback.lo: librbd/LibrbdWriteback.cc \
  include/rados/rados_types.hpp osdc/Striper.h cls/rbd/cls_rbd_client.h \
  cls/lock/cls_lock_types.h librbd/parent_types.h librbd/LibrbdWriteback.h \
  /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
- osdc/WritebackHandler.h librbd/SnapInfo.h librbd/internal.h
+ osdc/WritebackHandler.h librbd/SnapInfo.h librbd/Extent.h osdc/Striper.h
 
 /usr/include/errno.h:
 
@@ -2000,6 +1999,10 @@ log/EntryQueue.h:
 
 log/SubsystemMap.h:
 
+librbd/AioRequest.h:
+
+common/snap_types.h:
+
 include/Context.h:
 
 include/rados/librados.hpp:
@@ -2014,6 +2017,8 @@ include/rados/rados_types.h:
 
 include/rados/rados_types.hpp:
 
+librbd/internal.h:
+
 include/rbd/librbd.hpp:
 
 include/rbd/../rados/buffer.h:
@@ -2026,21 +2031,9 @@ include/rbd/../rados/librados.h:
 
 include/rbd/features.h:
 
-librbd/AioRequest.h:
-
-common/snap_types.h:
-
-librbd/ImageCtx.h:
-
-common/RWLock.h:
-
 include/rbd_types.h:
 
-osdc/ObjectCacher.h:
-
-include/lru.h:
-
-include/xlist.h:
+librbd/AioCompletion.h:
 
 common/Cond.h:
 
@@ -2048,9 +2041,19 @@ common/Mutex.h:
 
 common/Clock.h:
 
-common/Finisher.h:
-
 common/perf_counters.h:
+
+librbd/ImageCtx.h:
+
+common/RWLock.h:
+
+osdc/ObjectCacher.h:
+
+include/lru.h:
+
+include/xlist.h:
+
+common/Finisher.h:
 
 osdc/Objecter.h:
 
@@ -2202,4 +2205,6 @@ osdc/WritebackHandler.h:
 
 librbd/SnapInfo.h:
 
-librbd/internal.h:
+librbd/Extent.h:
+
+osdc/Striper.h:

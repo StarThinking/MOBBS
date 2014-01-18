@@ -1097,7 +1097,7 @@ extern "C" int rbd_aio_create_completion(void *cb_arg,
 extern "C" int rbd_aio_write(rbd_image_t image, uint64_t off, size_t len,
 			     const char *buf, rbd_completion_t c)
 {
-  printf("librbd.cc: rbd_aio_write\n");
+  //printf("librbd.cc: rbd_aio_write\n");
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_write(ictx, off, len, buf,
@@ -1115,8 +1115,8 @@ extern "C" int rbd_aio_discard(rbd_image_t image, uint64_t off, uint64_t len,
 extern "C" int rbd_aio_read(rbd_image_t image, uint64_t off, size_t len,
 			    char *buf, rbd_completion_t c)
 {
-  pthread_t tid = pthread_self();
-  printf("pid: %ld librbd.cc: rbd_aio_read\n", tid);
+  //pthread_t tid = pthread_self();
+  //printf("pid: %ld librbd.cc: rbd_aio_read\n", tid);
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_read(ictx, off, len, buf, NULL,
@@ -1158,4 +1158,11 @@ extern "C" void rbd_aio_release(rbd_completion_t c)
 {
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   comp->release();
+}
+
+extern "C" void rbd_callback_test(void(*ptr)())
+{
+    printf("rbd_callback_test\n");
+    //librados::callback_t cb = cb;
+    ptr();
 }

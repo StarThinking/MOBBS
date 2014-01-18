@@ -43,6 +43,7 @@ namespace librbd {
 
   void AioRequest::read_from_parent(vector<pair<uint64_t,uint64_t> >& image_extents)
   {
+    int pool = 0;
     assert(!m_parent_completion);
     m_parent_completion = aio_create_completion_internal(this, rbd_req_cb);
     ldout(m_ictx->cct, 20) << "read_from_parent this = " << this
@@ -50,7 +51,7 @@ namespace librbd {
 			   << " extents " << image_extents
 			   << dendl;
     aio_read(m_ictx->parent, image_extents, NULL, &m_read_data,
-	     m_parent_completion);
+	     m_parent_completion, pool);
   }
 
   /** read **/
@@ -59,8 +60,8 @@ namespace librbd {
   {
     ldout(m_ictx->cct, 20) << "should_complete " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len
 			   << " r = " << r << dendl;
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid  << " AioRequest.cc: AioRead::should_complete" << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid  << " AioRequest.cc: AioRead::should_complete" << std::endl;
     if (!m_tried_parent && r == -ENOENT) {
       RWLock::RLocker l(m_ictx->snap_lock);
       RWLock::RLocker l2(m_ictx->parent_lock);
@@ -90,8 +91,8 @@ namespace librbd {
   int AioRead::send() {
     ldout(m_ictx->cct, 20) << "send " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len << dendl;
 
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid  << " AioRequest.cc: AioRead::send " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid  << " AioRequest.cc: AioRead::send " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len << std::endl;
 
     librados::AioCompletion *rados_completion =
       librados::Rados::aio_create_completion(this, rados_req_cb, NULL);
@@ -149,8 +150,8 @@ namespace librbd {
   {
     ldout(m_ictx->cct, 20) << "write " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len
 			   << " should_complete: r = " << r << dendl;
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid << " AioRequest.cc: AbstractWrite::should_complete" << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid << " AioRequest.cc: AbstractWrite::should_complete" << std::endl;
 
     bool finished = true;
     switch (m_state) {
@@ -232,8 +233,8 @@ namespace librbd {
 
   int AbstractWrite::send() {
     ldout(m_ictx->cct, 20) << "send " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len << dendl;
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid <<" AioRequest.cc: AbstractWrite::send " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len << std::endl;
+    //pthread_t tid = pthread_self();
+    //cout << "pid: " << tid <<" AioRequest.cc: AbstractWrite::send " << this << " " << m_oid << " " << m_object_off << "~" << m_object_len << std::endl;
     librados::AioCompletion *rados_completion =
       librados::Rados::aio_create_completion(this, NULL, rados_req_cb);
     int r;

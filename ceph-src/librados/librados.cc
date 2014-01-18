@@ -938,8 +938,8 @@ int librados::IoCtx::aio_operate(const std::string& oid, AioCompletion *c,
 				 librados::ObjectReadOperation *o, 
 				 snap_t snapid, int flags, bufferlist *pbl)
 {
-  pthread_t tid = pthread_self();
-  cout << "pid: " << tid << " librados.cc: aio_operate" << std::endl;
+  //pthread_t tid = pthread_self();
+  //cout << "pid: " << tid << " librados.cc: aio_operate" << std::endl;
   object_t obj(oid);
   int op_flags = 0;
   if (flags & OPERATION_BALANCE_READS)
