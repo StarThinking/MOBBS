@@ -2884,7 +2884,7 @@ reprotect_and_return_err:
   int aio_write(ImageCtx *ictx, uint64_t off, size_t len, const char *buf,
 		AioCompletion *c)
   {
-    printf("aio_write\n");
+    //printf("aio_write, off = %ld, len = %ld\n", off, len);
     time_t time = std::time(NULL);
     AnalyzerOp *op = new AnalyzerOp(time, off, len);
     ictx->analyzer->add_write_op(*op);
@@ -2895,13 +2895,12 @@ reprotect_and_return_err:
       pool = pool - 1;
     else 
       pool = pool + 2;
-    printf("pool = %d\n", pool);
     CephContext *cct = ictx->cct;
     ldout(cct, 20) << "aio_write " << ictx << " off = " << off << " len = "
 		   << len << " buf = " << &buf << dendl;
-    pthread_t tid = pthread_self();
-    cout << "pid: " << tid << " internal.cc: aio_write " << ictx << " off = " << off << " len = "
-		   << len << " buf = " << &buf << std::endl;
+    //pthread_t tid = pthread_self();
+   // cout << "pid: " << tid << " internal.cc: aio_write " << ictx << " off = " << off << " len = "
+		   //<< len << " buf = " << &buf << std::endl;
 
     if (!len)
       return 0;
@@ -2915,7 +2914,6 @@ reprotect_and_return_err:
     if (r < 0)
       return r;
     
-    printf("here 1\n");
     ictx->snap_lock.get_read();
     snapid_t snap_id = ictx->snap_id;
     ::SnapContext snapc = ictx->snapc;
@@ -2925,7 +2923,6 @@ reprotect_and_return_err:
     ictx->parent_lock.put_read();
     ictx->snap_lock.put_read();
 
-    printf("here 2\n");
     if (snap_id != CEPH_NOSNAP || ictx->read_only)
       return -EROFS;
 
@@ -2935,14 +2932,11 @@ reprotect_and_return_err:
     vector<ObjectExtent> extents;
     Striper::file_to_extents(ictx->cct, ictx->format_string, &ictx->layout, off, mylen, 0, extents);
 
-    printf("here 3\n");
     c->get();
     c->init_time(ictx, AIO_TYPE_WRITE);
     for (vector<ObjectExtent>::iterator p = extents.begin(); p != extents.end(); ++p) {
       ldout(cct, 20) << " oid " << p->oid << " " << p->offset << "~" << p->length
 		     << " from " << p->buffer_extents << dendl;
-
-      printf("here 4\n");
       // assemble extent
       bufferlist bl;
       for (vector<pair<uint64_t,uint64_t> >::iterator q = p->buffer_extents.begin();
@@ -2951,18 +2945,14 @@ reprotect_and_return_err:
 	bl.append(buf + q->first, q->second);
       }
 
-      printf("here 5\n");
       C_AioWrite *req_comp = new C_AioWrite(cct, c);
-      printf("here 6\n");
       if (ictx->object_cacher) {
-        printf("here 7\n");
         //pthread_t tid = pthread_self();
         //cout << "pid: " << tid  << " internal.cc: object_cacher" << std::endl;
 	c->add_request();
 	ictx->write_to_cache(p->oid, bl, p->length, p->offset, req_comp);
       } else {
         
-        printf("here \n");
 	// reverse map this object extent onto the parent
         //pthread_t tid = pthread_self();
         //cout << "pid:" << tid << " internal.cc: none object_cacher" << std::endl;
@@ -3090,6 +3080,7 @@ reprotect_and_return_err:
 	       char *buf, bufferlist *bl,
 	       AioCompletion *c)
   {
+    //printf("aio_read, len = %ld\n", len);
     time_t time = std::time(NULL);
     AnalyzerOp *op = new AnalyzerOp(time, off, len);
     ictx->analyzer->add_read_op(*op);
@@ -3149,7 +3140,6 @@ reprotect_and_return_err:
       for (vector<ObjectExtent>::iterator q = p->second.begin(); q != p->second.end(); ++q) {
 	ldout(ictx->cct, 20) << " oid " << q->oid << " " << q->offset << "~" << q->length
 			     << " from " << q->buffer_extents << dendl;
-			     
 	//cout << " oid " << q->oid <<  std::endl;
 
 	C_AioRead *req_comp = new C_AioRead(ictx->cct, c);

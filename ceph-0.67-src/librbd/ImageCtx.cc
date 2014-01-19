@@ -88,7 +88,6 @@ namespace librbd {
 
   void *Analyzer::start(void *arg)
   {
-    //ExtentMap extent_map = *(ExtentMap *)arg;
     Analyzer *analyzer = (Analyzer *)arg;
     while(true) {
       analyzer->handle_op_queue();
@@ -257,16 +256,62 @@ namespace librbd {
   // ImageHitMap
 
   // Migrater
+
   void ImageCtx::do_migrate(uint64_t extent_id, int from_pool, int to_pool)
   {
     printf("doing migrating... extent_id = %ld, from pool %d to pool %d\n", extent_id, from_pool, to_pool);
-    int obj_num = EXTENT_SIZE / (OBJECT_SIZE * 1024); 
+    int from_pool_num = from_pool - 1;
+    int to_pool_num = to_pool - 1;
+    int obj_num = EXTENT_SIZE / OBJECT_SIZE; 
     uint64_t start_off = (extent_id * EXTENT_SIZE);
+    int ret = 0;
+    librados::IoCtx io_ctx_from = data_ctx[from_pool_num];
+    librados::IoCtx io_ctx_to = data_ctx[to_pool_num];
+
     for(int i = 0; i < obj_num; i++) {
-      uint64_t off = start_off + OBJECT_SIZE*i*1024;
-      //printf("off = %ld\n", off);
+      uint64_t off = start_off + OBJECT_SIZE * i;
+
+      // mapping
       object_t oid = map_object(off);
       cout << "object id = " << oid << std::endl;
+      librados::bufferlist buf;
+
+      // reading from frmo_pool
+      librados::AioCompletion *read_completion = librados::Rados::aio_create_completion();
+      ret = io_ctx_from.aio_read(oid.name, read_completion, &buf, OBJECT_SIZE, off);
+      if(ret < 0) {
+        std::cout << "couldn't start read object! error " << ret << std::endl;
+      }
+      read_completion->wait_for_complete();
+      ret = read_completion->get_return_value();
+      if(ret < 0) {
+        std::cout << "couldn't read object! error " << ret << std::endl;
+      }
+
+      // writing to to_pool
+      librados::AioCompletion *write_completion = librados::Rados::aio_create_completion();
+      ret = io_ctx_to.aio_write_full(oid.name, write_completion, buf);
+      if(ret < 0) {
+        std::cout << "couldn't start write object! error " << ret << std::endl;
+      }
+      write_completion->wait_for_complete();
+      ret = write_completion->get_return_value();
+      if(ret < 0) {
+        std::cout << "couldn't write object! error " << ret << std::endl;
+      }
+
+      // removing from from_pool
+      librados::AioCompletion *remove_completion = librados::Rados::aio_create_completion();
+      ret = io_ctx_from.aio_remove(oid.name, remove_completion);
+      if(ret < 0) {
+        std::cout << "couldn't start remove object! error " << ret << std::endl;
+      }
+      remove_completion->wait_for_complete();
+      ret = remove_completion->get_return_value();
+      if(ret < 0) {
+        std::cout << "couldn't remove object! error " << ret << std::endl;
+      }
+
     }
   }
 
@@ -282,6 +327,8 @@ namespace librbd {
          p != image_extents.end(); ++p) {
       uint64_t len = p->second;
       int r = clip_io(this, p->first, &len);
+      if(r < 0)
+        printf("clip_io error\n");
       Striper::file_to_extents(cct, format_string, &layout,
                  p->first, len, 0, object_extents, buffer_ofs);
       buffer_ofs += len;
@@ -292,6 +339,9 @@ namespace librbd {
         return q->oid;
       }
     }
+
+    printf("mapping error\n");
+    return NULL;
   }
 
   // Migrater
