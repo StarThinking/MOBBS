@@ -5,4 +5,6 @@ namespace librbd {
 #define SSD_TO_HDD -2
 #define EXTENT_SIZE 134217728
 #define OBJECT_SIZE 4194304
+#define INTERVAL 60
+#define UINT64_MAX 9999999999
 }

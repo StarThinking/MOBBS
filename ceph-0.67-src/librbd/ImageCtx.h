@@ -51,24 +51,20 @@ namespace librbd {
   {
   public:
     Analyzer(std::queue<AnalyzerOp> read_op_queue, std::queue<AnalyzerOp> write_op_queue, 
-       std::list<ImageHitMap> history_list, int INTERVAL, ImageCtx *ictx);
+       std::list<ImageHitMap> history_list, ImageCtx *ictx);
     static void *start(void *arg);
     void add_read_op(AnalyzerOp op);
     void add_write_op(AnalyzerOp op);
     void handle_op_queue();
     std::list<uint64_t> analyze(ImageHitMap *image_hit_map);
-  
+    static int num;
+
   private:
     std::queue<AnalyzerOp> read_op_queue;
     std::queue<AnalyzerOp> write_op_queue;
     std::list<ImageHitMap> history_list;
-    int INTERVAL;
     ImageCtx *ictx;
   };
-
-  // Analyzer
-
-  // AnalyzerOp
 
   class AnalyzerOp
   {
@@ -82,7 +78,7 @@ namespace librbd {
     uint64_t len;
   };
 
-  // AnalyzerOp
+  // Analyzer
 
   // ImageHitMap
 
@@ -91,10 +87,13 @@ namespace librbd {
   public:
     ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, ExtentMap extent_map);
     void print_map();
+    bool is_in_hdd(uint64_t extent_id);
     uint64_t get_read_ios();
     uint64_t get_write_ios();
     uint64_t get_hdd_extent_num();
     uint64_t get_ssd_extent_num();
+    uint64_t get_max_read_extent();
+    uint64_t get_max_write_extent();
     void set_extent_pool(uint64_t extent_id, int pool);
 
   private:
@@ -106,13 +105,17 @@ namespace librbd {
   // ImageHitMap
   
   struct ImageCtx {
+
     // Extent
+
     struct ExtentMap extent_map;
 
     int init_extentmap();
+    int finilize_extentmap();
     void start_analyzer();
     int get_pool_decision(uint64_t off, size_t len);
     uint64_t get_extent_id(uint64_t off);
+
     // Extent
 
     Analyzer *analyzer;
@@ -121,6 +124,7 @@ namespace librbd {
     
     void do_migrate(uint64_t extent_id, int from_pool, int to_pool);
     object_t map_object(uint64_t off);
+    void restore_to_all_hdd();
 
     // Migrater
 

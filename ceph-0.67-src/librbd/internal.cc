@@ -2104,6 +2104,9 @@ reprotect_and_return_err:
 
     if (ictx->wctx)
       ictx->unregister_watch();
+    
+    // finilize extentmap
+    ictx->finilize_extentmap();
 
     delete ictx;
   }
