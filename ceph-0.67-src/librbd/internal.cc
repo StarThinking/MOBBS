@@ -2091,6 +2091,9 @@ reprotect_and_return_err:
 
   void close_image(ImageCtx *ictx)
   {
+    // finilize extentmap
+    ictx->finilize_extentmap();
+
     ldout(ictx->cct, 20) << "close_image " << ictx << dendl;
     if (ictx->object_cacher)
       ictx->shutdown_cache(); // implicitly flushes
@@ -2105,9 +2108,6 @@ reprotect_and_return_err:
     if (ictx->wctx)
       ictx->unregister_watch();
     
-    // finilize extentmap
-    ictx->finilize_extentmap();
-
     delete ictx;
   }
 

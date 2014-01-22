@@ -622,8 +622,8 @@ librbd_la-internal.lo: librbd/internal.cc /usr/include/errno.h \
  cls/rbd/cls_rbd_client.h librbd/LibrbdWriteback.h \
  /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
  osdc/WritebackHandler.h librbd/SnapInfo.h librbd/Extent.h \
- librbd/internal.h osdc/Striper.h librbd/AioRequest.h include/util.h \
- librados/snap_set_diff.h /usr/include/c++/4.6/ctime
+ /usr/include/c++/4.6/ctime librbd/internal.h osdc/Striper.h \
+ librbd/AioRequest.h include/util.h librados/snap_set_diff.h
 
 /usr/include/errno.h:
 
@@ -2217,6 +2217,8 @@ librbd/SnapInfo.h:
 
 librbd/Extent.h:
 
+/usr/include/c++/4.6/ctime:
+
 librbd/internal.h:
 
 osdc/Striper.h:
@@ -2226,5 +2228,3 @@ librbd/AioRequest.h:
 include/util.h:
 
 librados/snap_set_diff.h:
-
-/usr/include/c++/4.6/ctime:

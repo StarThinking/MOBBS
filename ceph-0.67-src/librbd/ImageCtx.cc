@@ -66,6 +66,8 @@ namespace librbd {
       printf("Create pthread error!\n");
       exit(1);
     }
+   // pthread_join(id, NULL);
+   
   }
 
   uint64_t ImageCtx::get_extent_id(uint64_t off) 
@@ -82,13 +84,24 @@ namespace librbd {
     return pool;
   }
   
+  void ImageCtx::dump_perf()
+  {
+    cout << "dump perfcounters" << std::endl;
+    dump_perf();
+    bufferlist bl;
+    Formatter *f = new_formatter("json-pretty");
+    cct->get_perfcounters_collection()->dump_formatted(f, 0); 
+    f->flush(bl);
+    delete f;
+    bl.append('\0');
+    cout << bl.c_str() << std::endl;
+    cct->get_perfcounters_collection()->clear();
+  }
+
   // Extent
 
   // Analyzer
-
-  // temp
-  int Analyzer::num = 0;
-
+  
   Analyzer::Analyzer(std::queue<AnalyzerOp> read_op_queue, std::queue<AnalyzerOp> write_op_queue,
            std::list<ImageHitMap> history_list, ImageCtx *ictx) 
 	   : read_op_queue(read_op_queue),  write_op_queue(write_op_queue), history_list(history_list), ictx(ictx)
@@ -96,7 +109,7 @@ namespace librbd {
 
   void *Analyzer::start(void *arg)
   {
-    sleep(600);
+    //sleep(300);
     Analyzer *analyzer = (Analyzer *)arg;
     while(true) {
       int interval = INTERVAL;
@@ -160,7 +173,7 @@ namespace librbd {
 	 }
 
          // do migrate
-         ictx->do_migrate(extent_id, from_pool, to_pool);
+         ictx->do_concurrent_migrate(extent_id, from_pool, to_pool);
 	 
 	 // set extent_map to to_pool
 	 ictx->extent_map.map[extent_id] = to_pool;
@@ -179,11 +192,8 @@ namespace librbd {
   {
     printf("analyze\n");
     std::list<uint64_t> result_list;
-    /*if(num < 1024) {
-      uint64_t id = num++;
-      result_list.push_back(id);
-    }*/
     uint64_t hdd_extent_id = image_hit_map->get_max_write_extent();
+    //uint64_t hdd_extent_id = image_hit_map->get_max_read_extent();
     if(hdd_extent_id != UINT64_MAX)
       result_list.push_back(hdd_extent_id);
     return result_list;
@@ -218,9 +228,12 @@ namespace librbd {
   void ImageHitMap::print_map()
   {
     printf("\n---------ImageHitMap-----------\n");
-    printf("read iops = %ld\n", get_read_ios() / INTERVAL);
-    printf("write iops = %ld\n", get_write_ios() / INTERVAL);
-    printf("hdd_extents = %ld, ssd_extents = %ld\n", get_hdd_extent_num(), get_ssd_extent_num());
+    printf("read request iops = %ld, hdd-absorb = %lf, ssd-absorb = %lf\n", get_read_ios() / INTERVAL,
+    get_hdd_read_absorbtion(), get_ssd_read_absorbtion());
+    printf("write request iops = %ld, hdd-absorb = %lf, ssd-absorb = %lf\n", get_write_ios() / INTERVAL,
+    get_hdd_write_absorbtion(), get_ssd_write_absorbtion());
+    double ssd_ratio = (double)get_ssd_extent_num() / (double)(get_hdd_extent_num() + get_ssd_extent_num());
+    printf("hdd_extents = %ld, ssd_extents = %ld, ssd_ratio = %lf\n", get_hdd_extent_num(), get_ssd_extent_num(), ssd_ratio);
     printf("---------ImageHitMap-----------\n\n");
   }
 
@@ -273,10 +286,11 @@ namespace librbd {
     return num;
   }
 
+  // find the hdd extent absorbing max read ops 
   uint64_t ImageHitMap::get_max_read_extent()
   {
     uint64_t max_num = 0;
-    uint64_t extent_id = 0;
+    uint64_t extent_id = UINT64_MAX;
     for(std::map<uint64_t, uint64_t>::iterator it=read_map.begin(); it!=read_map.end(); it++) {
       uint64_t id = it->first;
       if(is_in_hdd(id)) {
@@ -285,6 +299,14 @@ namespace librbd {
           max_num = num;
   	  extent_id = id;
         }
+      }
+    }
+    if(extent_id != UINT64_MAX) {
+      uint64_t read_ios = get_read_ios();
+      if(read_ios != 0){
+        double ratio = (double)max_num / (double)read_ios;
+        printf("max = %ld, ios = %ld\n", max_num, read_ios);
+        printf("max read extent_id = %ld, ratio = %lf\n", extent_id, ratio);
       }
     }
     return extent_id;
@@ -299,13 +321,72 @@ namespace librbd {
       uint64_t id = it->first;
       if(is_in_hdd(id)) {
         uint64_t num = it->second;
+//	printf("num = %ld\n", num);
         if(num > max_num) {
           max_num = num;
   	  extent_id = id;
         }
       }
     }
+    if(extent_id != UINT64_MAX) {
+      uint64_t write_ios = get_write_ios();
+      if(write_ios != 0){
+        double ratio = (double)max_num / (double)write_ios;
+        printf("max = %ld, ios = %ld\n", max_num, write_ios);
+        printf("max write extent_id = %ld, ratio = %lf\n", extent_id, ratio);
+      }
+    }
     return extent_id;
+  }
+
+  double ImageHitMap::get_hdd_read_absorbtion()
+  {
+    uint64_t hdd_read_sum = 0;
+    uint64_t read_sum = get_read_ios();
+    for(std::map<uint64_t, uint64_t>::iterator it=read_map.begin(); it!=read_map.end(); it++) {
+      uint64_t id = it->first;
+      if(is_in_hdd(id)) {
+        hdd_read_sum += it->second;
+      }
+    }
+    if(read_sum == 0)
+      return (double)read_sum;
+    else
+      return (double)hdd_read_sum / (double)read_sum;
+  }
+
+  double ImageHitMap::get_ssd_read_absorbtion()
+  {
+    double hdd_read_absorbtion = get_hdd_read_absorbtion();
+    if(hdd_read_absorbtion == 0)
+      return 0;
+    else 
+      return (1.0 - hdd_read_absorbtion);
+  }
+
+  double ImageHitMap::get_hdd_write_absorbtion()
+  {
+    uint64_t hdd_write_sum = 0;
+    uint64_t write_sum = get_write_ios();
+    for(std::map<uint64_t, uint64_t>::iterator it=write_map.begin(); it!=write_map.end(); it++) {
+      uint64_t id = it->first;
+      if(is_in_hdd(id)) {
+        hdd_write_sum += it->second;
+      }
+    }
+    if(write_sum == 0)
+      return (double)write_sum;
+    else
+      return (double)hdd_write_sum / (double)write_sum;
+  }
+
+  double ImageHitMap::get_ssd_write_absorbtion()
+  {
+    double hdd_write_absorbtion = get_hdd_write_absorbtion();
+    if(hdd_write_absorbtion == 0)
+      return 0;
+    else 
+      return (1.0 - hdd_write_absorbtion);
   }
 
   void ImageHitMap::set_extent_pool(uint64_t extent_id, int pool)
@@ -320,6 +401,7 @@ namespace librbd {
   void ImageCtx::do_migrate(uint64_t extent_id, int from_pool, int to_pool)
   {
     printf("doing migrating... extent_id = %ld, from pool %d to pool %d\n", extent_id, from_pool, to_pool);
+    time_t begin_time = std::time(NULL);
     int from_pool_num = from_pool - 1;
     int to_pool_num = to_pool - 1;
     int obj_num = EXTENT_SIZE / OBJECT_SIZE; 
@@ -336,7 +418,7 @@ namespace librbd {
       //cout << "object id = " << oid << std::endl;
       librados::bufferlist buf;
 
-      // reading from frmo_pool
+      // reading from from_pool
       librados::AioCompletion *read_completion = librados::Rados::aio_create_completion();
       ret = io_ctx_from.aio_read(oid.name, read_completion, &buf, OBJECT_SIZE, off);
       if(ret < 0) {
@@ -371,8 +453,94 @@ namespace librbd {
       if(ret < 0) {
         std::cout << "couldn't remove object! error " << ret << std::endl;
       }
-
     }
+    time_t end_time = std::time(NULL);
+    printf("migration time = %ld\n", (end_time - begin_time));
+  }
+
+  void ImageCtx::do_concurrent_migrate(uint64_t extent_id, int from_pool, int to_pool)
+  {
+    printf("doing concurrent migrating... extent_id = %ld, from pool %d to pool %d\n", extent_id, from_pool, to_pool);
+    time_t begin_time = std::time(NULL);
+    int from_pool_num = from_pool - 1;
+    int to_pool_num = to_pool - 1;
+    int obj_num = EXTENT_SIZE / OBJECT_SIZE; 
+    uint64_t start_off = (extent_id * EXTENT_SIZE);
+    int ret = 0;
+    librados::IoCtx io_ctx_from = data_ctx[from_pool_num];
+    librados::IoCtx io_ctx_to = data_ctx[to_pool_num];
+
+    std::map<object_t, uint64_t> obj_map;
+    std::map<object_t, librados::bufferlist> buf_map;
+    std::map<object_t, librados::AioCompletion*> read_comp_map;
+    std::map<object_t, librados::AioCompletion*> write_comp_map;
+    std::map<object_t, librados::AioCompletion*> remove_comp_map;
+
+    // mapping
+    for(int i = 0; i < obj_num; i++) {
+      uint64_t off = start_off + OBJECT_SIZE * i;
+      object_t oid = map_object(off);
+      obj_map.insert(std::pair<object_t, uint64_t>(oid, off));
+    }
+
+    // reading
+    for(std::map<object_t, uint64_t>::iterator it=obj_map.begin(); it!=obj_map.end(); it++) {
+      // reading from from_pool
+      librados::AioCompletion *read_completion = librados::Rados::aio_create_completion();
+      ret = io_ctx_from.aio_read((it->first).name, read_completion, &buf_map[it->first], OBJECT_SIZE, it->second);
+      if(ret < 0) {
+        std::cout << "couldn't start read object! error " << ret << std::endl;
+      }
+      read_comp_map.insert(std::pair<object_t, librados::AioCompletion*>(it->first, read_completion));
+    }
+    // wait reading
+    for(std::map<object_t, librados::AioCompletion*>::iterator it=read_comp_map.begin(); it!=read_comp_map.end(); it++) {
+      (it->second)->wait_for_complete();
+      ret = (it->second)->get_return_value();
+      if(ret < 0) {
+        std::cout << "couldn't read object! error " << ret << std::endl;
+      }
+    }
+
+    // writing
+    for(std::map<object_t, uint64_t>::iterator it=obj_map.begin(); it!=obj_map.end(); it++) {
+      // writing to to_pool
+      librados::AioCompletion *write_completion = librados::Rados::aio_create_completion();
+      ret = io_ctx_to.aio_write_full((it->first).name, write_completion, buf_map[it->first]);
+      if(ret < 0) {
+        std::cout << "couldn't start write object! error " << ret << std::endl;
+      }
+      write_comp_map.insert(std::pair<object_t, librados::AioCompletion*>(it->first, write_completion));
+    }
+    // wait writing
+    for(std::map<object_t, librados::AioCompletion*>::iterator it=write_comp_map.begin(); it!=write_comp_map.end(); it++) {
+      (it->second)->wait_for_complete();
+      ret = (it->second)->get_return_value();
+      if(ret < 0) {
+        std::cout << "couldn't write object! error " << ret << std::endl;
+      }
+    }
+
+    // remove
+    for(std::map<object_t, uint64_t>::iterator it=obj_map.begin(); it!=obj_map.end(); it++) {
+      // removing from from_pool
+      librados::AioCompletion *remove_completion = librados::Rados::aio_create_completion();
+      ret = io_ctx_from.aio_remove((it->first).name, remove_completion);
+      if(ret < 0) {
+        std::cout << "couldn't start remove object! error " << ret << std::endl;
+      }
+      remove_comp_map.insert(std::pair<object_t, librados::AioCompletion*>(it->first, remove_completion));
+    }
+    // wait removing
+    for(std::map<object_t, librados::AioCompletion*>::iterator it=remove_comp_map.begin(); it!=remove_comp_map.end(); it++) {
+      (it->second)->wait_for_complete();
+      ret = (it->second)->get_return_value();
+      if(ret < 0) {
+        std::cout << "couldn't remove object! error " << ret << std::endl;
+      }
+    }
+    time_t end_time = std::time(NULL);
+    printf("concurrent migration time = %ld\n", (end_time - begin_time));
   }
 
   object_t ImageCtx::map_object(uint64_t off)
@@ -409,7 +577,7 @@ namespace librbd {
     printf("restore_to_all_hdd\n");
     for(std::map<uint64_t, int>::iterator it=extent_map.map.begin(); it!=extent_map.map.end(); it++) {
       if(it->second == SSD_POOL) {
-        do_migrate(it->first, SSD_POOL, HDD_POOL);
+        do_concurrent_migrate(it->first, SSD_POOL, HDD_POOL);
       }
     }
   }

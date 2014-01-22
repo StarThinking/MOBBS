@@ -24,6 +24,7 @@
 #include "librbd/SnapInfo.h"
 #include "librbd/parent_types.h"
 #include "librbd/Extent.h"
+#include <ctime>
 
 class CephContext;
 class PerfCounters;
@@ -57,7 +58,6 @@ namespace librbd {
     void add_write_op(AnalyzerOp op);
     void handle_op_queue();
     std::list<uint64_t> analyze(ImageHitMap *image_hit_map);
-    static int num;
 
   private:
     std::queue<AnalyzerOp> read_op_queue;
@@ -94,6 +94,10 @@ namespace librbd {
     uint64_t get_ssd_extent_num();
     uint64_t get_max_read_extent();
     uint64_t get_max_write_extent();
+    double get_hdd_read_absorbtion();
+    double get_ssd_read_absorbtion();
+    double get_hdd_write_absorbtion();
+    double get_ssd_write_absorbtion();
     void set_extent_pool(uint64_t extent_id, int pool);
 
   private:
@@ -115,6 +119,7 @@ namespace librbd {
     void start_analyzer();
     int get_pool_decision(uint64_t off, size_t len);
     uint64_t get_extent_id(uint64_t off);
+    void dump_perf();
 
     // Extent
 
@@ -123,6 +128,7 @@ namespace librbd {
     // Migrater
     
     void do_migrate(uint64_t extent_id, int from_pool, int to_pool);
+    void do_concurrent_migrate(uint64_t extent_id, int from_pool, int to_pool);
     object_t map_object(uint64_t off);
     void restore_to_all_hdd();
 

@@ -622,7 +622,8 @@ librbd_la-librbd.lo: librbd/librbd.cc /usr/include/errno.h \
  include/rados/librados.hpp librbd/parent_types.h \
  librbd/LibrbdWriteback.h /usr/include/c++/4.6/queue \
  /usr/include/c++/4.6/bits/stl_queue.h osdc/WritebackHandler.h \
- librbd/SnapInfo.h librbd/Extent.h librbd/internal.h osdc/Striper.h
+ librbd/SnapInfo.h librbd/Extent.h /usr/include/c++/4.6/ctime \
+ librbd/internal.h osdc/Striper.h
 
 /usr/include/errno.h:
 
@@ -2207,6 +2208,8 @@ osdc/WritebackHandler.h:
 librbd/SnapInfo.h:
 
 librbd/Extent.h:
+
+/usr/include/c++/4.6/ctime:
 
 librbd/internal.h:
 

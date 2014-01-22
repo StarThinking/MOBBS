@@ -621,7 +621,7 @@ librbd_la-LibrbdWriteback.lo: librbd/LibrbdWriteback.cc \
  cls/lock/cls_lock_types.h librbd/parent_types.h librbd/LibrbdWriteback.h \
  /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
  osdc/WritebackHandler.h librbd/SnapInfo.h librbd/Extent.h \
- librbd/internal.h
+ /usr/include/c++/4.6/ctime librbd/internal.h
 
 /usr/include/errno.h:
 
@@ -2204,5 +2204,7 @@ osdc/WritebackHandler.h:
 librbd/SnapInfo.h:
 
 librbd/Extent.h:
+
+/usr/include/c++/4.6/ctime:
 
 librbd/internal.h:
