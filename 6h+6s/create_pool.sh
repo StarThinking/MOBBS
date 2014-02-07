@@ -12,4 +12,7 @@ ceph osd pool create ssd-pool 256 256
 ceph osd pool set hdd-pool crush_ruleset 3
 ceph osd pool set ssd-pool crush_ruleset 4
 
+ceph osd pool set hdd-pool size 3
+ceph osd pool set ssd-pool size 3
+
 
