@@ -578,11 +578,12 @@ libos_a-FileJournal.o: os/FileJournal.cc common/debug.h common/dout.h \
  /usr/include/boost/config/no_tr1/functional.hpp \
  /usr/include/c++/4.6/functional \
  /usr/include/boost/smart_ptr/detail/operator_bool.hpp common/Throttle.h \
- common/Cond.h msg/msg_types.h common/RefCountedObj.h include/color.h \
- os/ObjectStore.h osd/osd_types.h include/CompatSet.h \
- include/interval_set.h common/snap_types.h os/hobject.h include/object.h \
- include/cmp.h json_spirit/json_spirit_value.h \
- /usr/include/c++/4.6/cassert /usr/include/boost/cstdint.hpp \
+ common/Cond.h msg/msg_types.h common/RefCountedObj.h \
+ /usr/include/libaio.h include/color.h os/ObjectStore.h osd/osd_types.h \
+ include/CompatSet.h include/interval_set.h common/snap_types.h \
+ os/hobject.h include/object.h include/cmp.h \
+ json_spirit/json_spirit_value.h /usr/include/c++/4.6/cassert \
+ /usr/include/boost/cstdint.hpp \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
@@ -2056,6 +2057,8 @@ common/Cond.h:
 msg/msg_types.h:
 
 common/RefCountedObj.h:
+
+/usr/include/libaio.h:
 
 include/color.h:
 

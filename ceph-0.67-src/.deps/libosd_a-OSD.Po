@@ -721,19 +721,20 @@ libosd_a-OSD.o: osd/OSD.cc /usr/include/c++/4.6/fstream \
  common/PrioritizedQueue.h osd/OSDMap.h common/ceph_argparse.h \
  common/version.h os/FileStore.h os/ObjectStore.h \
  os/JournalingObjectStore.h os/Journal.h os/FDCache.h os/hobject.h \
- os/WBThrottle.h include/uuid.h os/FileJournal.h osd/ReplicatedPG.h \
- messages/MOSDOp.h messages/MOSDOpReply.h messages/MOSDOp.h \
- messages/MOSDSubOp.h osd/Ager.h include/Distribution.h mon/MonClient.h \
- mon/MonMap.h auth/AuthClientHandler.h auth/RotatingKeyRing.h \
- messages/MMonSubscribe.h common/SimpleRNG.h messages/MLog.h \
- messages/PaxosServiceMessage.h mon/Session.h auth/AuthServiceHandler.h \
- auth/Auth.h osd/OSDMap.h mon/MonCap.h messages/MGenericMessage.h \
- messages/MPing.h messages/MOSDPing.h messages/MOSDFailure.h \
- messages/MOSDMarkMeDown.h messages/MOSDSubOpReply.h messages/MOSDSubOp.h \
- messages/MOSDBoot.h messages/MOSDPGTemp.h messages/MOSDMap.h \
- messages/MOSDPGNotify.h messages/MOSDPGQuery.h messages/MOSDPGRemove.h \
- messages/MOSDPGInfo.h messages/MOSDPGCreate.h messages/MOSDPGTrim.h \
- messages/MOSDPGScan.h messages/MOSDPGBackfill.h messages/MOSDPGMissing.h \
+ os/WBThrottle.h include/uuid.h os/FileJournal.h /usr/include/libaio.h \
+ osd/ReplicatedPG.h messages/MOSDOp.h messages/MOSDOpReply.h \
+ messages/MOSDOp.h messages/MOSDSubOp.h osd/Ager.h include/Distribution.h \
+ mon/MonClient.h mon/MonMap.h auth/AuthClientHandler.h \
+ auth/RotatingKeyRing.h messages/MMonSubscribe.h common/SimpleRNG.h \
+ messages/MLog.h messages/PaxosServiceMessage.h mon/Session.h \
+ auth/AuthServiceHandler.h auth/Auth.h osd/OSDMap.h mon/MonCap.h \
+ messages/MGenericMessage.h messages/MPing.h messages/MOSDPing.h \
+ messages/MOSDFailure.h messages/MOSDMarkMeDown.h \
+ messages/MOSDSubOpReply.h messages/MOSDSubOp.h messages/MOSDBoot.h \
+ messages/MOSDPGTemp.h messages/MOSDMap.h messages/MOSDPGNotify.h \
+ messages/MOSDPGQuery.h messages/MOSDPGRemove.h messages/MOSDPGInfo.h \
+ messages/MOSDPGCreate.h messages/MOSDPGTrim.h messages/MOSDPGScan.h \
+ messages/MOSDPGBackfill.h messages/MOSDPGMissing.h \
  messages/MBackfillReserve.h messages/MRecoveryReserve.h \
  messages/MOSDAlive.h messages/MOSDScrub.h messages/MMonCommand.h \
  messages/MCommand.h messages/MCommandReply.h messages/MCommand.h \
@@ -2612,6 +2613,8 @@ os/WBThrottle.h:
 include/uuid.h:
 
 os/FileJournal.h:
+
+/usr/include/libaio.h:
 
 osd/ReplicatedPG.h:
 

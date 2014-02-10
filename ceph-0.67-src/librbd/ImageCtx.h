@@ -52,11 +52,14 @@ namespace librbd {
   {
   public:
     Analyzer(std::queue<AnalyzerOp> read_op_queue, std::queue<AnalyzerOp> write_op_queue, 
-       std::list<ImageHitMap> history_list, ImageCtx *ictx);
+       std::list<ImageHitMap> history_list, ImageCtx *ictx, std::list<uint64_t> last_byte_list,
+       std::map<uint64_t, int> waiting_list);
     static void *start(void *arg);
     void add_read_op(AnalyzerOp op);
     void add_write_op(AnalyzerOp op);
     void handle_op_queue();
+    void set_last_byte(uint64_t byte);
+    bool is_seqential(uint64_t off);
     std::list<uint64_t> analyze(ImageHitMap *image_hit_map);
 
   private:
@@ -64,6 +67,8 @@ namespace librbd {
     std::queue<AnalyzerOp> write_op_queue;
     std::list<ImageHitMap> history_list;
     ImageCtx *ictx;
+    std::list<uint64_t> last_byte_list;
+    std::map<uint64_t, int> waiting_list;
   };
 
   class AnalyzerOp
@@ -71,6 +76,7 @@ namespace librbd {
   public:
     AnalyzerOp(time_t time, uint64_t off, uint64_t len);
     uint64_t get_off();
+    uint64_t get_len();
 
   private:
     time_t time;
@@ -85,24 +91,31 @@ namespace librbd {
   class ImageHitMap
   {
   public:
-    ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, ExtentMap extent_map);
+    ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, uint64_t reads, uint64_t writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, ExtentMap extent_map);
     void print_map();
+    void print_map_details();
+    std::list<uint64_t> find_ssd_candidates();
+    std::list<uint64_t> find_hdd_candidates();
     bool is_in_hdd(uint64_t extent_id);
-    uint64_t get_read_ios();
-    uint64_t get_write_ios();
     uint64_t get_hdd_extent_num();
     uint64_t get_ssd_extent_num();
-    uint64_t get_max_read_extent();
-    uint64_t get_max_write_extent();
-    double get_hdd_read_absorbtion();
-    double get_ssd_read_absorbtion();
-    double get_hdd_write_absorbtion();
-    double get_ssd_write_absorbtion();
+    //uint64_t get_max_read_extent();
+    //uint64_t get_max_write_extent();
+    //double get_hdd_read_absorbtion();
+    //double get_ssd_read_absorbtion();
+    //double get_hdd_write_absorbtion();
+    //double get_ssd_write_absorbtion();
     void set_extent_pool(uint64_t extent_id, int pool);
 
   private:
     std::map<uint64_t, uint64_t> read_map;
     std::map<uint64_t, uint64_t> write_map;
+    uint64_t reads;
+    uint64_t writes;
+    uint64_t seq_reads;
+    uint64_t seq_writes;
+    uint64_t read_bytes;
+    uint64_t write_bytes;
     ExtentMap extent_map; 
   };
 

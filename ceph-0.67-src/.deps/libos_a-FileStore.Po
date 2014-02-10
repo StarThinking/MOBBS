@@ -640,8 +640,8 @@ libos_a-FileStore.o: os/FileStore.cc /usr/include/inttypes.h \
  os/Journal.h common/Finisher.h common/perf_counters.h common/RWLock.h \
  common/Timer.h common/WorkQueue.h common/Thread.h common/HeartbeatMap.h \
  common/RWLock.h os/FDCache.h os/hobject.h common/shared_cache.hpp \
- os/WBThrottle.h include/uuid.h os/FileJournal.h include/color.h \
- common/errno.h common/run_cmd.h common/safe_io.h \
+ os/WBThrottle.h include/uuid.h os/FileJournal.h /usr/include/libaio.h \
+ include/color.h common/errno.h common/run_cmd.h common/safe_io.h \
  common/compiler_extensions.h common/sync_filesystem.h \
  common/../os/btrfs_ioctl.h common/fd.h os/DBObjectMap.h os/KeyValueDB.h \
  os/LevelDBStore.h /usr/include/leveldb/db.h \
@@ -2290,6 +2290,8 @@ os/WBThrottle.h:
 include/uuid.h:
 
 os/FileJournal.h:
+
+/usr/include/libaio.h:
 
 include/color.h:
 

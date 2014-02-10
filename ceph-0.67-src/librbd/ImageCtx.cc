@@ -59,7 +59,15 @@ namespace librbd {
     std::queue<AnalyzerOp> read_op_queue;
     std::queue<AnalyzerOp> write_op_queue;
     std::list<ImageHitMap> history_list;
-    analyzer = new Analyzer(read_op_queue, write_op_queue, history_list, this);
+    std::list<uint64_t> last_byte_list;
+    std::map<uint64_t, int> waiting_list;
+    
+    // init waiting_list all in hdd pool
+    for(int id = 0; id < extent_map.map_size; id++) {
+      waiting_list.insert( std::pair<uint64_t, int>((uint64_t)id, -3));
+    }
+    
+    analyzer = new Analyzer(read_op_queue, write_op_queue, history_list, this, last_byte_list, waiting_list);
     pthread_t id;
     int ret = pthread_create(&id, NULL, Analyzer::start, analyzer);
     if(ret != 0) {
@@ -87,7 +95,6 @@ namespace librbd {
   void ImageCtx::dump_perf()
   {
     cout << "dump perfcounters" << std::endl;
-    dump_perf();
     bufferlist bl;
     Formatter *f = new_formatter("json-pretty");
     cct->get_perfcounters_collection()->dump_formatted(f, 0); 
@@ -103,18 +110,31 @@ namespace librbd {
   // Analyzer
   
   Analyzer::Analyzer(std::queue<AnalyzerOp> read_op_queue, std::queue<AnalyzerOp> write_op_queue,
-           std::list<ImageHitMap> history_list, ImageCtx *ictx) 
-	   : read_op_queue(read_op_queue),  write_op_queue(write_op_queue), history_list(history_list), ictx(ictx)
+           std::list<ImageHitMap> history_list, ImageCtx *ictx, std::list<uint64_t> last_byte_list, 
+	   std::map<uint64_t, int> waiting_list) 
+	   : read_op_queue(read_op_queue),  write_op_queue(write_op_queue), history_list(history_list), ictx(ictx), last_byte_list(last_byte_list), waiting_list(waiting_list)
   {}
 
   void *Analyzer::start(void *arg)
   {
     //sleep(300);
     Analyzer *analyzer = (Analyzer *)arg;
+
+    int analyze_time = 0;
     while(true) {
-      int interval = INTERVAL;
-      sleep(interval);
+      int sleep_time = INTERVAL - analyze_time;
+      if(sleep_time > 0) {
+        printf("sleep %d seconds\n", sleep_time);
+        sleep(sleep_time);
+      }
+      else
+        printf("no sleep time\n");
+
+      time_t start = std::time(NULL);
       analyzer->handle_op_queue();
+      time_t finish = std::time(NULL);
+      analyze_time = finish - start;
+      
     }
     return NULL;
   }
@@ -124,6 +144,12 @@ namespace librbd {
     printf("handle_queue\n");
     std::map<uint64_t, uint64_t> read_map;
     std::map<uint64_t, uint64_t> write_map;
+    uint64_t reads = 0;
+    uint64_t writes = 0;
+    uint64_t seq_reads = 0;
+    uint64_t seq_writes = 0;
+    uint64_t read_bytes = 0;
+    uint64_t write_bytes = 0;
     ExtentMap current_extent_map = ictx->extent_map;
     int i;
 
@@ -140,18 +166,44 @@ namespace librbd {
     for(i=0; i<read_queue_size; i++) {
       AnalyzerOp op = read_op_queue.front();
       read_op_queue.pop();
-      uint64_t extent_id = op.get_off() / current_extent_map.extent_size;
-      read_map.at(extent_id) ++;
+      uint64_t off = op.get_off();
+      uint64_t len = op.get_len();
+
+      if(is_seqential(off)) {  // seqential workload
+        seq_reads++;
+      } else { // random workload
+        if(len <= LARGE_READ_SIZE) {
+          uint64_t extent_id = off / current_extent_map.extent_size;
+          read_map.at(extent_id) ++;
+	}
+      }
+      
+      reads++;
+      read_bytes += len;
+      set_last_byte(off + len);
     }
 
     for(i=0; i<write_queue_size; i++) {
       AnalyzerOp op = write_op_queue.front();
       write_op_queue.pop();
-      uint64_t extent_id = op.get_off() / current_extent_map.extent_size;
-      write_map.at(extent_id) ++;
+      uint64_t off = op.get_off();
+      uint64_t len = op.get_len();
+
+      if(is_seqential(off)) { // seqential workload
+        seq_writes++;
+      } else { // random workload
+        if(len <= LARGE_WRITE_SIZE) {
+          uint64_t extent_id = off / current_extent_map.extent_size;
+          write_map.at(extent_id) ++;
+	}
+      }
+      
+      writes++;
+      write_bytes += len;
+      set_last_byte(off + len);
     }
 
-    ImageHitMap *image_hit_map = new ImageHitMap(read_map, write_map, current_extent_map);
+    ImageHitMap *image_hit_map = new ImageHitMap(read_map, write_map, reads, writes, seq_reads, seq_writes, read_bytes, write_bytes, current_extent_map);
    
     // analyze this ImageHitMap
     std::list<uint64_t> result_list = analyze(image_hit_map);
@@ -188,14 +240,104 @@ namespace librbd {
 
   }
 
+  void Analyzer::set_last_byte(uint64_t byte)
+  {
+    int list_size = last_byte_list.size();
+    if(list_size < LAST_BYTE_LIST_SIZE)
+      last_byte_list.push_back(byte);
+    else {
+      last_byte_list.pop_front();
+      last_byte_list.push_back(byte);
+    }
+  }
+
+  bool Analyzer::is_seqential(uint64_t off)
+  {
+    bool seq = false;
+    for(std::list<uint64_t>::iterator it = last_byte_list.begin(); it != last_byte_list.end(); it++) {
+      uint64_t distance = 0;
+      uint64_t last_byte = *it;
+
+      if (off >= last_byte)
+        distance = off - last_byte;
+      else 
+        distance = last_byte - off;
+
+      //printf("off = %ld, last_byte = %ld, distance = %ld\n", off, last_byte, distance);
+      if( distance <= SEQ_DISTANCE ) {
+        seq = true;
+	break;
+      }
+    }
+    return seq;
+  }
+
   std::list<uint64_t> Analyzer::analyze(ImageHitMap *image_hit_map)
   {
     printf("analyze\n");
     std::list<uint64_t> result_list;
-    uint64_t hdd_extent_id = image_hit_map->get_max_write_extent();
-    //uint64_t hdd_extent_id = image_hit_map->get_max_read_extent();
-    if(hdd_extent_id != UINT64_MAX)
-      result_list.push_back(hdd_extent_id);
+    std::list<uint64_t> candidates_to_ssd = image_hit_map->find_ssd_candidates();
+    std::list<uint64_t> candidates_to_hdd = image_hit_map->find_hdd_candidates();
+    printf("candidates_to_ssd size = %ld, candidates_to_hdd size = %ld\n", candidates_to_ssd.size(), candidates_to_hdd.size());
+    
+    // waiting list value range: -3 -2 -1 means in hdd-pool, 1 2 3 means in ssd-pool
+    for(std::map<uint64_t, int>::iterator it = waiting_list.begin(); it != waiting_list.end(); it++) {
+      int candidate_contribute_to = 0;
+      uint64_t id = it->first;
+      int value = it->second;
+      //printf("waiting_list id = %ld, value = %d\n", id, value);
+      
+      // check contribute to which side
+      for(std::list<uint64_t>::iterator itt = candidates_to_ssd.begin(); itt != candidates_to_ssd.end(); itt++) {
+        if(id == *itt) {
+	  candidate_contribute_to = 1; // contribute to ssd side
+	  break;
+	}
+      } 
+      if(candidate_contribute_to == 0) {
+        for(std::list<uint64_t>::iterator ittt = candidates_to_hdd.begin(); ittt != candidates_to_hdd.end(); ittt++) {
+          if(id == *ittt) {
+  	    candidate_contribute_to = -1; // contribute to hdd side
+	   // printf("fucking to contribute to hdd side!\n");
+	    break;
+  	  }
+        }
+      }
+      
+      if(candidate_contribute_to == 1) { // contribute to ssd side
+        if(value < 0) { // now in hdd-pool
+	  if(value < -1) // -2 or -3
+	    waiting_list[id] ++;
+	  else { // -1
+	    waiting_list[id] = 3;
+	    result_list.push_back(id);
+	    //printf("id = %ld, migrate to ssd pool\n", id);
+	  }  
+	} else { // now in ssd-pool
+	  if(value < 3) // 1 or 2
+	    waiting_list[id] ++;
+	}
+      } else if(candidate_contribute_to == -1){ // contribute to hdd side
+        if(value > 0) { // now in ssd-pool
+	  if(value > 1) // 2 or 3
+	    waiting_list[id] --;
+	  else { // 1
+	    waiting_list[id] = -3;
+	    result_list.push_back(id);
+	    //printf("id = %ld, migrate to hdd pool\n", id);
+	  }
+	} else { // now in hdd-pool
+	  if(value > -3)
+	    waiting_list[id] --;
+	}
+      }
+      
+      // check value range whether violated
+      if(value < -3 || value > 3 || value ==0) {
+        printf("value in waiting_list violated!!!\n");
+      }
+    }
+    
     return result_list;
   }
 
@@ -218,23 +360,67 @@ namespace librbd {
     return off;
   }
 
+  uint64_t AnalyzerOp::get_len()
+  {
+    return len;
+  }
+
   // Analyzer
 
   // ImageHitMap
 
-  ImageHitMap::ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, ExtentMap extent_map) : read_map(read_map), write_map(write_map), extent_map(extent_map)
+  ImageHitMap::ImageHitMap(std::map<uint64_t, uint64_t> read_map, std::map<uint64_t, uint64_t> write_map, uint64_t reads, uint64_t writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes,  ExtentMap extent_map) : read_map(read_map), write_map(write_map), reads(reads), writes(writes), seq_reads(seq_reads), seq_writes(seq_writes),  read_bytes(read_bytes), write_bytes(write_bytes),  extent_map(extent_map)
   {}
   
   void ImageHitMap::print_map()
   {
     printf("\n---------ImageHitMap-----------\n");
-    printf("read request iops = %ld, hdd-absorb = %lf, ssd-absorb = %lf\n", get_read_ios() / INTERVAL,
-    get_hdd_read_absorbtion(), get_ssd_read_absorbtion());
-    printf("write request iops = %ld, hdd-absorb = %lf, ssd-absorb = %lf\n", get_write_ios() / INTERVAL,
-    get_hdd_write_absorbtion(), get_ssd_write_absorbtion());
+    double read_seqness = (double)seq_reads / (double)reads;
+    double write_seqness = (double)seq_writes / (double)writes;
+    printf("read request iops = %ld, bandwith = %ld, seqness = %lf\n", reads / INTERVAL, read_bytes / INTERVAL, read_seqness);
+    printf("write request iops = %ld, bandwith = %ld, seqness = %lf\n", writes / INTERVAL, write_bytes / INTERVAL, write_seqness);
     double ssd_ratio = (double)get_ssd_extent_num() / (double)(get_hdd_extent_num() + get_ssd_extent_num());
     printf("hdd_extents = %ld, ssd_extents = %ld, ssd_ratio = %lf\n", get_hdd_extent_num(), get_ssd_extent_num(), ssd_ratio);
     printf("---------ImageHitMap-----------\n\n");
+  }
+
+  void ImageHitMap::print_map_details() 
+  {
+   for(int id = 0; id < extent_map.map_size; id++) {
+     printf("random reads = %ld, writes = %ld\n", read_map[id], write_map[id]);
+    } 
+  }
+
+  std::list<uint64_t> ImageHitMap::find_ssd_candidates()
+  {
+    std::list<uint64_t> candidates_to_ssd;
+    int map_size = extent_map.map_size;
+    for(int id = 0; id < map_size; id++) {
+      uint64_t reads = read_map[id];  
+      uint64_t writes = write_map[id]; 
+      double read_cover = (double)reads / (double)(HDD_READ_THRESHOLD * INTERVAL / map_size);
+      double write_cover = (double)writes / (double)(HDD_WRITE_THRESHOLD * INTERVAL / map_size);
+      if((read_cover + write_cover) >= SLACK_FACTOR && is_in_hdd(id)) {
+        candidates_to_ssd.push_back(id);
+      }
+    }
+    return candidates_to_ssd;
+  }
+
+  std::list<uint64_t> ImageHitMap::find_hdd_candidates()
+  {
+    std::list<uint64_t> candidates_to_hdd;
+    int map_size = extent_map.map_size;
+    for(int id = 0; id < map_size; id++) {
+      uint64_t reads = read_map[id];  
+      uint64_t writes = write_map[id]; 
+      double read_cover = (double)reads / (double)(HDD_READ_THRESHOLD * INTERVAL / map_size);
+      double write_cover = (double)writes / (double)(HDD_WRITE_THRESHOLD * INTERVAL / map_size);
+      if((read_cover + write_cover) * SLACK_FACTOR < 1) {
+        candidates_to_hdd.push_back(id);
+      }
+    }
+    return candidates_to_hdd;
   }
 
   bool ImageHitMap::is_in_hdd(uint64_t extent_id)
@@ -245,25 +431,7 @@ namespace librbd {
     else
       return false;
   }
-
-  uint64_t ImageHitMap::get_read_ios()
-  {
-    uint64_t op_num = 0;
-    for(std::map<uint64_t, uint64_t>::iterator it=read_map.begin(); it!=read_map.end(); it++) {
-      op_num += it->second;
-    }
-    return op_num;
-  }
   
-  uint64_t ImageHitMap::get_write_ios()
-  {
-    uint64_t op_num = 0;
-    for(std::map<uint64_t, uint64_t>::iterator it=write_map.begin(); it!=write_map.end(); it++) {
-      op_num += it->second;
-    }
-    return op_num;
-  }
-
   uint64_t ImageHitMap::get_hdd_extent_num()
   {
     uint64_t num = 0;
@@ -287,7 +455,7 @@ namespace librbd {
   }
 
   // find the hdd extent absorbing max read ops 
-  uint64_t ImageHitMap::get_max_read_extent()
+ /* uint64_t ImageHitMap::get_max_read_extent()
   {
     uint64_t max_num = 0;
     uint64_t extent_id = UINT64_MAX;
@@ -342,7 +510,7 @@ namespace librbd {
   double ImageHitMap::get_hdd_read_absorbtion()
   {
     uint64_t hdd_read_sum = 0;
-    uint64_t read_sum = get_read_ios();
+    uint64_t read_sum = get_reads();
     for(std::map<uint64_t, uint64_t>::iterator it=read_map.begin(); it!=read_map.end(); it++) {
       uint64_t id = it->first;
       if(is_in_hdd(id)) {
@@ -367,7 +535,7 @@ namespace librbd {
   double ImageHitMap::get_hdd_write_absorbtion()
   {
     uint64_t hdd_write_sum = 0;
-    uint64_t write_sum = get_write_ios();
+    uint64_t write_sum = get_writes();
     for(std::map<uint64_t, uint64_t>::iterator it=write_map.begin(); it!=write_map.end(); it++) {
       uint64_t id = it->first;
       if(is_in_hdd(id)) {
@@ -388,6 +556,7 @@ namespace librbd {
     else 
       return (1.0 - hdd_write_absorbtion);
   }
+  */
 
   void ImageHitMap::set_extent_pool(uint64_t extent_id, int pool)
   {
@@ -455,7 +624,7 @@ namespace librbd {
       }
     }
     time_t end_time = std::time(NULL);
-    printf("migration time = %ld\n", (end_time - begin_time));
+    //printf("migration time = %ld\n", (end_time - begin_time));
   }
 
   void ImageCtx::do_concurrent_migrate(uint64_t extent_id, int from_pool, int to_pool)
@@ -540,7 +709,7 @@ namespace librbd {
       }
     }
     time_t end_time = std::time(NULL);
-    printf("concurrent migration time = %ld\n", (end_time - begin_time));
+   // printf("concurrent migration time = %ld\n", (end_time - begin_time));
   }
 
   object_t ImageCtx::map_object(uint64_t off)

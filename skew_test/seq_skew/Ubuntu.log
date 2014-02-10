@@ -1,0 +1,2021 @@
+2014-02-10 07:25:17.174+0000: starting up
+LC_ALL=C PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 4096 -realtime mlock=off -smp 2,sockets=2,cores=1,threads=1 -uuid 187a7ab2-4f2e-9bb7-2a40-1f760cd2dbb1 -nographic -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0xb,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:bf,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x7
+Domain id=67 is tainted: high-privileges
+char device redirected to /dev/pts/4 (label charserial0)
+init extentmap
+extentmap mapsize = 1024
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 3, bandwith = 13192, seqness = 0.956989
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 60, candidates_to_hdd size = 958
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 193, bandwith = 798651, seqness = 0.290953
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 199, candidates_to_hdd size = 818
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 855, bandwith = 3504537, seqness = 0.519070
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 183, candidates_to_hdd size = 836
+doing concurrent migrating... extent_id = 0, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 44, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 62, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 74, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 82, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 90, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 94, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 203, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 231, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 269, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 271, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 287, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 335, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 400, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 401, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 416, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 446, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 449, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 461, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 494, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 502, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 525, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 564, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 572, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 604, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 638, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 670, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 725, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 733, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 863, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 894, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 913, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 914, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 918, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1008, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 818, bandwith = 3352780, seqness = 0.507198
+hdd_extents = 988, ssd_extents = 36, ssd_ratio = 0.035156
+---------ImageHitMap-----------
+
+sleep 42 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 237, candidates_to_hdd size = 744
+doing concurrent migrating... extent_id = 5, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 12, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 28, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 30, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 36, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 42, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 66, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 78, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 223, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 227, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 235, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 253, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 261, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 343, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 385, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 392, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 408, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 425, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 441, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 448, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 456, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 464, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 478, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 486, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 493, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 501, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 509, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 548, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 580, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 612, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 614, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 620, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 662, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 717, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 757, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 782, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 822, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 841, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 847, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 855, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 857, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 858, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 886, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 902, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 905, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 906, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 910, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 944, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 952, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1016, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 971, bandwith = 3980014, seqness = 0.373836
+hdd_extents = 938, ssd_extents = 86, ssd_ratio = 0.083984
+---------ImageHitMap-----------
+
+sleep 27 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 160, candidates_to_hdd size = 775
+doing concurrent migrating... extent_id = 58, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 191, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 215, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 279, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 296, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 327, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 406, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 432, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 524, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 526, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 556, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 654, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 702, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 750, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 790, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 798, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 826, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 959, bandwith = 3928132, seqness = 0.419092
+hdd_extents = 921, ssd_extents = 103, ssd_ratio = 0.100586
+---------ImageHitMap-----------
+
+sleep 53 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 140, candidates_to_hdd size = 788
+doing concurrent migrating... extent_id = 50, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 86, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 139, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 316, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 417, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 429, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 430, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 485, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 622, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 630, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 814, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 849, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 898, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 920, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 936, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 949, bandwith = 3888537, seqness = 0.428469
+hdd_extents = 906, ssd_extents = 118, ssd_ratio = 0.115234
+---------ImageHitMap-----------
+
+sleep 53 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 135, candidates_to_hdd size = 787
+doing concurrent migrating... extent_id = 20, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 30, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 46, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 70, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 179, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 211, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 219, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 229, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 237, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 385, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 401, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 433, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 453, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 469, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 596, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 709, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 808, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 846, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 858, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 889, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 981, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1021, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 986, bandwith = 4042069, seqness = 0.435788
+hdd_extents = 892, ssd_extents = 132, ssd_ratio = 0.128906
+---------ImageHitMap-----------
+
+sleep 53 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 127, candidates_to_hdd size = 781
+doing concurrent migrating... extent_id = 18, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 29, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 187, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 191, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 195, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 296, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 303, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 413, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 432, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 477, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 532, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 606, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 694, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 750, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 826, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 897, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1013, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 1005, bandwith = 4119210, seqness = 0.390852
+hdd_extents = 885, ssd_extents = 139, ssd_ratio = 0.135742
+---------ImageHitMap-----------
+
+sleep 50 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 95, candidates_to_hdd size = 818
+doing concurrent migrating... extent_id = 139, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 316, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 321, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 406, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 429, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 462, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 823, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 833, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 839, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 896, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 915, bandwith = 3748249, seqness = 0.461170
+hdd_extents = 883, ssd_extents = 141, ssd_ratio = 0.137695
+---------ImageHitMap-----------
+
+sleep 56 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 103, candidates_to_hdd size = 813
+doing concurrent migrating... extent_id = 10, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 12, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 179, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 199, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 422, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 425, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 430, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 446, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 461, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 478, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 526, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 653, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 718, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 757, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 782, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 806, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 808, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 873, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 881, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1000, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 905, bandwith = 3710498, seqness = 0.432819
+hdd_extents = 885, ssd_extents = 139, ssd_ratio = 0.135742
+---------ImageHitMap-----------
+
+sleep 48 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 87, candidates_to_hdd size = 831
+doing concurrent migrating... extent_id = 29, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 46, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 62, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 75, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 357, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 413, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 417, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 456, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 524, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 548, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 694, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 709, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 817, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 981, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1022, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 733, bandwith = 3005508, seqness = 0.446509
+hdd_extents = 892, ssd_extents = 132, ssd_ratio = 0.128906
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 20, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 50, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 229, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 253, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 261, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 271, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 303, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 392, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 400, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 448, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 453, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 580, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 606, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 614, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 654, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 702, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 717, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 790, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 798, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 841, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 846, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 847, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 889, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 902, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 920, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 917, ssd_extents = 107, ssd_ratio = 0.104492
+---------ImageHitMap-----------
+
+sleep 56 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 10, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 18, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 28, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 36, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 58, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 66, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 78, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 86, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 219, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 237, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 327, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 422, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 462, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 485, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 486, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 517, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 532, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 604, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 612, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 622, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 653, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 718, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 823, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 833, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 839, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 849, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 855, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 873, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 881, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 886, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 894, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 896, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 897, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 906, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 910, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1008, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1013, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 954, ssd_extents = 70, ssd_ratio = 0.068359
+---------ImageHitMap-----------
+
+sleep 52 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 0, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 5, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 42, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 44, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 70, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 74, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 75, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 82, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 90, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 94, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 187, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 195, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 199, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 203, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 211, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 215, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 223, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 227, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 231, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 235, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 269, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 279, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 287, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 321, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 335, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 343, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 357, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 408, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 416, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 433, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 441, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 449, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 464, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 469, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 477, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 493, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 494, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 501, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 502, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 509, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 525, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 556, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 564, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 572, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 596, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 620, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 630, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 638, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 662, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 670, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 725, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 733, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 806, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 814, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 817, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 822, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 857, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 863, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 898, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 905, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 913, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 914, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 918, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 936, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 944, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 952, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1000, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1016, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1022, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 47 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 41, candidates_to_hdd size = 979
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 145, bandwith = 602521, seqness = 0.293673
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 121, candidates_to_hdd size = 900
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 860, bandwith = 3523106, seqness = 0.485855
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 120, candidates_to_hdd size = 901
+doing concurrent migrating... extent_id = 0, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 44, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 82, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 86, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 90, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 94, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 203, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 223, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 231, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 269, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 287, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 343, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 416, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 449, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 456, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 502, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 525, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 572, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 612, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 620, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 638, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 670, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 717, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 733, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 814, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 825, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 841, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 849, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 863, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 913, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 914, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 766, bandwith = 3140198, seqness = 0.499772
+hdd_extents = 993, ssd_extents = 31, ssd_ratio = 0.030273
+---------ImageHitMap-----------
+
+sleep 48 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 152, candidates_to_hdd size = 836
+doing concurrent migrating... extent_id = 5, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 12, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 28, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 36, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 50, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 66, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 74, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 78, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 187, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 207, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 215, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 219, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 235, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 261, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 279, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 327, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 335, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 400, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 408, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 433, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 441, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 464, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 486, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 494, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 501, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 596, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 604, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 630, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 654, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 806, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 822, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 839, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 855, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 857, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 897, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 906, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 910, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 912, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 918, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 952, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1008, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1016, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 1108, bandwith = 4541917, seqness = 0.281444
+hdd_extents = 951, ssd_extents = 73, ssd_ratio = 0.071289
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 68, candidates_to_hdd size = 890
+doing concurrent migrating... extent_id = 62, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 493, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 564, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 646, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 662, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 894, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 944, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 997, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1021, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 868, bandwith = 3558126, seqness = 0.438096
+hdd_extents = 942, ssd_extents = 82, ssd_ratio = 0.080078
+---------ImageHitMap-----------
+
+sleep 58 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 35, candidates_to_hdd size = 918
+doing concurrent migrating... extent_id = 195, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 425, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 469, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 485, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 532, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 588, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 905, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1013, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 701, bandwith = 2873890, seqness = 0.616989
+hdd_extents = 934, ssd_extents = 90, ssd_ratio = 0.087891
+---------ImageHitMap-----------
+
+sleep 46 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 46, candidates_to_hdd size = 902
+doing concurrent migrating... extent_id = 50, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 207, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 279, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 327, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 509, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 548, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 630, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 717, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 825, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 902, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1000, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 752, bandwith = 3081898, seqness = 0.601462
+hdd_extents = 936, ssd_extents = 88, ssd_ratio = 0.085938
+---------ImageHitMap-----------
+
+sleep 47 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 40, candidates_to_hdd size = 912
+doing concurrent migrating... extent_id = 12, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 227, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 400, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 556, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 798, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 847, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 912, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 928, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 936, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 744, bandwith = 3049403, seqness = 0.551546
+hdd_extents = 933, ssd_extents = 91, ssd_ratio = 0.088867
+---------ImageHitMap-----------
+
+sleep 49 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 29, candidates_to_hdd size = 919
+doing concurrent migrating... extent_id = 425, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 456, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 469, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 596, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 839, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 841, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 849, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1005, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 712, bandwith = 2918741, seqness = 0.565712
+hdd_extents = 939, ssd_extents = 85, ssd_ratio = 0.083008
+---------ImageHitMap-----------
+
+sleep 53 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 34, candidates_to_hdd size = 921
+doing concurrent migrating... extent_id = 28, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 62, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 408, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 438, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 486, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 532, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 604, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 646, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 894, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 902, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1000, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1016, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 612, bandwith = 2508458, seqness = 0.616138
+hdd_extents = 949, ssd_extents = 75, ssd_ratio = 0.073242
+---------ImageHitMap-----------
+
+sleep 34 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 28, candidates_to_hdd size = 927
+doing concurrent migrating... extent_id = 179, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 237, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 889, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 997, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 529, bandwith = 2168285, seqness = 0.657295
+hdd_extents = 947, ssd_extents = 77, ssd_ratio = 0.075195
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 78, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 187, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 215, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 223, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 548, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 588, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 806, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 855, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 897, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 928, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 936, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1008, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 959, ssd_extents = 65, ssd_ratio = 0.063477
+---------ImageHitMap-----------
+
+sleep 58 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 36, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 66, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 82, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 195, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 343, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 433, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 441, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 485, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 509, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 798, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 910, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1005, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 972, ssd_extents = 52, ssd_ratio = 0.050781
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 0, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 5, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 44, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 74, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 86, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 90, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 94, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 179, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 203, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 219, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 227, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 231, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 235, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 237, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 261, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 269, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 287, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 335, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 416, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 438, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 449, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 464, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 493, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 494, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 501, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 502, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 517, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 525, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 556, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 564, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 572, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 612, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 620, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 638, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 654, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 662, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 670, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 733, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 814, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 822, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 847, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 857, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 863, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 889, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 905, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 906, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 913, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 914, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 918, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 944, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 952, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1013, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 51 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 83, candidates_to_hdd size = 940
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 838, bandwith = 3437090, seqness = 0.447087
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 89, candidates_to_hdd size = 933
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 858, bandwith = 3516279, seqness = 0.413858
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 101, candidates_to_hdd size = 921
+doing concurrent migrating... extent_id = 0, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 5, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 36, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 44, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 66, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 74, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 78, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 82, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 86, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 90, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 94, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 195, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 203, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 223, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 227, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 231, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 235, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 269, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 279, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 287, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 335, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 343, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 416, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 441, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 449, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 464, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 486, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 494, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 501, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 502, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 525, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 572, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 604, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 612, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 620, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 630, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 638, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 662, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 670, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 725, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 733, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 814, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 822, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 841, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 849, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 855, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 857, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 863, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 905, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 910, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 913, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 914, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 918, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 936, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 952, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1016, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 772, bandwith = 3165866, seqness = 0.438771
+hdd_extents = 967, ssd_extents = 57, ssd_ratio = 0.055664
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 65, candidates_to_hdd size = 901
+doing concurrent migrating... extent_id = 28, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 163, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 425, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 493, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 509, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 564, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 847, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1008, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1013, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 1225, bandwith = 5019579, seqness = 0.506820
+hdd_extents = 958, ssd_extents = 66, ssd_ratio = 0.064453
+---------ImageHitMap-----------
+
+sleep 14 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 13, candidates_to_hdd size = 957
+doing concurrent migrating... extent_id = 485, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 806, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 603, bandwith = 2472960, seqness = 0.665010
+hdd_extents = 956, ssd_extents = 68, ssd_ratio = 0.066406
+---------ImageHitMap-----------
+
+sleep 58 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 17, candidates_to_hdd size = 951
+doing concurrent migrating... extent_id = 36, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 261, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 841, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 523, bandwith = 2142890, seqness = 0.704014
+hdd_extents = 956, ssd_extents = 68, ssd_ratio = 0.066406
+---------ImageHitMap-----------
+
+sleep 44 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 18, candidates_to_hdd size = 953
+doing concurrent migrating... extent_id = 163, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 279, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 630, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 725, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 849, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 936, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 944, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 497, bandwith = 2037009, seqness = 0.686015
+hdd_extents = 961, ssd_extents = 63, ssd_ratio = 0.061523
+---------ImageHitMap-----------
+
+sleep 45 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 22, candidates_to_hdd size = 950
+doing concurrent migrating... extent_id = 28, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 343, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 425, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 441, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 485, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 902, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 906, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1000, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 526, bandwith = 2154769, seqness = 0.625681
+hdd_extents = 963, ssd_extents = 61, ssd_ratio = 0.059570
+---------ImageHitMap-----------
+
+sleep 19 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 18, candidates_to_hdd size = 955
+doing concurrent migrating... extent_id = 66, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 78, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 223, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 509, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 556, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 604, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1008, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 518, bandwith = 2122342, seqness = 0.556531
+hdd_extents = 968, ssd_extents = 56, ssd_ratio = 0.054688
+---------ImageHitMap-----------
+
+sleep 53 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 12, candidates_to_hdd size = 966
+doing concurrent migrating... extent_id = 195, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 486, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 806, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 248, bandwith = 1016081, seqness = 0.482397
+hdd_extents = 971, ssd_extents = 53, ssd_ratio = 0.051758
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 86, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 847, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 855, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1013, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1016, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 976, ssd_extents = 48, ssd_ratio = 0.046875
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 5, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 82, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 90, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 227, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 235, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 269, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 335, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 493, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 556, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 564, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 612, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 814, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 902, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1000, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 990, ssd_extents = 34, ssd_ratio = 0.033203
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 0, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 44, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 74, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 94, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 203, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 231, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 261, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 287, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 416, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 449, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 464, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 494, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 501, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 502, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 517, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 525, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 572, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 620, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 638, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 662, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 670, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 733, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 822, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 857, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 863, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 905, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 906, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 910, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 913, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 914, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 918, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 944, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 952, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 55 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 44, candidates_to_hdd size = 977
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 403, bandwith = 1654442, seqness = 0.420837
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 71, candidates_to_hdd size = 951
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 809, bandwith = 3315165, seqness = 0.402640
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 71, candidates_to_hdd size = 953
+doing concurrent migrating... extent_id = 0, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 5, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 44, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 74, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 82, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 90, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 94, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 203, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 231, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 235, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 269, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 287, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 343, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 416, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 449, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 464, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 501, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 502, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 525, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 572, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 612, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 620, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 630, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 638, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 662, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 670, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 733, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 814, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 822, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 849, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 857, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 863, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 910, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 913, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 914, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 918, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 944, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 952, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 801, bandwith = 3281510, seqness = 0.443945
+hdd_extents = 986, ssd_extents = 38, ssd_ratio = 0.037109
+---------ImageHitMap-----------
+
+sleep 2 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 35, candidates_to_hdd size = 953
+doing concurrent migrating... extent_id = 36, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 86, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 223, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 335, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 456, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 494, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 855, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1016, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 684, bandwith = 2805555, seqness = 0.515512
+hdd_extents = 977, ssd_extents = 47, ssd_ratio = 0.045898
+---------ImageHitMap-----------
+
+sleep 5 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 17, candidates_to_hdd size = 969
+doing concurrent migrating... extent_id = 78, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 227, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 906, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 530, bandwith = 2173132, seqness = 0.646373
+hdd_extents = 974, ssd_extents = 50, ssd_ratio = 0.048828
+---------ImageHitMap-----------
+
+sleep 35 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 14, candidates_to_hdd size = 972
+doing concurrent migrating... extent_id = 219, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 261, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 556, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 564, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 849, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 489, bandwith = 2006630, seqness = 0.696367
+hdd_extents = 970, ssd_extents = 54, ssd_ratio = 0.052734
+---------ImageHitMap-----------
+
+sleep 1 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 12, candidates_to_hdd size = 964
+doing concurrent migrating... extent_id = 82, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 335, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 456, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 630, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 910, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 492, bandwith = 2018713, seqness = 0.551080
+hdd_extents = 975, ssd_extents = 49, ssd_ratio = 0.047852
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 15, candidates_to_hdd size = 968
+doing concurrent migrating... extent_id = 509, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 703, bandwith = 2880853, seqness = 0.674313
+hdd_extents = 974, ssd_extents = 50, ssd_ratio = 0.048828
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 14, candidates_to_hdd size = 967
+doing concurrent migrating... extent_id = 36, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 441, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 847, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 905, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 566, bandwith = 2320179, seqness = 0.595257
+hdd_extents = 972, ssd_extents = 52, ssd_ratio = 0.050781
+---------ImageHitMap-----------
+
+sleep 27 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 7, candidates_to_hdd size = 980
+doing concurrent migrating... extent_id = 78, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 219, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 269, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 494, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 556, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 914, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 392, bandwith = 1606519, seqness = 0.777291
+hdd_extents = 978, ssd_extents = 46, ssd_ratio = 0.044922
+---------ImageHitMap-----------
+
+sleep 50 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 4, candidates_to_hdd size = 990
+doing concurrent migrating... extent_id = 0, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 223, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 227, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 493, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 612, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 77, bandwith = 316416, seqness = 0.605609
+hdd_extents = 982, ssd_extents = 42, ssd_ratio = 0.041016
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 441, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 509, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 564, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 662, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 814, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 847, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 855, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 990, ssd_extents = 34, ssd_ratio = 0.033203
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 86, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 203, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 261, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 287, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 343, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 501, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 905, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 906, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 944, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1016, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1000, ssd_extents = 24, ssd_ratio = 0.023438
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 5, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 44, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 74, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 90, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 94, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 231, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 235, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 416, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 449, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 464, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 493, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 502, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 525, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 572, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 620, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 638, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 670, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 733, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 822, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 857, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 863, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 913, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 918, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 952, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 55 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 50, candidates_to_hdd size = 973
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 576, bandwith = 2363118, seqness = 0.452522
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 57, candidates_to_hdd size = 967
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 812, bandwith = 3326566, seqness = 0.417534
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 66, candidates_to_hdd size = 957
+doing concurrent migrating... extent_id = 0, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 5, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 36, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 44, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 74, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 82, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 86, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 90, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 94, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 203, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 231, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 235, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 269, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 279, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 287, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 343, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 416, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 449, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 464, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 494, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 501, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 502, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 525, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 572, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 620, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 638, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 670, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 733, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 822, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 849, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 857, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 863, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 906, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 913, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 914, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 918, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 952, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 810, bandwith = 3320968, seqness = 0.406870
+hdd_extents = 987, ssd_extents = 37, ssd_ratio = 0.036133
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 35, candidates_to_hdd size = 951
+doing concurrent migrating... extent_id = 485, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 841, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 855, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 944, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1016, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1021, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 1294, bandwith = 5301316, seqness = 0.570658
+hdd_extents = 980, ssd_extents = 44, ssd_ratio = 0.042969
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 13, candidates_to_hdd size = 975
+doing concurrent migrating... extent_id = 441, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 612, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 662, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 621, bandwith = 2546141, seqness = 0.692683
+hdd_extents = 977, ssd_extents = 47, ssd_ratio = 0.045898
+---------ImageHitMap-----------
+
+sleep 58 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 11, candidates_to_hdd size = 972
+doing concurrent migrating... extent_id = 253, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 261, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 279, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 564, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 560, bandwith = 2295125, seqness = 0.686853
+hdd_extents = 975, ssd_extents = 49, ssd_ratio = 0.047852
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 12, candidates_to_hdd size = 970
+doing concurrent migrating... extent_id = 509, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 814, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 841, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 849, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 804, bandwith = 3295027, seqness = 0.661798
+hdd_extents = 975, ssd_extents = 49, ssd_ratio = 0.047852
+---------ImageHitMap-----------
+
+sleep 29 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 1, candidates_to_hdd size = 990
+doing concurrent migrating... extent_id = 485, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 494, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 612, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 944, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 270, bandwith = 1109674, seqness = 0.896832
+hdd_extents = 979, ssd_extents = 45, ssd_ratio = 0.043945
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 36, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 86, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 261, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 517, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 662, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 906, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1016, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 986, ssd_extents = 38, ssd_ratio = 0.037109
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 82, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 94, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 235, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 253, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 269, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 441, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 509, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 564, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 814, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 855, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 914, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 998, ssd_extents = 26, ssd_ratio = 0.025391
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 0, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 5, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 44, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 74, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 90, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 203, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 231, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 287, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 343, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 416, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 449, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 464, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 501, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 502, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 525, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 572, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 620, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 638, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 670, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 733, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 822, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 857, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 863, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 913, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 918, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 952, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 55 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 30, candidates_to_hdd size = 994
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 90, bandwith = 371302, seqness = 0.537429
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 52, candidates_to_hdd size = 971
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 849, bandwith = 3479278, seqness = 0.398638
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 48, candidates_to_hdd size = 976
+doing concurrent migrating... extent_id = 0, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 5, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 44, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 82, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 90, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 94, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 203, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 231, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 235, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 269, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 343, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 416, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 449, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 464, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 501, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 502, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 525, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 572, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 620, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 638, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 670, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 733, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 822, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 857, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 863, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 913, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 914, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 918, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 952, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 669, bandwith = 2740292, seqness = 0.518996
+hdd_extents = 995, ssd_extents = 29, ssd_ratio = 0.028320
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 27, candidates_to_hdd size = 968
+doing concurrent migrating... extent_id = 36, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 86, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 195, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 227, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 287, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 441, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1016, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 1021, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 847, bandwith = 3470199, seqness = 0.511813
+hdd_extents = 987, ssd_extents = 37, ssd_ratio = 0.036133
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 28, candidates_to_hdd size = 959
+doing concurrent migrating... extent_id = 493, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 517, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 814, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 855, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 1823, bandwith = 7468032, seqness = 0.484876
+hdd_extents = 983, ssd_extents = 41, ssd_ratio = 0.040039
+---------ImageHitMap-----------
+
+no sleep time
+handle_queue
+analyze
+candidates_to_ssd size = 11, candidates_to_hdd size = 987
+doing concurrent migrating... extent_id = 66, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 74, from pool 1 to pool 2
+doing concurrent migrating... extent_id = 910, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 903, bandwith = 3698824, seqness = 0.538814
+hdd_extents = 980, ssd_extents = 44, ssd_ratio = 0.042969
+---------ImageHitMap-----------
+
+sleep 56 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 3, candidates_to_hdd size = 996
+doing concurrent migrating... extent_id = 36, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 195, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 847, from pool 1 to pool 2
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 50, bandwith = 207189, seqness = 0.721252
+hdd_extents = 981, ssd_extents = 43, ssd_ratio = 0.041992
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 86, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 203, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 343, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 416, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 441, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 733, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1021, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 988, ssd_extents = 36, ssd_ratio = 0.035156
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 44, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 66, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 74, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 90, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 227, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 287, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 464, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 493, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 517, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 670, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 814, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 855, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 857, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 863, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 910, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 1016, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1004, ssd_extents = 20, ssd_ratio = 0.019531
+---------ImageHitMap-----------
+
+sleep 59 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+doing concurrent migrating... extent_id = 0, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 5, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 82, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 94, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 231, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 235, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 269, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 449, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 501, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 502, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 525, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 572, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 620, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 638, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 822, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 847, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 913, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 914, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 918, from pool 2 to pool 1
+doing concurrent migrating... extent_id = 952, from pool 2 to pool 1
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 56 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds
+handle_queue
+analyze
+candidates_to_ssd size = 0, candidates_to_hdd size = 1024
+no need migration
+
+---------ImageHitMap-----------
+read request iops = 0, bandwith = 0, seqness = -nan
+write request iops = 0, bandwith = 0, seqness = -nan
+hdd_extents = 1024, ssd_extents = 0, ssd_ratio = 0.000000
+---------ImageHitMap-----------
+
+sleep 60 seconds

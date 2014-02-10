@@ -45,7 +45,7 @@
 /* #undef HAVE_LEVELDB_FILTER_POLICY */
 
 /* Defined if you don't have atomic_ops */
-/* #undef HAVE_LIBAIO */
+#define HAVE_LIBAIO 1
 
 /* Define to 1 if you have the `boost_system' library (-lboost_system). */
 /* #undef HAVE_LIBBOOST_SYSTEM */
