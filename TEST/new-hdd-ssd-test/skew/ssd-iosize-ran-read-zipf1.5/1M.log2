@@ -1,0 +1,30 @@
+test: (g=0): rw=randread, bs=1M-1M/1M-1M/1M-1M, ioengine=sync, iodepth=1
+...
+test: (g=0): rw=randread, bs=1M-1M/1M-1M/1M-1M, ioengine=sync, iodepth=1
+fio-2.1.4
+Starting 30 processes
+
+test: (groupid=0, jobs=30): err= 0: pid=8937: Sat Feb 15 17:48:43 2014
+  read : io=138287MB, bw=1152.2MB/s, iops=1152, runt=120030msec
+    clat (msec): min=3, max=142, avg=26.03, stdev=13.68
+     lat (msec): min=3, max=142, avg=26.03, stdev=13.68
+    clat percentiles (msec):
+     |  1.00th=[   10],  5.00th=[   11], 10.00th=[   13], 20.00th=[   15],
+     | 30.00th=[   18], 40.00th=[   20], 50.00th=[   23], 60.00th=[   26],
+     | 70.00th=[   30], 80.00th=[   36], 90.00th=[   46], 95.00th=[   55],
+     | 99.00th=[   71], 99.50th=[   77], 99.90th=[   90], 99.95th=[   99],
+     | 99.99th=[  124]
+    bw (KB  /s): min=13758, max=88867, per=3.34%, avg=39438.68, stdev=10036.46
+    lat (msec) : 4=0.01%, 10=2.59%, 20=39.17%, 50=51.27%, 100=6.92%
+    lat (msec) : 250=0.05%
+  cpu          : usr=0.07%, sys=0.42%, ctx=139731, majf=0, minf=8510
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=138287/w=0/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+   READ: io=138287MB, aggrb=1152.2MB/s, minb=1152.2MB/s, maxb=1152.2MB/s, mint=120030msec, maxt=120030msec
+
+Disk stats (read/write):
+  vdc: ios=414475/0, merge=0/0, ticks=10397824/0, in_queue=10398816, util=99.89%
