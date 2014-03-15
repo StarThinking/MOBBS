@@ -1,0 +1,3 @@
+arch/intel.lo: arch/intel.c arch/probe.h
+
+arch/probe.h:

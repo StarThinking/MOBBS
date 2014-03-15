@@ -1,0 +1,2 @@
+test/osd/libec_missing_entry_point_la-ErasureCodePluginMissingEntryPoint.lo: \
+ test/osd/ErasureCodePluginMissingEntryPoint.cc
