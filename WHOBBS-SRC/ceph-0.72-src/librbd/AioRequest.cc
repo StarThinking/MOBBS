@@ -49,7 +49,7 @@ namespace librbd {
 			   << " extents " << image_extents
 			   << dendl;
     aio_read(m_ictx->parent, image_extents, NULL, &m_read_data,
-	     m_parent_completion, HDD_POOL);
+	     m_parent_completion, DEFAULT_POOL);
   }
 
   /** read **/
@@ -242,7 +242,7 @@ namespace librbd {
 
     librados::AioCompletion *rados_completion =
       librados::Rados::aio_create_completion(this, NULL, rados_req_cb);
-    m_ictx->md_ctx[HDD_POOL].aio_operate(m_oid, rados_completion, &m_copyup,
+    m_ictx->md_ctx[DEFAULT_POOL].aio_operate(m_oid, rados_completion, &m_copyup,
 			       m_snap_seq, m_snaps);
     rados_completion->release();
   }

@@ -39,12 +39,15 @@ namespace librbd {
     // initilize extent_map
     std::map<uint64_t, int> *p = &(extent_map.map);
    
-    // the default position is HDD_POOL
+    // set the default position 
     for(uint64_t i = 0; i < extent_map.map_size; i++) {
-      (*p).insert( std::pair<uint64_t, int>(i, HDD_POOL));
+      int value = HDD_STRIDE;
+      if(DEFAULT_POOL == SSD_POOL)
+        value = SSD_STRIDE;
+      
+      (*p).insert( std::pair<uint64_t, int>(i, value));
     }
 
-    mapper = new Mapper(&extent_map);
     analyzer = new Analyzer(&extent_map);
 
     // start a new thread to perform tasks of Analyzer
@@ -97,7 +100,7 @@ namespace librbd {
     memset(&layout, 0, sizeof(layout));
 
     string pname = string("librbd-") + id + string("-") +
-      data_ctx[HDD_POOL].get_pool_name() + string("/") + name;
+      data_ctx[DEFAULT_POOL].get_pool_name() + string("/") + name;
     if (snap) {
       snap_name = snap;
       pname += "@";
@@ -129,7 +132,7 @@ namespace librbd {
 				       cct->_conf->rbd_cache_target_dirty,
 				       cct->_conf->rbd_cache_max_dirty_age,
 				       cct->_conf->rbd_cache_block_writes_upfront);
-      object_set = new ObjectCacher::ObjectSet(NULL, data_ctx[HDD_POOL].get_id(), 0);
+      object_set = new ObjectCacher::ObjectSet(NULL, data_ctx[DEFAULT_POOL].get_id(), 0);
       object_set->return_enoent = true;
       object_cacher->start();
     }
@@ -157,7 +160,7 @@ namespace librbd {
     if (id.length()) {
       old_format = false;
     } else {
-      r = detect_format(md_ctx[HDD_POOL], name, &old_format, NULL);
+      r = detect_format(md_ctx[DEFAULT_POOL], name, &old_format, NULL);
       if (r < 0) {
 	lderr(cct) << "error finding header: " << cpp_strerror(r) << dendl;
 	return r;
@@ -166,7 +169,7 @@ namespace librbd {
 
     if (!old_format) {
       if (!id.length()) {
-	r = cls_client::get_id(&md_ctx[HDD_POOL], id_obj_name(name), &id);
+	r = cls_client::get_id(&md_ctx[DEFAULT_POOL], id_obj_name(name), &id);
 	if (r < 0) {
 	  lderr(cct) << "error reading image id: " << cpp_strerror(r)
 		     << dendl;
@@ -175,7 +178,7 @@ namespace librbd {
       }
 
       header_oid = header_name(id);
-      r = cls_client::get_immutable_metadata(&md_ctx[HDD_POOL], header_oid,
+      r = cls_client::get_immutable_metadata(&md_ctx[DEFAULT_POOL], header_oid,
 					     &object_prefix, &order);
       if (r < 0) {
 	lderr(cct) << "error reading immutable metadata: "
@@ -183,7 +186,7 @@ namespace librbd {
 	return r;
       }
 
-      r = cls_client::get_stripe_unit_count(&md_ctx[HDD_POOL], header_oid,
+      r = cls_client::get_stripe_unit_count(&md_ctx[DEFAULT_POOL], header_oid,
 					    &stripe_unit, &stripe_count);
       if (r < 0 && r != -ENOEXEC && r != -EINVAL) {
 	lderr(cct) << "error reading striping metadata: "
@@ -209,7 +212,7 @@ namespace librbd {
     layout.fl_stripe_unit = stripe_unit;
     layout.fl_stripe_count = stripe_count;
     layout.fl_object_size = 1ull << order;
-    layout.fl_pg_pool = data_ctx[HDD_POOL].get_id();  // FIXME: pool id overflow?
+    layout.fl_pg_pool = data_ctx[DEFAULT_POOL].get_id();  // FIXME: pool id overflow?
 
     delete[] format_string;
     size_t len = object_prefix.length() + 16;
@@ -295,7 +298,7 @@ namespace librbd {
       snap_name = in_snap_name;
       snap_id = it->second.id;
       snap_exists = true;
-      data_ctx[HDD_POOL].snap_set_read(snap_id);
+      data_ctx[DEFAULT_POOL].snap_set_read(snap_id);
       return 0;
     }
     return -ENOENT;
@@ -306,7 +309,7 @@ namespace librbd {
     snap_id = CEPH_NOSNAP;
     snap_name = "";
     snap_exists = true;
-    data_ctx[HDD_POOL].snap_set_read(snap_id);
+    data_ctx[DEFAULT_POOL].snap_set_read(snap_id);
   }
 
   snap_t ImageCtx::get_snap_id(string in_snap_name) const
@@ -515,7 +518,7 @@ namespace librbd {
     ObjectCacher::OSDRead *rd = object_cacher->prepare_read(snap_id, bl, 0);
     snap_lock.put_read();
     ObjectExtent extent(o, 0 /* a lie */, off, len, 0);
-    extent.oloc.pool = data_ctx[HDD_POOL].get_id();
+    extent.oloc.pool = data_ctx[DEFAULT_POOL].get_id();
     extent.buffer_extents.push_back(make_pair(0, len));
     rd->extents.push_back(extent);
     cache_lock.Lock();
@@ -532,7 +535,7 @@ namespace librbd {
 							      utime_t(), 0);
     snap_lock.put_read();
     ObjectExtent extent(o, 0, off, len, 0);
-    extent.oloc.pool = data_ctx[HDD_POOL].get_id();
+    extent.oloc.pool = data_ctx[DEFAULT_POOL].get_id();
     // XXX: nspace is always default, io_ctx_impl field private
     //extent.oloc.nspace = data_ctx.io_ctx_impl->oloc.nspace;
     extent.buffer_extents.push_back(make_pair(0, len));
@@ -634,13 +637,13 @@ namespace librbd {
   int ImageCtx::register_watch() {
     assert(!wctx);
     wctx = new WatchCtx(this);
-    return md_ctx[HDD_POOL].watch(header_oid, 0, &(wctx->cookie), wctx);
+    return md_ctx[DEFAULT_POOL].watch(header_oid, 0, &(wctx->cookie), wctx);
   }
 
   void ImageCtx::unregister_watch() {
     assert(wctx);
     wctx->invalidate();
-    md_ctx[HDD_POOL].unwatch(header_oid, wctx->cookie);
+    md_ctx[DEFAULT_POOL].unwatch(header_oid, wctx->cookie);
     delete wctx;
     wctx = NULL;
   }

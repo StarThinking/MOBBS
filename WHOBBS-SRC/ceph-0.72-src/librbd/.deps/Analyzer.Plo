@@ -570,7 +570,7 @@ librbd/Analyzer.lo: librbd/Analyzer.cc common/ceph_context.h \
  common/PrebufferedStreambuf.h log/EntryQueue.h log/SubsystemMap.h \
  common/errno.h /usr/include/c++/4.6/ctime librbd/Analyzer.h \
  /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
- librbd/WHOBBS.h
+ librbd/WHOBBS.h librbd/Mapper.h
 
 common/ceph_context.h:
 
@@ -1963,3 +1963,5 @@ librbd/Analyzer.h:
 /usr/include/c++/4.6/bits/stl_queue.h:
 
 librbd/WHOBBS.h:
+
+librbd/Mapper.h:

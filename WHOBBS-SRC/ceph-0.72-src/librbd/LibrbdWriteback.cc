@@ -102,7 +102,7 @@ namespace librbd {
     librados::ObjectReadOperation op;
     op.read(off, len, pbl, NULL);
     int flags = m_ictx->get_read_flags(snapid);
-    int r = m_ictx->data_ctx[HDD_POOL].aio_operate(oid.name, rados_completion, &op,
+    int r = m_ictx->data_ctx[DEFAULT_POOL].aio_operate(oid.name, rados_completion, &op,
 					 snapid, flags, NULL);
     rados_completion->release();
     assert(r >= 0);
@@ -159,7 +159,7 @@ namespace librbd {
     m_writes[oid.name].push(result);
     ldout(m_ictx->cct, 20) << "write will wait for result " << result << dendl;
     C_OrderedWrite *req_comp = new C_OrderedWrite(m_ictx->cct, result, this);
-    AioWrite *req = new AioWrite(m_ictx, HDD_POOL, oid.name,
+    AioWrite *req = new AioWrite(m_ictx, DEFAULT_POOL, oid.name,
 				 object_no, off, objectx, object_overlap,
 				 bl, snapc, snap_id,
 				 req_comp);

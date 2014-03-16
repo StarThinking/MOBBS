@@ -3,6 +3,9 @@
 #ifndef EXTENT_MAP
 #define EXTENT_MAP
 
+#define DEFAULT_POOL HDD_POOL
+#define HDD_STRIDE -3
+#define SSD_STRIDE 3
 #define READ_OP 0
 #define WRITE_OP 1
 #define HDD_POOL 0
@@ -13,6 +16,12 @@
 #define SEQ_DISTANCE 4096
 #define SMALL_READ_SIZE 131072
 #define SMALL_WRITE_SIZE 65536
+
+#define HDD_CAPACITY 6291456
+#define REPLICA 3
+#define HDD_READ_IOPS 150
+#define HDD_WRITE_IOPS 150
+//#define SLACK_FACTOR 2.0
 
 struct ExtentMap {
   uint64_t extent_size;

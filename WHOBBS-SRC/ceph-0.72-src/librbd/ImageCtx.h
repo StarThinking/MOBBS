@@ -42,7 +42,6 @@ namespace librbd {
     int initialize_WHOBBS();
     int finilize_WHOBBS();
     Analyzer *analyzer;
-    Mapper *mapper;
     // WHOBBS
    
     CephContext *cct;
