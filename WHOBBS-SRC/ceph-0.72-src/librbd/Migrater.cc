@@ -152,12 +152,15 @@ namespace librbd {
   void Migrater::restore_to_default_pool()
   {
     cout << "restore to the default pool" << std::endl;
-    for(std::map<uint64_t, int>::iterator it=extent_map_p->map.begin(); it!=extent_map_p->map.end(); it++) {
-      if(it->second != DEFAULT_POOL) {
-        if(DEFAULT_POOL == HDD_POOL)
-          do_concurrent_migrate(it->first, SSD_POOL, DEFAULT_POOL);
-	else
-	  do_concurrent_migrate(it->first, HDD_POOL, DEFAULT_POOL);
+    if(DEFAULT_POOL == HDD_POOL) {
+      for(std::map<uint64_t, int>::iterator it=extent_map_p->map.begin(); it!=extent_map_p->map.end(); it++) {
+        if(it->second > 0) 
+	  do_concurrent_migrate(it->first, SSD_POOL, HDD_POOL);
+      }
+    } else {
+      for(std::map<uint64_t, int>::iterator it=extent_map_p->map.begin(); it!=extent_map_p->map.end(); it++) {
+        if(it->second < 0) 
+	  do_concurrent_migrate(it->first, HDD_POOL, SSD_POOL);
       }
     }
   }

@@ -10,14 +10,6 @@
 
 namespace librbd {
 
-  void Analyzer::test()
-  {
-    printf("test\n");
-    migrater->do_concurrent_migrate(0, HDD_POOL, SSD_POOL);
-    migrater->do_concurrent_migrate(0, SSD_POOL, HDD_POOL);
-
-  }
-
   Analyzer::Analyzer(ExtentMap *extent_map_p, Migrater *migrater) 
     : extent_map_p(extent_map_p), migrater(migrater)
   {}
@@ -41,7 +33,6 @@ namespace librbd {
       time_t finish = std::time(NULL);
       analyze_time = finish - start;
     }
-    //analyzer->test();
     return NULL;
   }
 
@@ -61,19 +52,22 @@ namespace librbd {
     
     // analyze the report by WHOBBS Placement Model
     std::map<int, std::list<uint64_t> > placement_map = analyze_placement(report);
+    std::map<int, std::list<uint64_t> > placement_map_filtered = filter_placement(placement_map);
 
-    cout << "placement: " << placement_map[HDD_POOL].size() << " extent -> hdd pool" << ", " 
-    	<< placement_map[SSD_POOL].size() << " extent -> ssd pool" << std::endl;
+#ifdef DO_MIGRATION
+    cout << "placement: " << placement_map_filtered[HDD_POOL].size() << " extent -> hdd pool" << ", " 
+    	<< placement_map_filtered[SSD_POOL].size() << " extent -> ssd pool" << std::endl;
 
-    for(std::list<uint64_t>::iterator it = placement_map[HDD_POOL].begin(); it != placement_map[HDD_POOL].end(); it++) {
+    for(std::list<uint64_t>::iterator it = placement_map_filtered[HDD_POOL].begin(); it != placement_map_filtered[HDD_POOL].end(); it++) {
       uint64_t extent_id = *it;
       migrater->do_concurrent_migrate(extent_id, SSD_POOL, HDD_POOL);
     }
     
-    for(std::list<uint64_t>::iterator it = placement_map[SSD_POOL].begin(); it != placement_map[SSD_POOL].end(); it++) {
+    for(std::list<uint64_t>::iterator it = placement_map_filtered[SSD_POOL].begin(); it != placement_map_filtered[SSD_POOL].end(); it++) {
       uint64_t extent_id = *it;
       migrater->do_concurrent_migrate(extent_id, HDD_POOL, SSD_POOL);
     }
+#endif
     cout << std::endl;
   }
 
@@ -235,6 +229,37 @@ namespace librbd {
       if(value < HDD_STRIDE || value > SSD_STRIDE || value == 0)
         cout << "value is in violation!" << std::endl;
     } 
+    placement_map.insert(std::pair<int, std::list<uint64_t> >(HDD_POOL, hdd_placement));
+    placement_map.insert(std::pair<int, std::list<uint64_t> >(SSD_POOL, ssd_placement));
+    return placement_map;
+  }
+
+  std::map<int, std::list<uint64_t> > Analyzer::filter_placement(std::map<int, std::list<uint64_t> > raw_placement) 
+  {
+    std::map<int, std::list<uint64_t> > placement_map;
+    std::list<uint64_t> hdd_placement;
+    std::list<uint64_t> ssd_placement;
+    uint64_t counter = 0;
+
+    // give priority to migration -> SSD_POOL
+    for(std::list<uint64_t>::iterator it = raw_placement[SSD_POOL].begin(); it != raw_placement[SSD_POOL].end(); it++) {
+      if(counter < MAX_MIGRATION) {
+        ssd_placement.push_back(*it);
+	counter ++;
+      } else {
+        break;
+      }
+    }
+
+    for(std::list<uint64_t>::iterator it = raw_placement[HDD_POOL].begin(); it != raw_placement[HDD_POOL].end(); it++) {
+      if(counter < MAX_MIGRATION) {
+        hdd_placement.push_back(*it);
+	counter ++;
+      } else {
+        break;
+      }
+    }
+
     placement_map.insert(std::pair<int, std::list<uint64_t> >(HDD_POOL, hdd_placement));
     placement_map.insert(std::pair<int, std::list<uint64_t> >(SSD_POOL, ssd_placement));
     return placement_map;

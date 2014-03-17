@@ -21,7 +21,6 @@ namespace librbd {
     Analyzer(ExtentMap *extent_map_p, Migrater *migrater);
     static void *startAnalyzer(void *arg);
     void add_op(AnalyzerOp op);
-    void test();
 
   protected:
     void handle();
@@ -30,7 +29,7 @@ namespace librbd {
     bool is_sequential(uint64_t off);
     void set_last_byte(uint64_t byte);
     std::map<int, std::list<uint64_t> > analyze_placement(AnalyzerReport *report);
-    std::list<uint64_t> placement_filter(std::map<int, std::list<uint64_t> > raw_placement);
+    std::map<int, std::list<uint64_t> > filter_placement(std::map<int, std::list<uint64_t> > raw_placement);
 
   private:
     ExtentMap *extent_map_p;
