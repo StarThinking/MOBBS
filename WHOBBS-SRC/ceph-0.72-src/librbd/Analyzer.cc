@@ -10,14 +10,21 @@
 
 namespace librbd {
 
-  Analyzer::Analyzer(ExtentMap *extent_map_p) 
-    : extent_map_p(extent_map_p)
+  void Analyzer::test()
+  {
+    printf("test\n");
+    migrater->do_concurrent_migrate(0, HDD_POOL, SSD_POOL);
+    migrater->do_concurrent_migrate(0, SSD_POOL, HDD_POOL);
+
+  }
+
+  Analyzer::Analyzer(ExtentMap *extent_map_p, Migrater *migrater) 
+    : extent_map_p(extent_map_p), migrater(migrater)
   {}
 
   void *Analyzer::startAnalyzer(void *arg)
   {
-    Analyzer *analyzer = (Analyzer *)arg
-    ;
+    Analyzer *analyzer = (Analyzer *)arg;
     cout << "startAnalyzer" << std::endl;
     int analyze_time = 0;
     while(true) {
@@ -34,6 +41,7 @@ namespace librbd {
       time_t finish = std::time(NULL);
       analyze_time = finish - start;
     }
+    //analyzer->test();
     return NULL;
   }
 
@@ -44,6 +52,7 @@ namespace librbd {
 
   void Analyzer::handle()
   {
+    cout << std::endl;
     cout << "handle" << std::endl;
 
     // create a report and print it
@@ -58,13 +67,14 @@ namespace librbd {
 
     for(std::list<uint64_t>::iterator it = placement_map[HDD_POOL].begin(); it != placement_map[HDD_POOL].end(); it++) {
       uint64_t extent_id = *it;
-      //do_concurrent_migration(extent_id, SSD_POOL, HDD_POOL);
+      migrater->do_concurrent_migrate(extent_id, SSD_POOL, HDD_POOL);
     }
     
     for(std::list<uint64_t>::iterator it = placement_map[SSD_POOL].begin(); it != placement_map[SSD_POOL].end(); it++) {
       uint64_t extent_id = *it;
-      //do_concurrent_migration(extent_id, HDD_POOL, SSD_POOL);
+      migrater->do_concurrent_migrate(extent_id, HDD_POOL, SSD_POOL);
     }
+    cout << std::endl;
   }
 
   AnalyzerReport* Analyzer::create_report(ExtentMap *extent_map_p, std::queue<AnalyzerOp> *op_queue)
@@ -254,7 +264,6 @@ namespace librbd {
     cout << "hdd extent num = " << hdd_extent_num << ", ssd extent num = " << ssd_extent_num
     	<< ", ssd ratio = " << ssd_ratio << std::endl;
     cout << "---------------Report---------------" << std::endl;
-    cout << "" << std::endl;
   }
 
   std::list<uint64_t> AnalyzerReport::tend_to(int pool)

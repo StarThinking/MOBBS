@@ -7,7 +7,8 @@ librbd_la_SOURCES = \
 	librbd/LibrbdWriteback.cc \
 	librbd/WatchCtx.cc \
 	librbd/Mapper.cc \
-	librbd/Analyzer.cc 
+	librbd/Analyzer.cc \
+        librbd/Migrater.cc 
 librbd_la_LIBADD = \
 	$(LIBRADOS) $(LIBOSDC) \
 	libcls_rbd_client.la libcls_lock_client.la \
@@ -26,4 +27,5 @@ noinst_HEADERS += \
 	librbd/WatchCtx.h \
 	librbd/Mapper.h \
 	librbd/Analyzer.h \
-	librbd/WHOBBS.h 
+	librbd/WHOBBS.h \
+	librbd/Migrater.h 

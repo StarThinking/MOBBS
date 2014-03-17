@@ -653,7 +653,7 @@ librbd_la_DEPENDENCIES = $(LIBRADOS) $(LIBOSDC) libcls_rbd_client.la \
 am_librbd_la_OBJECTS = librbd/librbd.lo librbd/AioCompletion.lo \
 	librbd/AioRequest.lo librbd/ImageCtx.lo librbd/internal.lo \
 	librbd/LibrbdWriteback.lo librbd/WatchCtx.lo librbd/Mapper.lo \
-	librbd/Analyzer.lo
+	librbd/Analyzer.lo librbd/Migrater.lo
 librbd_la_OBJECTS = $(am_librbd_la_OBJECTS)
 librbd_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -2724,12 +2724,12 @@ am__noinst_HEADERS_DIST = arch/intel.h arch/neon.h arch/probe.h \
 	librbd/internal.h librbd/LibrbdWriteback.h \
 	librbd/parent_types.h librbd/SnapInfo.h librbd/WatchCtx.h \
 	librbd/Mapper.h librbd/Analyzer.h librbd/WHOBBS.h \
-	rgw/logrotate.conf rgw/rgw_acl.h rgw/rgw_acl_s3.h \
-	rgw/rgw_acl_swift.h rgw/rgw_client_io.h rgw/rgw_fcgi.h \
-	rgw/rgw_xml.h rgw/rgw_cache.h rgw/rgw_common.h rgw/rgw_cors.h \
-	rgw/rgw_cors_s3.h rgw/rgw_cors_swift.h rgw/rgw_string.h \
-	rgw/rgw_formats.h rgw/rgw_http_errors.h rgw/rgw_log.h \
-	rgw/rgw_multi.h rgw/rgw_policy_s3.h rgw/rgw_gc.h \
+	librbd/Migrater.h rgw/logrotate.conf rgw/rgw_acl.h \
+	rgw/rgw_acl_s3.h rgw/rgw_acl_swift.h rgw/rgw_client_io.h \
+	rgw/rgw_fcgi.h rgw/rgw_xml.h rgw/rgw_cache.h rgw/rgw_common.h \
+	rgw/rgw_cors.h rgw/rgw_cors_s3.h rgw/rgw_cors_swift.h \
+	rgw/rgw_string.h rgw/rgw_formats.h rgw/rgw_http_errors.h \
+	rgw/rgw_log.h rgw/rgw_multi.h rgw/rgw_policy_s3.h rgw/rgw_gc.h \
 	rgw/rgw_metadata.h rgw/rgw_multi_del.h rgw/rgw_op.h \
 	rgw/rgw_http_client.h rgw/rgw_swift.h rgw/rgw_swift_auth.h \
 	rgw/rgw_quota.h rgw/rgw_rados.h rgw/rgw_replica_log.h \
@@ -3229,12 +3229,12 @@ noinst_HEADERS = arch/intel.h arch/neon.h arch/probe.h \
 	librbd/internal.h librbd/LibrbdWriteback.h \
 	librbd/parent_types.h librbd/SnapInfo.h librbd/WatchCtx.h \
 	librbd/Mapper.h librbd/Analyzer.h librbd/WHOBBS.h \
-	rgw/logrotate.conf rgw/rgw_acl.h rgw/rgw_acl_s3.h \
-	rgw/rgw_acl_swift.h rgw/rgw_client_io.h rgw/rgw_fcgi.h \
-	rgw/rgw_xml.h rgw/rgw_cache.h rgw/rgw_common.h rgw/rgw_cors.h \
-	rgw/rgw_cors_s3.h rgw/rgw_cors_swift.h rgw/rgw_string.h \
-	rgw/rgw_formats.h rgw/rgw_http_errors.h rgw/rgw_log.h \
-	rgw/rgw_multi.h rgw/rgw_policy_s3.h rgw/rgw_gc.h \
+	librbd/Migrater.h rgw/logrotate.conf rgw/rgw_acl.h \
+	rgw/rgw_acl_s3.h rgw/rgw_acl_swift.h rgw/rgw_client_io.h \
+	rgw/rgw_fcgi.h rgw/rgw_xml.h rgw/rgw_cache.h rgw/rgw_common.h \
+	rgw/rgw_cors.h rgw/rgw_cors_s3.h rgw/rgw_cors_swift.h \
+	rgw/rgw_string.h rgw/rgw_formats.h rgw/rgw_http_errors.h \
+	rgw/rgw_log.h rgw/rgw_multi.h rgw/rgw_policy_s3.h rgw/rgw_gc.h \
 	rgw/rgw_metadata.h rgw/rgw_multi_del.h rgw/rgw_op.h \
 	rgw/rgw_http_client.h rgw/rgw_swift.h rgw/rgw_swift_auth.h \
 	rgw/rgw_quota.h rgw/rgw_rados.h rgw/rgw_replica_log.h \
@@ -3699,7 +3699,8 @@ librbd_la_SOURCES = \
 	librbd/LibrbdWriteback.cc \
 	librbd/WatchCtx.cc \
 	librbd/Mapper.cc \
-	librbd/Analyzer.cc 
+	librbd/Analyzer.cc \
+        librbd/Migrater.cc 
 
 librbd_la_LIBADD = \
 	$(LIBRADOS) $(LIBOSDC) \
@@ -5526,6 +5527,8 @@ librbd/WatchCtx.lo: librbd/$(am__dirstamp) \
 librbd/Mapper.lo: librbd/$(am__dirstamp) \
 	librbd/$(DEPDIR)/$(am__dirstamp)
 librbd/Analyzer.lo: librbd/$(am__dirstamp) \
+	librbd/$(DEPDIR)/$(am__dirstamp)
+librbd/Migrater.lo: librbd/$(am__dirstamp) \
 	librbd/$(DEPDIR)/$(am__dirstamp)
 librbd.la: $(librbd_la_OBJECTS) $(librbd_la_DEPENDENCIES) $(EXTRA_librbd_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(librbd_la_LINK) -rpath $(libdir) $(librbd_la_OBJECTS) $(librbd_la_LIBADD) $(LIBS)
@@ -7737,6 +7740,8 @@ mostlyclean-compile:
 	-rm -f librbd/LibrbdWriteback.lo
 	-rm -f librbd/Mapper.$(OBJEXT)
 	-rm -f librbd/Mapper.lo
+	-rm -f librbd/Migrater.$(OBJEXT)
+	-rm -f librbd/Migrater.lo
 	-rm -f librbd/WatchCtx.$(OBJEXT)
 	-rm -f librbd/WatchCtx.lo
 	-rm -f librbd/internal.$(OBJEXT)
@@ -8556,6 +8561,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/ImageCtx.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/LibrbdWriteback.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/Mapper.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/Migrater.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/WatchCtx.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/internal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/librbd.Plo@am__quote@

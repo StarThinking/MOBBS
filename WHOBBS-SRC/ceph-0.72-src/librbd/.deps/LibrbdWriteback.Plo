@@ -622,7 +622,7 @@ librbd/LibrbdWriteback.lo: librbd/LibrbdWriteback.cc /usr/include/errno.h \
  librbd/LibrbdWriteback.h /usr/include/c++/4.6/queue \
  /usr/include/c++/4.6/bits/stl_queue.h osdc/WritebackHandler.h \
  librbd/SnapInfo.h librbd/WHOBBS.h librbd/Mapper.h librbd/Analyzer.h \
- librbd/internal.h
+ librbd/Migrater.h librbd/internal.h
 
 /usr/include/errno.h:
 
@@ -2217,5 +2217,7 @@ librbd/WHOBBS.h:
 librbd/Mapper.h:
 
 librbd/Analyzer.h:
+
+librbd/Migrater.h:
 
 librbd/internal.h:

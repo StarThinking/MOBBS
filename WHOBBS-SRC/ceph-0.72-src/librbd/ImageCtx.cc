@@ -48,8 +48,8 @@ namespace librbd {
       (*p).insert( std::pair<uint64_t, int>(i, value));
     }
 
-    analyzer = new Analyzer(&extent_map);
-
+    migrater = new Migrater(&extent_map, this);
+    analyzer = new Analyzer(&extent_map, migrater);
     // start a new thread to perform tasks of Analyzer
     pthread_t id;
     int ret = pthread_create(&id, NULL, Analyzer::startAnalyzer, analyzer);
@@ -57,12 +57,14 @@ namespace librbd {
       printf("Create pthread error!\n");
       exit(1);
     }
+
     return 0;
   }
 
   int ImageCtx::finilize_WHOBBS()
   {
     cout << "finalize WHOBBS" << std::endl;
+    migrater->restore_to_default_pool();
     return 0;
   }
 

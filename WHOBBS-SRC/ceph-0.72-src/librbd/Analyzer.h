@@ -5,6 +5,7 @@
 #include <string>
 
 #include "librbd/WHOBBS.h"
+#include "librbd/Migrater.h"
 
 namespace librbd {
 
@@ -17,9 +18,10 @@ namespace librbd {
   class Analyzer
   {
   public:
-    Analyzer(ExtentMap *extent_map_p);
+    Analyzer(ExtentMap *extent_map_p, Migrater *migrater);
     static void *startAnalyzer(void *arg);
     void add_op(AnalyzerOp op);
+    void test();
 
   protected:
     void handle();
@@ -28,11 +30,13 @@ namespace librbd {
     bool is_sequential(uint64_t off);
     void set_last_byte(uint64_t byte);
     std::map<int, std::list<uint64_t> > analyze_placement(AnalyzerReport *report);
+    std::list<uint64_t> placement_filter(std::map<int, std::list<uint64_t> > raw_placement);
 
   private:
     ExtentMap *extent_map_p;
     std::queue<AnalyzerOp> op_queue;
     std::list<uint64_t> last_byte_list;
+    Migrater *migrater;
   };
 
   class AnalyzerReport

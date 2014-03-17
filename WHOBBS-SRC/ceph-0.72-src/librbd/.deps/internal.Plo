@@ -624,8 +624,8 @@ librbd/internal.lo: librbd/internal.cc include/int_types.h acconfig.h \
  librbd/LibrbdWriteback.h /usr/include/c++/4.6/queue \
  /usr/include/c++/4.6/bits/stl_queue.h osdc/WritebackHandler.h \
  librbd/SnapInfo.h librbd/WHOBBS.h librbd/Mapper.h librbd/Analyzer.h \
- librbd/internal.h osdc/Striper.h librbd/AioRequest.h include/util.h \
- librados/snap_set_diff.h
+ librbd/Migrater.h librbd/internal.h osdc/Striper.h librbd/AioRequest.h \
+ include/util.h librados/snap_set_diff.h
 
 include/int_types.h:
 
@@ -2230,6 +2230,8 @@ librbd/WHOBBS.h:
 librbd/Mapper.h:
 
 librbd/Analyzer.h:
+
+librbd/Migrater.h:
 
 librbd/internal.h:
 
