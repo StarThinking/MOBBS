@@ -1,0 +1,98 @@
+2014-03-18 05:47:57.524+0000: starting up
+LC_ALL=C PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin QEMU_AUDIO_DRV=none /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 32768 -realtime mlock=off -smp 8,sockets=8,cores=1,threads=1 -uuid 787a7ab1-4f1e-9bb6-1a40-1f760cd2dbb7 -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -device lsi,id=scsi0,bus=pci.0,addr=0x5 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:b7,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -vnc 127.0.0.1:0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+Domain id=71 is tainted: high-privileges
+char device redirected to /dev/pts/0 (label charserial0)
+initialize WHOBBS
+extent_map: map_size = 2048 ,extent_size = 67108864
+startAnalyzer
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 12, bandwidth = 19894272, seqness = 0.972549
+write iops = 75, bandwidth = 67099754, seqness = 0.939264
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1994, tend to ssd: 54
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 21, bandwidth = 27649813, seqness = 0.831002
+write iops = 127, bandwidth = 93451340, seqness = 0.787589
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1773, tend to ssd: 275
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 22, bandwidth = 25450564, seqness = 0.801775
+write iops = 159, bandwidth = 93354052, seqness = 0.673897
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1576, tend to ssd: 472
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 23, bandwidth = 23568691, seqness = 0.695913
+write iops = 196, bandwidth = 83678993, seqness = 0.535375
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1374, tend to ssd: 674
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 69, bandwidth = 7008669, seqness = 0.130367
+write iops = 796, bandwidth = 33821713, seqness = 0.109478
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1239, tend to ssd: 809
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 96, bandwidth = 5829900, seqness = 0.107666
+write iops = 1035, bandwidth = 31091925, seqness = 0.0987528
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1227, tend to ssd: 821
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 99, bandwidth = 6010406, seqness = 0.112474
+write iops = 1078, bandwidth = 32836386, seqness = 0.100292
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1211, tend to ssd: 837
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 99, bandwidth = 6226798, seqness = 0.126588
+write iops = 1065, bandwidth = 33259707, seqness = 0.111282
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1199, tend to ssd: 849
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 91, bandwidth = 5903889, seqness = 0.108998
+write iops = 984, bandwidth = 34456648, seqness = 0.115746
+hdd extent num = 0, ssd extent num = 2048, ssd ratio = 1
+---------------Report---------------
+tend to hdd: 1193, tend to ssd: 855
+
+sleep 120 seconds

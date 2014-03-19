@@ -1,0 +1,1002 @@
+2014-03-19 00:12:40.967+0000: starting up
+LC_ALL=C PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin QEMU_AUDIO_DRV=none /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 32768 -realtime mlock=off -smp 8,sockets=8,cores=1,threads=1 -uuid 787a7ab1-4f1e-9bb6-1a40-1f760cd2dbb7 -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -device lsi,id=scsi0,bus=pci.0,addr=0x5 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:b7,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -vnc 127.0.0.1:0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+Domain id=100 is tainted: high-privileges
+char device redirected to /dev/pts/0 (label charserial0)
+initialize WHOBBS
+extent_map: map_size = 2048 ,extent_size = 67108864
+startAnalyzer
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 5, bandwidth = 8934664, seqness = 0.994065
+write iops = 38, bandwidth = 30047138, seqness = 0.973958
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2040, tend to ssd: 8
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 8, bandwidth = 13822566, seqness = 0.99177
+write iops = 48, bandwidth = 47699626, seqness = 0.978936
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2042, tend to ssd: 6
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 12, bandwidth = 14034397, seqness = 0.784367
+write iops = 79, bandwidth = 52524108, seqness = 0.742044
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1915, tend to ssd: 133
+placement: 0 extent -> hdd pool, 3 extent -> ssd pool
+concurrent migration: extent id = 0 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 512 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1024 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+
+sleep 59 seconds
+
+handle
+---------------Report---------------
+read iops = 11, bandwidth = 19647897, seqness = 0.997072
+write iops = 63, bandwidth = 66565435, seqness = 0.975916
+hdd extent num = 2045, ssd extent num = 3, ssd ratio = 0.00146484
+---------------Report---------------
+tend to hdd: 2032, tend to ssd: 16
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 16, bandwidth = 14496494, seqness = 0.648221
+write iops = 112, bandwidth = 46821384, seqness = 0.542577
+hdd extent num = 2045, ssd extent num = 3, ssd ratio = 0.00146484
+---------------Report---------------
+tend to hdd: 1781, tend to ssd: 267
+placement: 0 extent -> hdd pool, 8 extent -> ssd pool
+concurrent migration: extent id = 12 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 31 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 524 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 544 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1037 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1536 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1549 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1569 HDD_POOL -> SSD_POOL
+
+sleep 46 seconds
+
+handle
+---------------Report---------------
+read iops = 19, bandwidth = 11797427, seqness = 0.454545
+write iops = 142, bandwidth = 34815342, seqness = 0.358614
+hdd extent num = 2037, ssd extent num = 11, ssd ratio = 0.00537109
+---------------Report---------------
+tend to hdd: 1734, tend to ssd: 314
+placement: 0 extent -> hdd pool, 10 extent -> ssd pool
+concurrent migration: extent id = 9 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 13 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 548 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 555 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1062 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1066 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1544 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1574 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1578 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1587 HDD_POOL -> SSD_POOL
+
+sleep 53 seconds
+
+handle
+---------------Report---------------
+read iops = 18, bandwidth = 2037486, seqness = 0.413666
+write iops = 133, bandwidth = 5549952, seqness = 0.301609
+hdd extent num = 2027, ssd extent num = 21, ssd ratio = 0.0102539
+---------------Report---------------
+tend to hdd: 1723, tend to ssd: 325
+placement: 0 extent -> hdd pool, 246 extent -> ssd pool
+concurrent migration: extent id = 1 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 2 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 3 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 4 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 5 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 6 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 7 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 8 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 10 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 11 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 14 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 15 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 16 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 17 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 18 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 19 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 20 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 21 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 22 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 23 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 24 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 25 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 26 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 27 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 28 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 29 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 30 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 32 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 33 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 34 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 35 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 36 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 37 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 38 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 39 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 40 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 41 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 42 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 43 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 44 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 45 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 46 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 47 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 48 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 49 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 50 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 51 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 52 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 53 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 54 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 55 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 56 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 57 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 58 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 59 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 60 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 61 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 62 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 64 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 65 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 66 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 513 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 514 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 515 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 516 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 517 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 518 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 519 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 520 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 521 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 522 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 523 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 525 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 526 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 527 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 528 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 529 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 530 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 531 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 532 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 533 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 534 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 535 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 536 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 537 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 538 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 539 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 540 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 541 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 542 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 543 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 545 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 546 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 547 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 549 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 550 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 551 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 552 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 553 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 554 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 556 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 557 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 558 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 559 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 560 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 561 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 562 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 563 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 564 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 565 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 566 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 567 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 568 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 569 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 570 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 571 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1025 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1026 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1027 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1028 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1029 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1030 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1031 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1032 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1033 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1034 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1035 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1036 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1038 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1039 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1040 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1041 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1042 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1043 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1044 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1045 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1046 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1047 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1048 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1049 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1050 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1051 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1052 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1053 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1054 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1055 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1056 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1057 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1058 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1059 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1060 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1061 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1063 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1064 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1065 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1067 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1068 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1069 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1070 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1071 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1072 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1073 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1074 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1075 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1076 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1077 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1078 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1079 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1080 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1081 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1082 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1083 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1084 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1086 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1087 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1088 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1090 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1091 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1092 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1093 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1094 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1095 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1096 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1097 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1098 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1099 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1537 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1538 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1539 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1540 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1541 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1542 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1543 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1545 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1546 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1547 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1548 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1550 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1551 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1552 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1553 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1554 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1555 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1556 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1557 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1558 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1559 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1560 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1561 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1562 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1563 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1564 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1565 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1566 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1567 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1568 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1570 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1571 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1572 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1573 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1575 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1576 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1577 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1579 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1580 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1581 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1582 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1583 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1584 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1585 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1586 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1588 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1589 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1590 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1591 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1592 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1593 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1594 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1595 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1596 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1597 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1598 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1600 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1601 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1602 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1603 HDD_POOL -> SSD_POOL
+
+sleep 38 seconds
+
+handle
+---------------Report---------------
+read iops = 39, bandwidth = 3425501, seqness = 0.161603
+write iops = 308, bandwidth = 11759274, seqness = 0.151404
+hdd extent num = 1781, ssd extent num = 267, ssd ratio = 0.130371
+---------------Report---------------
+tend to hdd: 1722, tend to ssd: 326
+placement: 0 extent -> hdd pool, 47 extent -> ssd pool
+concurrent migration: extent id = 63 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 67 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 68 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 69 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 70 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 71 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 74 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 572 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 573 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 574 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 575 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 576 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 577 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 578 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 579 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 580 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 581 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 582 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1085 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1089 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1100 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1101 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1102 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1103 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1104 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1105 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1106 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1107 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1108 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1109 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1110 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1111 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1112 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1113 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1599 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1604 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1605 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1606 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1607 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1608 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1609 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 1610 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1611 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1612 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1613 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1616 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1617 HDD_POOL -> SSD_POOL
+
+sleep 56 seconds
+
+handle
+---------------Report---------------
+read iops = 58, bandwidth = 5639210, seqness = 0.202158
+write iops = 502, bandwidth = 19645448, seqness = 0.165418
+hdd extent num = 1734, ssd extent num = 314, ssd ratio = 0.15332
+---------------Report---------------
+tend to hdd: 1712, tend to ssd: 336
+placement: 0 extent -> hdd pool, 6 extent -> ssd pool
+concurrent migration: extent id = 72 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 73 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 584 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1115 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1614 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1615 HDD_POOL -> SSD_POOL
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 66, bandwidth = 6817885, seqness = 0.196992
+write iops = 524, bandwidth = 23295837, seqness = 0.146986
+hdd extent num = 1728, ssd extent num = 320, ssd ratio = 0.15625
+---------------Report---------------
+tend to hdd: 1714, tend to ssd: 334
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 77, bandwidth = 7918976, seqness = 0.179862
+write iops = 583, bandwidth = 24600874, seqness = 0.151386
+hdd extent num = 1728, ssd extent num = 320, ssd ratio = 0.15625
+---------------Report---------------
+tend to hdd: 1700, tend to ssd: 348
+placement: 0 extent -> hdd pool, 1 extent -> ssd pool
+concurrent migration: extent id = 587 HDD_POOL -> SSD_POOL
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 79, bandwidth = 7040580, seqness = 0.133431
+write iops = 589, bandwidth = 25689702, seqness = 0.170461
+hdd extent num = 1727, ssd extent num = 321, ssd ratio = 0.156738
+---------------Report---------------
+tend to hdd: 1685, tend to ssd: 363
+placement: 0 extent -> hdd pool, 9 extent -> ssd pool
+concurrent migration: extent id = 81 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 82 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 588 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 589 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 590 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1120 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1121 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1625 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1627 HDD_POOL -> SSD_POOL
+
+sleep 32 seconds
+
+handle
+---------------Report---------------
+read iops = 43, bandwidth = 3496695, seqness = 0.186441
+write iops = 327, bandwidth = 12809139, seqness = 0.173299
+hdd extent num = 1718, ssd extent num = 330, ssd ratio = 0.161133
+---------------Report---------------
+tend to hdd: 1682, tend to ssd: 366
+placement: 0 extent -> hdd pool, 16 extent -> ssd pool
+concurrent migration: extent id = 80 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 83 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 84 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 583 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 591 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 592 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 593 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 594 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 595 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 596 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1114 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1618 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1619 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1629 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1630 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1631 HDD_POOL -> SSD_POOL
+
+sleep 59 seconds
+
+handle
+---------------Report---------------
+read iops = 56, bandwidth = 5200076, seqness = 0.104517
+write iops = 420, bandwidth = 18494592, seqness = 0.128622
+hdd extent num = 1702, ssd extent num = 346, ssd ratio = 0.168945
+---------------Report---------------
+tend to hdd: 1681, tend to ssd: 367
+placement: 0 extent -> hdd pool, 16 extent -> ssd pool
+concurrent migration: extent id = 75 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 76 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 77 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+concurrent migration: extent id = 78 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 79 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 85 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 585 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 586 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1116 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1117 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1118 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1620 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1621 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1622 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1623 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1626 HDD_POOL -> SSD_POOL
+
+sleep 18 seconds
+
+handle
+---------------Report---------------
+read iops = 3, bandwidth = 210534, seqness = 0.276699
+write iops = 41, bandwidth = 1243588, seqness = 0.317666
+hdd extent num = 1686, ssd extent num = 362, ssd ratio = 0.176758
+---------------Report---------------
+tend to hdd: 1743, tend to ssd: 305
+placement: 1 extent -> hdd pool, 3 extent -> ssd pool
+concurrent migration: extent id = 1121 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 597 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1624 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1632 HDD_POOL -> SSD_POOL
+
+sleep 51 seconds
+
+handle
+---------------Report---------------
+read iops = 6, bandwidth = 596172, seqness = 0.173554
+write iops = 72, bandwidth = 2578141, seqness = 0.238237
+hdd extent num = 1684, ssd extent num = 364, ssd ratio = 0.177734
+---------------Report---------------
+tend to hdd: 1705, tend to ssd: 343
+placement: 2 extent -> hdd pool, 4 extent -> ssd pool
+concurrent migration: extent id = 82 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 84 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 599 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1119 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1628 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1633 HDD_POOL -> SSD_POOL
+during migrating, sleep one second and try again
+
+sleep 52 seconds
+
+handle
+---------------Report---------------
+read iops = 31, bandwidth = 3159816, seqness = 0.177895
+write iops = 279, bandwidth = 10656674, seqness = 0.193835
+hdd extent num = 1682, ssd extent num = 366, ssd ratio = 0.178711
+---------------Report---------------
+tend to hdd: 1689, tend to ssd: 359
+placement: 5 extent -> hdd pool, 1 extent -> ssd pool
+concurrent migration: extent id = 83 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1114 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1116 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1117 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1118 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 598 HDD_POOL -> SSD_POOL
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 54, bandwidth = 4494916, seqness = 0.171157
+write iops = 390, bandwidth = 16090743, seqness = 0.208408
+hdd extent num = 1686, ssd extent num = 362, ssd ratio = 0.176758
+---------------Report---------------
+tend to hdd: 1679, tend to ssd: 369
+placement: 0 extent -> hdd pool, 1 extent -> ssd pool
+concurrent migration: extent id = 600 HDD_POOL -> SSD_POOL
+
+sleep 60 seconds
+
+handle
+---------------Report---------------
+read iops = 67, bandwidth = 5583095, seqness = 0.131841
+write iops = 511, bandwidth = 21756194, seqness = 0.15885
+hdd extent num = 1685, ssd extent num = 363, ssd ratio = 0.177246
+---------------Report---------------
+tend to hdd: 1672, tend to ssd: 376
+placement: 0 extent -> hdd pool, 3 extent -> ssd pool
+concurrent migration: extent id = 1121 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1634 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1635 HDD_POOL -> SSD_POOL
+
+sleep 59 seconds
+qemu: terminating on signal 15 from pid 1659
+finalize WHOBBS
+restore to the default pool
+concurrent migration: extent id = 0 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 2 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 3 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 4 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 5 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 6 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 7 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 8 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 9 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 10 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 11 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 12 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 13 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 14 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 15 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 16 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 17 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 18 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 19 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 20 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 21 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 22 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 23 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 24 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 25 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 26 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 27 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 28 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 29 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 30 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 31 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 32 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 33 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 34 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 35 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 36 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 37 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 38 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 39 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 40 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 41 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 42 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 43 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 44 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 45 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 46 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 47 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 48 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 49 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 50 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 51 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 52 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 53 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 54 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 55 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 56 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 57 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 58 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 59 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 60 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 61 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 62 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 63 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 64 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 65 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 66 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 67 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 68 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 69 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 70 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 71 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 72 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 73 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 74 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 75 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 76 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 77 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 78 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 79 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 80 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 81 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 85 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 512 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 513 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 514 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 515 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 516 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 517 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 518 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 519 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 520 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 521 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 522 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 523 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 524 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 525 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 526 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 527 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 528 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 529 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 530 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 531 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 532 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 533 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 534 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 535 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 536 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 537 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 538 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 539 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 540 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 541 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 542 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 543 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 544 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 545 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 546 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 547 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 548 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 549 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 550 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 551 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 552 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 553 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 554 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 555 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 556 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 557 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 558 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 559 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 560 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 561 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 562 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 563 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 564 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 565 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 566 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 567 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 568 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 569 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 570 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 571 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 572 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 573 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 574 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 575 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 576 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 577 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 578 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 579 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 580 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 581 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 582 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 583 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 584 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 585 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 586 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 587 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 588 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 589 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 590 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 591 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 592 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 593 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 594 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 595 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 596 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 597 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 598 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 599 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 600 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1024 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1025 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1026 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1027 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1028 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1029 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1030 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1031 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1032 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1033 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1034 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1035 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1036 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1037 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1038 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1039 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1040 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1041 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1042 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1043 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1044 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1045 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1046 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1047 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1048 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1049 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1050 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1051 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1052 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1053 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1054 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1055 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1056 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1057 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1058 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1059 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1060 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1061 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1062 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1063 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1064 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1065 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1066 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1067 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1068 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1069 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1070 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1071 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1072 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1073 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1074 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1075 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1076 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1077 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1078 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1079 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1080 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1081 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1082 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1083 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1084 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1085 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1086 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1087 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1088 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1089 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1090 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1091 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1092 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1093 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1094 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1095 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1096 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1097 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1098 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1099 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1100 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1101 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1102 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1103 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1104 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1105 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1106 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1107 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1108 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1109 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1110 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1111 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1112 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1113 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1115 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1119 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1120 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1121 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1536 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1537 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1538 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1539 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1540 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1541 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1542 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1543 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1544 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1545 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1546 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1547 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1548 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1549 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1550 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1551 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1552 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1553 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1554 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1555 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1556 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1557 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1558 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1559 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1560 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1561 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1562 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1563 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1564 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1565 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1566 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1567 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1568 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1569 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1570 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1571 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1572 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1573 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1574 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1575 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1576 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1577 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1578 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1579 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1580 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1581 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1582 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1583 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1584 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1585 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1586 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1587 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1588 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1589 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1590 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1591 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1592 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1593 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1594 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1595 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1596 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1597 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1598 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1599 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1600 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1601 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1602 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1603 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1604 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1605 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1606 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1607 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1608 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1609 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1610 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1611 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1612 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1613 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1614 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1615 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1616 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1617 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1618 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1619 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1620 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1621 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1622 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1623 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1624 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1625 SSD_POOL -> HDD_POOL
+
+handle
+---------------Report---------------
+read iops = 56, bandwidth = 5167300, seqness = 0.165885
+write iops = 465, bandwidth = 19720823, seqness = 0.162636
+hdd extent num = 2037, ssd extent num = 11, ssd ratio = 0.00537109
+---------------Report---------------
+tend to hdd: 1665, tend to ssd: 383
+value is in violation!
+placement: 0 extent -> hdd pool, 4 extent -> ssd pool
+concurrent migration: extent id = 82 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1626 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 83 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1627 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1117 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1628 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1629 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1118 HDD_POOL -> SSD_POOL
+concurrent migration: extent id = 1630 SSD_POOL -> HDD_POOL
+
+sleep 59 seconds
+concurrent migration: extent id = 1631 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1632 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1633 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1634 SSD_POOL -> HDD_POOL
+concurrent migration: extent id = 1635 SSD_POOL -> HDD_POOL
+2014-03-19 00:32:44.500+0000: shutting down

@@ -1,0 +1,292 @@
+2014-03-18 01:39:49.515+0000: starting up
+LC_ALL=C PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin QEMU_AUDIO_DRV=none /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 32768 -realtime mlock=off -smp 8,sockets=8,cores=1,threads=1 -uuid 787a7ab1-4f1e-9bb6-1a40-1f760cd2dbb7 -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -device lsi,id=scsi0,bus=pci.0,addr=0x5 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:b7,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -vnc 127.0.0.1:0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+Domain id=65 is tainted: high-privileges
+char device redirected to /dev/pts/7 (label charserial0)
+initialize WHOBBS
+extent_map: map_size = 2048 ,extent_size = 67108864
+startAnalyzer
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 31, bandwidth = 4871133, seqness = 0.515168
+write iops = 273, bandwidth = 18929169, seqness = 0.405779
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1910, tend to ssd: 138
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 32, bandwidth = 7217868, seqness = 0.420301
+write iops = 245, bandwidth = 23254869, seqness = 0.325233
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1901, tend to ssd: 147
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 36, bandwidth = 8348057, seqness = 0.429459
+write iops = 255, bandwidth = 25754658, seqness = 0.347505
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1864, tend to ssd: 184
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 32, bandwidth = 7526502, seqness = 0.429583
+write iops = 249, bandwidth = 23883878, seqness = 0.331841
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1853, tend to ssd: 195
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 36, bandwidth = 7688704, seqness = 0.420379
+write iops = 263, bandwidth = 25455513, seqness = 0.323954
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1845, tend to ssd: 203
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 31, bandwidth = 6765943, seqness = 0.441695
+write iops = 259, bandwidth = 24626380, seqness = 0.343887
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1849, tend to ssd: 199
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 33, bandwidth = 7390139, seqness = 0.462546
+write iops = 255, bandwidth = 24049288, seqness = 0.33291
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1852, tend to ssd: 196
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 35, bandwidth = 8437828, seqness = 0.43446
+write iops = 262, bandwidth = 26756710, seqness = 0.329071
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1835, tend to ssd: 213
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 32, bandwidth = 6870220, seqness = 0.421093
+write iops = 260, bandwidth = 24070280, seqness = 0.307147
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1844, tend to ssd: 204
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 29, bandwidth = 6643131, seqness = 0.410314
+write iops = 236, bandwidth = 21355008, seqness = 0.308761
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1831, tend to ssd: 217
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 35, bandwidth = 7730961, seqness = 0.411206
+write iops = 259, bandwidth = 26071142, seqness = 0.309858
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1823, tend to ssd: 225
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 32, bandwidth = 7382801, seqness = 0.416944
+write iops = 238, bandwidth = 23279684, seqness = 0.312092
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1836, tend to ssd: 212
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 31, bandwidth = 7106082, seqness = 0.451545
+write iops = 235, bandwidth = 22522470, seqness = 0.347066
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1840, tend to ssd: 208
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 34, bandwidth = 8438545, seqness = 0.436671
+write iops = 238, bandwidth = 27601715, seqness = 0.350021
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1798, tend to ssd: 250
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 16, bandwidth = 4815667, seqness = 0.279211
+write iops = 216, bandwidth = 25325909, seqness = 0.186308
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1768, tend to ssd: 280
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 11, bandwidth = 3055718, seqness = 0.350189
+write iops = 172, bandwidth = 19212424, seqness = 0.265764
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1491, tend to ssd: 557
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 12, bandwidth = 1543918, seqness = 0.434496
+write iops = 253, bandwidth = 11455590, seqness = 0.306327
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1602, tend to ssd: 446
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 12, bandwidth = 1377348, seqness = 0.519711
+write iops = 244, bandwidth = 10921437, seqness = 0.313685
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1639, tend to ssd: 409
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 6, bandwidth = 706798, seqness = 0.45728
+write iops = 165, bandwidth = 7575415, seqness = 0.291991
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1333, tend to ssd: 715
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 8, bandwidth = 836983, seqness = 0.427419
+write iops = 186, bandwidth = 8307404, seqness = 0.292276
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1402, tend to ssd: 646
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 10, bandwidth = 1166097, seqness = 0.465154
+write iops = 204, bandwidth = 8696832, seqness = 0.3172
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1546, tend to ssd: 502
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 10, bandwidth = 1071547, seqness = 0.465698
+write iops = 221, bandwidth = 9858867, seqness = 0.298581
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1656, tend to ssd: 392
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 8, bandwidth = 942728, seqness = 0.443872
+write iops = 195, bandwidth = 9083357, seqness = 0.279918
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1470, tend to ssd: 578
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 8, bandwidth = 1132168, seqness = 0.46096
+write iops = 190, bandwidth = 8652663, seqness = 0.267505
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1426, tend to ssd: 622
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 11, bandwidth = 2073019, seqness = 0.310295
+write iops = 145, bandwidth = 7804142, seqness = 0.22016
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1570, tend to ssd: 478
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 14, bandwidth = 2784221, seqness = 0.307471
+write iops = 171, bandwidth = 8802338, seqness = 0.185189
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1451, tend to ssd: 597
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 14, bandwidth = 2384179, seqness = 0.293983
+write iops = 166, bandwidth = 7239748, seqness = 0.181186
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1470, tend to ssd: 578
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 12, bandwidth = 2054417, seqness = 0.322394
+write iops = 150, bandwidth = 6952550, seqness = 0.227509
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1542, tend to ssd: 506
+
+sleep 120 seconds
+qemu: terminating on signal 15 from pid 1659
+finalize WHOBBS
+restore to the default pool
+2014-03-18 02:36:02.811+0000: shutting down
