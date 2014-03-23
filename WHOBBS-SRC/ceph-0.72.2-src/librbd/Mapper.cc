@@ -30,18 +30,37 @@ namespace librbd {
     return num;
   }
 
-  int Mapper::get_pool(ExtentMap *extent_map_p, uint64_t off)
+  int Mapper::get_pool(string type, ExtentMap *extent_map_p, uint64_t off, uint64_t len)
   {
     uint64_t extent_id = off / extent_map_p->extent_size;
     int value = (extent_map_p->map)[extent_id];
     int pool = 0;
-    if(value < 0)
-      pool = HDD_POOL;
-    else if(value > 0)
-      pool = SSD_POOL;
-    else {
-      cout << "wrong value in extent map!" << std::endl;
+
+    // check if during migrating
+    if(value == MIGRATING_TO_SSD || value == MIGRATING_TO_HDD) {
+     /* if(type.compare("read")) { // read is allowed during migration
+        if(value == MIGRATING_TO_SSD)
+	  pool = HDD_POOL;
+	else
+	  pool = SSD_POOL;
+      } else { // write will be blocked during migration*/
+        pool = value;
+      //}
+    } else {
+      if(value < 0)
+        pool = HDD_POOL;
+      else if(value > 0)
+        pool = SSD_POOL;
+      else {
+        cout << "wrong value in extent map!" << std::endl;
+      }
     }
+
+    // check if cross two extents
+    uint64_t bound = (extent_id + 1) * extent_map_p->extent_size;
+    if((off + len) > bound)
+      cout << "cross the bound!!!" << std::endl;
+
     return pool;
   }
 

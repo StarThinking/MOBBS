@@ -2598,7 +2598,7 @@ reprotect_and_return_err:
 
     Context *ctx = new C_SafeCond(&mylock, &cond, &done, &ret);
     AioCompletion *c = aio_create_completion_internal(ctx, rbd_ctx_cb);
-    int r = aio_read(ictx, image_extents, buf, pbl, c, DEFAULT_POOL);
+    int r = aio_read(ictx, image_extents, buf, pbl, c);
     if (r < 0) {
       c->release();
       delete ctx;
@@ -2857,12 +2857,13 @@ reprotect_and_return_err:
 
   int aio_write(ImageCtx *ictx, uint64_t off, size_t len, const char *buf,
 		AioCompletion *c)
-  {
+ {
+    //cout << "aio_write off = " << off << ", len = " << len  << std::endl;
+
     time_t time = std::time(NULL);
     AnalyzerOp *op = new AnalyzerOp(WRITE_OP, time, off, len);
     ictx->analyzer->add_op(*op);
 
-    int pool = Mapper::get_pool(&(ictx->extent_map), off);
     CephContext *cct = ictx->cct;
     ldout(cct, 20) << "aio_write " << ictx << " off = " << off << " len = "
 		   << len << " buf = " << (void*)buf << dendl;
@@ -2922,6 +2923,20 @@ reprotect_and_return_err:
 			      p->objectno, 0, ictx->layout.fl_object_size,
 			      objectx);
 	uint64_t object_overlap = ictx->prune_parent_extents(objectx, overlap);
+
+        vector<pair<uint64_t, uint64_t> > file_extents;
+        Striper::extent_to_file(ictx->cct, &ictx->layout, p->objectno, p->offset, p->length, file_extents);
+        uint64_t file_offset = file_extents[0].first;
+        uint64_t file_len = file_extents[0].second;
+        int pool;
+        do {
+          pool = Mapper::get_pool("write", &(ictx->extent_map), file_offset, file_len);
+          if(pool != MIGRATING_TO_SSD && pool != MIGRATING_TO_HDD)
+            break;
+          else {
+            msleep(50);
+          }
+        } while(1);
 
 	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
@@ -3040,22 +3055,20 @@ reprotect_and_return_err:
 	       char *buf, bufferlist *bl,
 	       AioCompletion *c)
   {
+    //cout << "aio_read off = " << off << ", len = " << len  << std::endl;
     time_t time = std::time(NULL);
     AnalyzerOp *op = new AnalyzerOp(READ_OP, time, off, len);
     ictx->analyzer->add_op(*op);
 
-    int pool = Mapper::get_pool(&(ictx->extent_map), off);
-
     vector<pair<uint64_t,uint64_t> > image_extents(1);
     image_extents[0] = make_pair(off, len);
-    return aio_read(ictx, image_extents, buf, bl, c, pool);
+    return aio_read(ictx, image_extents, buf, bl, c);
   }
 
   int aio_read(ImageCtx *ictx, const vector<pair<uint64_t,uint64_t> >& image_extents,
-	       char *buf, bufferlist *pbl, AioCompletion *c, int pool)
+	       char *buf, bufferlist *pbl, AioCompletion *c)
   {
     ldout(ictx->cct, 20) << "aio_read " << ictx << " completion " << c << " " << image_extents << dendl;
-
     int r = ictx_check(ictx);
     if (r < 0)
       return r;
@@ -3093,6 +3106,21 @@ reprotect_and_return_err:
       for (vector<ObjectExtent>::iterator q = p->second.begin(); q != p->second.end(); ++q) {
 	ldout(ictx->cct, 20) << " oid " << q->oid << " " << q->offset << "~" << q->length
 			     << " from " << q->buffer_extents << dendl;
+       
+        vector<pair<uint64_t, uint64_t> > file_extents;
+        Striper::extent_to_file(ictx->cct, &ictx->layout, q->objectno, q->offset, q->length, file_extents);
+        uint64_t file_offset = file_extents[0].first;
+        uint64_t file_len = file_extents[0].second;
+
+        int pool;
+        do {
+          pool = Mapper::get_pool("read", &(ictx->extent_map), file_offset, file_len);
+          if(pool != MIGRATING_TO_SSD && pool != MIGRATING_TO_HDD)
+            break;
+          else {
+            msleep(50);
+          }
+        } while(1);
 
 	C_AioRead *req_comp = new C_AioRead(ictx->cct, c);
 	AioRead *req = new AioRead(ictx, pool, q->oid.name, 

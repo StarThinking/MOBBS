@@ -19,25 +19,16 @@ namespace librbd {
 
   void Migrater::do_concurrent_migrate(uint64_t extent_id, int from_pool, int to_pool)
   {
-    if(from_pool == HDD_POOL)
-      cout << "concurrent migration: extent id = " << extent_id << " "  << "HDD_POOL -> SSD_POOL" << std::endl;
-    else
-      cout << "concurrent migration: extent id = " << extent_id << " "  << "SSD_POOL -> HDD_POOL" << std::endl;
-
-    time_t begin_time = std::time(NULL);
+    //time_t begin_time = std::time(NULL);
+    pthread_t tid = pthread_self();
+    struct timeval tv_begin, tv_end;
+    gettimeofday(&tv_begin, NULL);
     int obj_num = EXTENT_SIZE / OBJECT_SIZE;
     uint64_t start_off = (extent_id * EXTENT_SIZE);
     int ret = 0;
    
-    /*librados::IoCtx io_ctx_from = ictx->data_ctx[SSD_POOL];
-    librados::IoCtx io_ctx_to = ictx->data_ctx[HDD_POOL];
-    if(from_pool == HDD_POOL) {
-      librados::IoCtx io_ctx_from = ictx->data_ctx[HDD_POOL];
-      librados::IoCtx io_ctx_to = ictx->data_ctx[SSD_POOL];
-    }*/
     librados::IoCtx io_ctx_from = ictx->data_ctx[from_pool];
     librados::IoCtx io_ctx_to = ictx->data_ctx[to_pool];
-
 
     std::map<object_t, uint64_t> obj_map;
     std::map<object_t, librados::bufferlist> buf_map;
@@ -53,11 +44,21 @@ namespace librbd {
       obj_map.insert(std::pair<object_t, uint64_t>(oid, off));
     }
 
+    // lock extent map
+    if(to_pool == SSD_POOL)
+      extent_map_p->map[extent_id] = MIGRATING_TO_SSD;
+    else
+      extent_map_p->map[extent_id] = MIGRATING_TO_HDD;
+    
+    // flush the aios towards the original pool
+    io_ctx_from.aio_flush();
+
     // reading
     for(std::map<object_t, uint64_t>::iterator it=obj_map.begin(); it!=obj_map.end(); it++) {
       // reading from from_pool
       librados::AioCompletion *read_completion = librados::Rados::aio_create_completion();
-      ret = io_ctx_from.aio_read((it->first).name, read_completion, &buf_map[it->first], OBJECT_SIZE, it->second);
+      //ret = io_ctx_from.aio_read((it->first).name, read_completion, &buf_map[it->first], OBJECT_SIZE, it->second);
+      ret = io_ctx_from.aio_read((it->first).name, read_completion, &buf_map[it->first], OBJECT_SIZE, 0);
       if(ret < 0) {
         std::cout << "couldn't start read object! error " << ret << std::endl;
       }
@@ -115,10 +116,18 @@ namespace librbd {
          std::cout << "couldn't remove object! error " << ret << std::endl;
       }
     }
-    time_t end_time = std::time(NULL);
-
-    //cout << "concurrent migration: extent id = " << extent_id << " "  
-     //   	<< "HDD_POOL -> SSD_POOL" << ", time = " << end_time - begin_time << std::endl;
+    //time_t end_time = std::time(NULL);
+    gettimeofday(&tv_end, NULL);
+    long time_used = 1000000 * (tv_end.tv_sec - tv_begin.tv_sec) + (tv_end.tv_usec - tv_begin.tv_usec); //us
+    time_used /= 1000; // ms
+   
+    if(from_pool == HDD_POOL)
+      cout << "tid = " << tid << ", concurrent migration: extent id = " << extent_id << " "  
+       	<< "HDD_POOL -> SSD_POOL" << ", time = " << time_used << " ms" << std::endl;
+    else
+      cout << "tid = " << tid << ", concurrent migration: extent id = " << extent_id << " "  
+       	<< "SSD_POOL -> HDD_POOL" << ", time = " << time_used << " ms" << std::endl;
+     
       
   }
 
@@ -135,6 +144,7 @@ namespace librbd {
       int r = clip_io(ictx, p->first, &len);
       if(r < 0)
         printf("clip_io error\n");
+      
       Striper::file_to_extents(ictx->cct, ictx->format_string, &(ictx->layout), p->first, len, 0, object_extents, buffer_ofs);
       buffer_ofs += len; 
     }
@@ -152,6 +162,22 @@ namespace librbd {
   void Migrater::restore_to_default_pool()
   {
     cout << "restore to the default pool" << std::endl;
+    
+    // waiting for migration finishing
+    bool migrating = true;
+    do{
+      std::map<uint64_t, int>::iterator it;
+      for(it=extent_map_p->map.begin(); it!=extent_map_p->map.end(); it++) {
+        if(it->second == MIGRATING_TO_SSD || it->second == MIGRATING_TO_HDD) {
+	  cout << "waiting for migration finishing before restoring, sleep 10 seconds" << std::endl;
+	  sleep(10);
+	  break;
+	}
+      }
+      if(it == extent_map_p->map.end()) 
+        migrating = false;
+    } while(migrating);
+
     if(DEFAULT_POOL == HDD_POOL) {
       for(std::map<uint64_t, int>::iterator it=extent_map_p->map.begin(); it!=extent_map_p->map.end(); it++) {
         if(it->second > 0) 

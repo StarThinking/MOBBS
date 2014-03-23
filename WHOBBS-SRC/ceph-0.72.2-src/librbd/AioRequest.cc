@@ -49,7 +49,7 @@ namespace librbd {
 			   << " extents " << image_extents
 			   << dendl;
     aio_read(m_ictx->parent, image_extents, NULL, &m_read_data,
-	     m_parent_completion, DEFAULT_POOL);
+	     m_parent_completion);
   }
 
   /** read **/

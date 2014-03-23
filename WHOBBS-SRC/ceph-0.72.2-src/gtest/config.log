@@ -507,7 +507,7 @@ configure: failed program was:
 configure:15237: result: no
 configure:15140: checking whether pthreads work without any flags
 configure:15228: gcc -o conftest -g -O2    conftest.c   >&5
-/tmp/ccvwEDVF.o: In function `main':
+/tmp/ccImufyA.o: In function `main':
 /root/Qemu_RBD/WHOBBS-SRC/ceph-0.72.2.WHOBBS/src/gtest/conftest.c:27: undefined reference to `pthread_join'
 /root/Qemu_RBD/WHOBBS-SRC/ceph-0.72.2.WHOBBS/src/gtest/conftest.c:28: undefined reference to `__pthread_register_cancel'
 /root/Qemu_RBD/WHOBBS-SRC/ceph-0.72.2.WHOBBS/src/gtest/conftest.c:29: undefined reference to `pthread_create'
