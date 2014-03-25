@@ -22,7 +22,7 @@ function clean() {
 	done
 }
 
-sleep_time=60
+sleep_time=120
 while true
 do
         clean

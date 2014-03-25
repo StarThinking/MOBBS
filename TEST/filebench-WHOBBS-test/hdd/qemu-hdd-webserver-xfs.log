@@ -1,0 +1,72 @@
+2014-03-24 22:58:52.975+0000: starting up
+LC_ALL=C PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin QEMU_AUDIO_DRV=none /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 4096 -realtime mlock=off -smp 2,sockets=2,cores=1,threads=1 -uuid 787a7ab1-4f1e-9bb6-1a40-1f760cd2dbb7 -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -device lsi,id=scsi0,bus=pci.0,addr=0x5 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:b7,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -vnc 127.0.0.1:0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+Domain id=180 is tainted: high-privileges
+char device redirected to /dev/pts/6 (label charserial0)
+initialize WHOBBS
+extent_map: map_size = 4096 ,extent_size = 33554432
+startAnalyzer
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 7, bandwidth = 11483246, seqness = 0.956763, avg latency = 1735260
+write iops = 55, bandwidth = 41278301, seqness = 0.923977, avg latency = 242587491
+hdd extent num = 4096, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 4024, tend to ssd: 72
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 6, bandwidth = 1142272, seqness = 0.344569, avg latency = 266063747
+write iops = 248, bandwidth = 14392584, seqness = 0.14208, avg latency = 411912853
+hdd extent num = 4096, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 3898, tend to ssd: 198
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 3, bandwidth = 147592, seqness = 0.230425, avg latency = 368411122
+write iops = 244, bandwidth = 11405508, seqness = 0.105691, avg latency = 390248985
+hdd extent num = 4096, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 3892, tend to ssd: 204
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 4, bandwidth = 102442, seqness = 0.214712, avg latency = 348732506
+write iops = 247, bandwidth = 10891874, seqness = 0.112043, avg latency = 387075798
+hdd extent num = 4096, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 3890, tend to ssd: 206
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 3, bandwidth = 64226, seqness = 0.248837, avg latency = 345111171
+write iops = 236, bandwidth = 10959441, seqness = 0.11539, avg latency = 426038157
+hdd extent num = 4096, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 3892, tend to ssd: 204
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 4, bandwidth = 82530, seqness = 0.263158, avg latency = 345986197
+write iops = 237, bandwidth = 10463859, seqness = 0.116989, avg latency = 408440247
+hdd extent num = 4096, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 3893, tend to ssd: 203
+
+sleep 120 seconds
+qemu: terminating on signal 15 from pid 1659
+finalize WHOBBS
+restore to the default pool
+2014-03-24 23:11:26.630+0000: shutting down

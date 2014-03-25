@@ -3,7 +3,7 @@
 
 echo "filebench test begin"
 
-pool=whobbs
+pool=hdd
 
 for workload in fileserver varmail webserver
 do 
@@ -19,7 +19,7 @@ do
 	ssh 192.168.122.53 "mkfs.xfs -f /dev/vdb"
 	ssh 192.168.122.53 "mount /dev/vdb /mnt"
 	ssh 192.168.122.53 "filebench -f /root/filebench_test/$workload.f" > ./filebench-"$pool-$workload"-xfs.log
-	sleep 2000
+	sleep 30
         virsh destroy Ubuntu
 	sleep 30
 	cp /usr/local/libvirt/var/log/libvirt/qemu/Ubuntu.log ./qemu-"$pool-$workload"-xfs.log
@@ -37,7 +37,7 @@ do
 	ssh 192.168.122.53 "mkfs.ext4 /dev/vdb"
 	ssh 192.168.122.53 "mount /dev/vdb /mnt"
 	ssh 192.168.122.53 "filebench -f /root/filebench_test/$workload.f" > ./filebench-"$pool-$workload"-ext4.log
-	sleep 2000
+	sleep 30
 	virsh destroy Ubuntu
 	sleep 30
 	cp /usr/local/libvirt/var/log/libvirt/qemu/Ubuntu.log ./qemu-"$pool-$workload"-ext4.log

@@ -41,13 +41,23 @@ namespace librbd {
     op_queue.push(op);
   }
 
+  void Analyzer::add_read_lat(utime_t elapsed) 
+  {
+    read_latency_queue.push(elapsed);
+  }
+
+  void Analyzer::add_write_lat(utime_t elapsed) 
+  {
+    write_latency_queue.push(elapsed);
+  }
+
   void Analyzer::handle()
   {
     cout << std::endl;
     cout << "handle" << std::endl;
 
     // create a report and print it
-    AnalyzerReport *report = create_report(extent_map_p, &op_queue);
+    AnalyzerReport *report = create_report(extent_map_p, &op_queue, &read_latency_queue, &write_latency_queue);
     report->print_report();
     
     // analyze the report by WHOBBS Placement Model
@@ -71,7 +81,7 @@ namespace librbd {
     cout << std::endl;
   }
 
-  AnalyzerReport* Analyzer::create_report(ExtentMap *extent_map_p, std::queue<AnalyzerOp> *op_queue)
+  AnalyzerReport* Analyzer::create_report(ExtentMap *extent_map_p, std::queue<AnalyzerOp> *op_queue, std::queue<utime_t> *read_latency_queue, std::queue<utime_t> *write_latency_queue)
   {
     std::map<uint64_t, uint64_t> read_score_map;
     std::map<uint64_t, uint64_t> write_score_map;
@@ -81,6 +91,8 @@ namespace librbd {
     uint64_t seq_writes = 0;
     uint64_t read_bytes = 0;
     uint64_t write_bytes = 0;
+    uint64_t read_avg_lat = 0;
+    uint64_t write_avg_lat = 0;
 
     uint64_t i;
     for(i=0; i < extent_map_p->map_size; i++) {
@@ -88,9 +100,9 @@ namespace librbd {
       write_score_map.insert(std::pair<uint64_t, uint64_t>(i, 0));
     }
 
-    uint64_t queue_size = op_queue->size();
+    uint64_t op_queue_size = op_queue->size();
     // creating the report
-    for(i=0; i < queue_size; i++) {
+    for(i=0; i < op_queue_size; i++) {
       AnalyzerOp op = op_queue->front();
       op_queue->pop();
 
@@ -125,7 +137,26 @@ namespace librbd {
       set_last_byte(off + len);
     }
 
-    AnalyzerReport *report = new AnalyzerReport(extent_map_p, read_score_map, write_score_map, ran_reads, ran_writes, seq_reads, seq_writes, read_bytes, write_bytes);   
+    // calculate average latency
+    uint64_t read_lat_queue_size = read_latency_queue->size();
+    uint64_t write_lat_queue_size = write_latency_queue->size();
+    for(i=0; i < read_lat_queue_size; i++) {
+      utime_t elapsed = read_latency_queue->front();
+      read_latency_queue->pop();
+      read_avg_lat += elapsed.to_nsec();
+    }
+    for(i=0; i < write_lat_queue_size; i++) {
+      utime_t elapsed = write_latency_queue->front();
+      write_latency_queue->pop();
+      write_avg_lat += elapsed.to_nsec();
+    }
+
+    if(read_lat_queue_size != 0)
+      read_avg_lat /= read_lat_queue_size;
+    if(write_lat_queue_size != 0)
+      write_avg_lat /= write_lat_queue_size;
+
+    AnalyzerReport *report = new AnalyzerReport(extent_map_p, read_score_map, write_score_map, ran_reads, ran_writes, seq_reads, seq_writes, read_bytes, write_bytes, read_avg_lat, write_avg_lat);   
     return report;
   }
 
@@ -270,8 +301,8 @@ namespace librbd {
   AnalyzerReport::AnalyzerReport()
   {}
 
-  AnalyzerReport::AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes) :
-  	extent_map_p(extent_map_p), read_score_map(read_score_map), write_score_map(write_score_map), ran_reads(ran_reads), ran_writes(ran_writes), seq_reads(seq_reads), seq_writes(seq_writes), read_bytes(read_bytes), write_bytes(write_bytes)
+  AnalyzerReport::AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat) :
+  	extent_map_p(extent_map_p), read_score_map(read_score_map), write_score_map(write_score_map), ran_reads(ran_reads), ran_writes(ran_writes), seq_reads(seq_reads), seq_writes(seq_writes), read_bytes(read_bytes), write_bytes(write_bytes), read_avg_lat(read_avg_lat), write_avg_lat(write_avg_lat)
   {}
 
   void AnalyzerReport::print_report()
@@ -283,9 +314,11 @@ namespace librbd {
     uint64_t hdd_extent_num = Mapper::hdd_extent_num(extent_map_p);
     double ssd_ratio = (double)ssd_extent_num / ((double)ssd_extent_num + (double)hdd_extent_num);
     cout << "read iops = " << (ran_reads + seq_reads) / INTERVAL << ", bandwidth = "
-    	<< read_bytes / INTERVAL << ", seqness = " << read_seqness << std::endl;
+    	<< read_bytes / INTERVAL << ", seqness = " << read_seqness  
+	<< ", avg latency = " << read_avg_lat << std::endl;
     cout << "write iops = " << (ran_writes + seq_writes) / INTERVAL << ", bandwidth = "
-    	<< write_bytes / INTERVAL << ", seqness = " << write_seqness << std::endl;
+    	<< write_bytes / INTERVAL << ", seqness = " << write_seqness 
+	<< ", avg latency = " << write_avg_lat << std::endl;
     cout << "hdd extent num = " << hdd_extent_num << ", ssd extent num = " << ssd_extent_num
     	<< ", ssd ratio = " << ssd_ratio << std::endl;
     cout << "---------------Report---------------" << std::endl;
