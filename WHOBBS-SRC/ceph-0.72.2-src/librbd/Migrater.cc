@@ -9,18 +9,56 @@
 
 #include <ctime>
 
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <dlfcn.h>
+
 #include "librbd/Migrater.h"
 
 namespace librbd {
 
   Migrater::Migrater(ExtentMap *extent_map_p, ImageCtx *ictx) :
-    extent_map_p(extent_map_p), ictx(ictx)
+    extent_map_p(extent_map_p), ictx(ictx), migrating(false), to_finilize(false)
   {}
+
+  /*extern "C" int osd_migrate()
+  {
+    char *argv[] = {"hello"};
+    if(execl("./migrater/TutorialClient", argv[0], NULL) < 0) {
+      printf("execl error\n");
+    }
+    return 0;
+  }
+
+  int Migrater::do_osd_migrate(uint64_t extent_id, int from_pool, int to_pool)
+  {
+    printf("do_osd_migrate\n");
+    pid_t pid;
+    pid = fork();
+    if(pid < 0) {
+      printf("fork error!\n");
+      return -1;
+    } else if(pid == 0) {
+        printf("in son pthread\n");
+	osd_migrate();
+    } else {
+      wait(NULL);
+    }
+    return 0;
+  }*/
 
   void Migrater::do_concurrent_migrate(uint64_t extent_id, int from_pool, int to_pool)
   {
-    //time_t begin_time = std::time(NULL);
     pthread_t tid = pthread_self();
+    if(from_pool == HDD_POOL)
+      cout << "tid = " << tid << ", concurrent migration: extent id = " << extent_id << " "  
+       	<< "HDD_POOL -> SSD_POOL" << std::endl;
+    else
+      cout << "tid = " << tid << ", concurrent migration: extent id = " << extent_id << " "  
+       	<< "SSD_POOL -> HDD_POOL" << std::endl;
+
+    //time_t begin_time = std::time(NULL);
     struct timeval tv_begin, tv_end;
     gettimeofday(&tv_begin, NULL);
     int obj_num = EXTENT_SIZE / OBJECT_SIZE;
@@ -40,7 +78,7 @@ namespace librbd {
     for(int i = 0; i < obj_num; i++) {
       uint64_t off = start_off + OBJECT_SIZE * i;
       object_t oid = map_object(off);
-      //cout << "oid = " << oid << std::endl;
+      cout << "migration oid = " << oid << std::endl;;
       obj_map.insert(std::pair<object_t, uint64_t>(oid, off));
     }
 
@@ -52,6 +90,7 @@ namespace librbd {
     
     // flush the aios towards the original pool
     io_ctx_from.aio_flush();
+
 
     // reading
     for(std::map<object_t, uint64_t>::iterator it=obj_map.begin(); it!=obj_map.end(); it++) {
@@ -116,6 +155,7 @@ namespace librbd {
          std::cout << "couldn't remove object! error " << ret << std::endl;
       }
     }
+    
     //time_t end_time = std::time(NULL);
     gettimeofday(&tv_end, NULL);
     long time_used = 1000000 * (tv_end.tv_sec - tv_begin.tv_sec) + (tv_end.tv_usec - tv_begin.tv_usec); //us
@@ -127,8 +167,7 @@ namespace librbd {
     else
       cout << "tid = " << tid << ", concurrent migration: extent id = " << extent_id << " "  
        	<< "SSD_POOL -> HDD_POOL" << ", time = " << time_used << " ms" << std::endl;
-     
-      
+    
   }
 
   
@@ -158,9 +197,20 @@ namespace librbd {
     printf("mapping error\n");
     return NULL;
   }
-  
+
+  bool Migrater::get_migrating()
+  {
+    return migrating;
+  }
+
+  void Migrater::set_migrating(bool _migrating)
+  {
+    migrating = _migrating;
+  }
+
   void Migrater::restore_to_default_pool()
   {
+    // wrong logical!!!!!!
     cout << "restore to the default pool" << std::endl;
     
     // waiting for migration finishing

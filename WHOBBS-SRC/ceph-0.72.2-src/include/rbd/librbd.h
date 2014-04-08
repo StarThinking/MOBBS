@@ -103,7 +103,7 @@ int rbd_remove_with_progress(rados_ioctx_t io, const char *name,
 			     librbd_progress_fn_t cb, void *cbdata);
 int rbd_rename(rados_ioctx_t src_io_ctx, const char *srcname, const char *destname);
 
-int rbd_open(rados_ioctx_t io0, rados_ioctx_t io1, const char *name, rbd_image_t *image, const char *snap_name);
+int rbd_open(rados_ioctx_t io0, rados_ioctx_t io1,  const char *name, rbd_image_t *image, const char *snap_name);
 
 /**
  * Open an image in read-only mode.

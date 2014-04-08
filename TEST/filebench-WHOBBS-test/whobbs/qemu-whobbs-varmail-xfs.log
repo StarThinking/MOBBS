@@ -1,0 +1,1520 @@
+2014-03-28 03:23:44.071+0000: starting up
+LC_ALL=C PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin QEMU_AUDIO_DRV=none /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 4096 -realtime mlock=off -smp 2,sockets=2,cores=1,threads=1 -uuid 787a7ab1-4f1e-9bb6-1a40-1f760cd2dbb7 -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -device lsi,id=scsi0,bus=pci.0,addr=0x5 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:b7,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -vnc 127.0.0.1:0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+Domain id=209 is tainted: high-privileges
+char device redirected to /dev/pts/6 (label charserial0)
+initialize WHOBBS
+extent_map: map_size = 2048 ,extent_size = 33554432
+startAnalyzer
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 11, bandwidth = 9110088, seqness = 0.865289, avg latency = 6080080
+write iops = 107, bandwidth = 26802547, seqness = 0.890134, avg latency = 156056492
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1935, tend to ssd: 113
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 19, bandwidth = 10973836, seqness = 0.830085, avg latency = 82651600
+write iops = 176, bandwidth = 37343893, seqness = 0.855651, avg latency = 132835555
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1853, tend to ssd: 195
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 18, bandwidth = 9782660, seqness = 0.827633, avg latency = 101478041
+write iops = 189, bandwidth = 35158216, seqness = 0.852423, avg latency = 129186641
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1880, tend to ssd: 168
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 6, bandwidth = 1524305, seqness = 0.752343, avg latency = 41397605
+write iops = 156, bandwidth = 5961920, seqness = 0.587642, avg latency = 87029706
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1750, tend to ssd: 298
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 4, bandwidth = 38297, seqness = 0.607921, avg latency = 44629841
+write iops = 154, bandwidth = 1747118, seqness = 0.496875, avg latency = 68765592
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 1766, tend to ssd: 282
+placement: 0 extent -> hdd pool, 9 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 0 HDD_POOL -> SSD_POOL, time = 2027 ms
+tid = 140252213659392, concurrent migration: extent id = 512 HDD_POOL -> SSD_POOL, time = 672 ms
+tid = 140252213659392, concurrent migration: extent id = 1024 HDD_POOL -> SSD_POOL, time = 353 ms
+tid = 140252213659392, concurrent migration: extent id = 1025 HDD_POOL -> SSD_POOL, time = 561 ms
+tid = 140252213659392, concurrent migration: extent id = 1027 HDD_POOL -> SSD_POOL, time = 580 ms
+tid = 140252213659392, concurrent migration: extent id = 1029 HDD_POOL -> SSD_POOL, time = 575 ms
+tid = 140252213659392, concurrent migration: extent id = 1030 HDD_POOL -> SSD_POOL, time = 604 ms
+tid = 140252213659392, concurrent migration: extent id = 1032 HDD_POOL -> SSD_POOL, time = 501 ms
+tid = 140252213659392, concurrent migration: extent id = 1536 HDD_POOL -> SSD_POOL, time = 893 ms
+
+sleep 113 seconds
+
+handle
+---------------Report---------------
+read iops = 7, bandwidth = 69435, seqness = 0.633298, avg latency = 49057505
+write iops = 193, bandwidth = 2244023, seqness = 0.527313, avg latency = 76173144
+hdd extent num = 2039, ssd extent num = 9, ssd ratio = 0.00439453
+---------------Report---------------
+tend to hdd: 1760, tend to ssd: 288
+placement: 0 extent -> hdd pool, 9 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1183 HDD_POOL -> SSD_POOL, time = 838 ms
+tid = 140252213659392, concurrent migration: extent id = 1189 HDD_POOL -> SSD_POOL, time = 830 ms
+tid = 140252213659392, concurrent migration: extent id = 1190 HDD_POOL -> SSD_POOL, time = 631 ms
+tid = 140252213659392, concurrent migration: extent id = 1191 HDD_POOL -> SSD_POOL, time = 588 ms
+tid = 140252213659392, concurrent migration: extent id = 1192 HDD_POOL -> SSD_POOL, time = 512 ms
+tid = 140252213659392, concurrent migration: extent id = 1193 HDD_POOL -> SSD_POOL, time = 493 ms
+tid = 140252213659392, concurrent migration: extent id = 1194 HDD_POOL -> SSD_POOL, time = 724 ms
+tid = 140252213659392, concurrent migration: extent id = 1195 HDD_POOL -> SSD_POOL, time = 441 ms
+tid = 140252213659392, concurrent migration: extent id = 1537 HDD_POOL -> SSD_POOL, time = 845 ms
+
+sleep 114 seconds
+
+handle
+---------------Report---------------
+read iops = 8, bandwidth = 75852, seqness = 0.610611, avg latency = 44092484
+write iops = 216, bandwidth = 2554615, seqness = 0.527836, avg latency = 103273449
+hdd extent num = 2030, ssd extent num = 18, ssd ratio = 0.00878906
+---------------Report---------------
+tend to hdd: 1757, tend to ssd: 291
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1031 HDD_POOL -> SSD_POOL, time = 2015 ms
+tid = 140252213659392, concurrent migration: extent id = 1041 HDD_POOL -> SSD_POOL, time = 1268 ms
+tid = 140252213659392, concurrent migration: extent id = 1042 HDD_POOL -> SSD_POOL, time = 626 ms
+tid = 140252213659392, concurrent migration: extent id = 1196 HDD_POOL -> SSD_POOL, time = 1775 ms
+tid = 140252213659392, concurrent migration: extent id = 1197 HDD_POOL -> SSD_POOL, time = 440 ms
+tid = 140252213659392, concurrent migration: extent id = 1198 HDD_POOL -> SSD_POOL, time = 611 ms
+tid = 140252213659392, concurrent migration: extent id = 1199 HDD_POOL -> SSD_POOL, time = 674 ms
+tid = 140252213659392, concurrent migration: extent id = 1200 HDD_POOL -> SSD_POOL, time = 803 ms
+tid = 140252213659392, concurrent migration: extent id = 1201 HDD_POOL -> SSD_POOL, time = 867 ms
+tid = 140252213659392, concurrent migration: extent id = 1202 HDD_POOL -> SSD_POOL, time = 859 ms
+tid = 140252213659392, concurrent migration: extent id = 1203 HDD_POOL -> SSD_POOL, time = 468 ms
+tid = 140252213659392, concurrent migration: extent id = 1204 HDD_POOL -> SSD_POOL, time = 568 ms
+tid = 140252213659392, concurrent migration: extent id = 1205 HDD_POOL -> SSD_POOL, time = 1072 ms
+tid = 140252213659392, concurrent migration: extent id = 1206 HDD_POOL -> SSD_POOL, time = 1331 ms
+tid = 140252213659392, concurrent migration: extent id = 1207 HDD_POOL -> SSD_POOL, time = 964 ms
+tid = 140252213659392, concurrent migration: extent id = 1208 HDD_POOL -> SSD_POOL, time = 536 ms
+tid = 140252213659392, concurrent migration: extent id = 1210 HDD_POOL -> SSD_POOL, time = 901 ms
+tid = 140252213659392, concurrent migration: extent id = 1211 HDD_POOL -> SSD_POOL, time = 2261 ms
+tid = 140252213659392, concurrent migration: extent id = 1212 HDD_POOL -> SSD_POOL, time = 1026 ms
+tid = 140252213659392, concurrent migration: extent id = 1213 HDD_POOL -> SSD_POOL, time = 727 ms
+tid = 140252213659392, concurrent migration: extent id = 1214 HDD_POOL -> SSD_POOL, time = 811 ms
+tid = 140252213659392, concurrent migration: extent id = 1215 HDD_POOL -> SSD_POOL, time = 888 ms
+tid = 140252213659392, concurrent migration: extent id = 1216 HDD_POOL -> SSD_POOL, time = 817 ms
+tid = 140252213659392, concurrent migration: extent id = 1217 HDD_POOL -> SSD_POOL, time = 616 ms
+tid = 140252213659392, concurrent migration: extent id = 1218 HDD_POOL -> SSD_POOL, time = 553 ms
+tid = 140252213659392, concurrent migration: extent id = 1219 HDD_POOL -> SSD_POOL, time = 776 ms
+tid = 140252213659392, concurrent migration: extent id = 1220 HDD_POOL -> SSD_POOL, time = 491 ms
+tid = 140252213659392, concurrent migration: extent id = 1221 HDD_POOL -> SSD_POOL, time = 590 ms
+tid = 140252213659392, concurrent migration: extent id = 1222 HDD_POOL -> SSD_POOL, time = 588 ms
+tid = 140252213659392, concurrent migration: extent id = 1223 HDD_POOL -> SSD_POOL, time = 926 ms
+tid = 140252213659392, concurrent migration: extent id = 1224 HDD_POOL -> SSD_POOL, time = 580 ms
+tid = 140252213659392, concurrent migration: extent id = 1225 HDD_POOL -> SSD_POOL, time = 1677 ms
+tid = 140252213659392, concurrent migration: extent id = 1226 HDD_POOL -> SSD_POOL, time = 1074 ms
+tid = 140252213659392, concurrent migration: extent id = 1228 HDD_POOL -> SSD_POOL, time = 773 ms
+tid = 140252213659392, concurrent migration: extent id = 1229 HDD_POOL -> SSD_POOL, time = 541 ms
+tid = 140252213659392, concurrent migration: extent id = 1230 HDD_POOL -> SSD_POOL, time = 1075 ms
+tid = 140252213659392, concurrent migration: extent id = 1231 HDD_POOL -> SSD_POOL, time = 762 ms
+tid = 140252213659392, concurrent migration: extent id = 1232 HDD_POOL -> SSD_POOL, time = 1684 ms
+tid = 140252213659392, concurrent migration: extent id = 1233 HDD_POOL -> SSD_POOL, time = 777 ms
+tid = 140252213659392, concurrent migration: extent id = 1234 HDD_POOL -> SSD_POOL, time = 1061 ms
+tid = 140252213659392, concurrent migration: extent id = 1235 HDD_POOL -> SSD_POOL, time = 520 ms
+tid = 140252213659392, concurrent migration: extent id = 1236 HDD_POOL -> SSD_POOL, time = 552 ms
+tid = 140252213659392, concurrent migration: extent id = 1237 HDD_POOL -> SSD_POOL, time = 445 ms
+tid = 140252213659392, concurrent migration: extent id = 1238 HDD_POOL -> SSD_POOL, time = 1119 ms
+tid = 140252213659392, concurrent migration: extent id = 1239 HDD_POOL -> SSD_POOL, time = 648 ms
+tid = 140252213659392, concurrent migration: extent id = 1240 HDD_POOL -> SSD_POOL, time = 575 ms
+tid = 140252213659392, concurrent migration: extent id = 1241 HDD_POOL -> SSD_POOL, time = 913 ms
+tid = 140252213659392, concurrent migration: extent id = 1242 HDD_POOL -> SSD_POOL, time = 697 ms
+tid = 140252213659392, concurrent migration: extent id = 1243 HDD_POOL -> SSD_POOL, time = 1234 ms
+tid = 140252213659392, concurrent migration: extent id = 1244 HDD_POOL -> SSD_POOL, time = 1534 ms
+tid = 140252213659392, concurrent migration: extent id = 1245 HDD_POOL -> SSD_POOL, time = 1160 ms
+tid = 140252213659392, concurrent migration: extent id = 1246 HDD_POOL -> SSD_POOL, time = 1718 ms
+tid = 140252213659392, concurrent migration: extent id = 1247 HDD_POOL -> SSD_POOL, time = 1269 ms
+tid = 140252213659392, concurrent migration: extent id = 1248 HDD_POOL -> SSD_POOL, time = 1190 ms
+tid = 140252213659392, concurrent migration: extent id = 1249 HDD_POOL -> SSD_POOL, time = 2184 ms
+tid = 140252213659392, concurrent migration: extent id = 1250 HDD_POOL -> SSD_POOL, time = 1418 ms
+
+sleep 66 seconds
+
+handle
+---------------Report---------------
+read iops = 9, bandwidth = 91490, seqness = 0.639149, avg latency = 56415023
+write iops = 232, bandwidth = 2818496, seqness = 0.534794, avg latency = 86640536
+hdd extent num = 1974, ssd extent num = 74, ssd ratio = 0.0361328
+---------------Report---------------
+tend to hdd: 1752, tend to ssd: 296
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 683 HDD_POOL -> SSD_POOL, time = 808 ms
+tid = 140252213659392, concurrent migration: extent id = 1026 HDD_POOL -> SSD_POOL, time = 3184 ms
+tid = 140252213659392, concurrent migration: extent id = 1028 HDD_POOL -> SSD_POOL, time = 799 ms
+tid = 140252213659392, concurrent migration: extent id = 1033 HDD_POOL -> SSD_POOL, time = 721 ms
+tid = 140252213659392, concurrent migration: extent id = 1034 HDD_POOL -> SSD_POOL, time = 817 ms
+tid = 140252213659392, concurrent migration: extent id = 1035 HDD_POOL -> SSD_POOL, time = 2036 ms
+tid = 140252213659392, concurrent migration: extent id = 1036 HDD_POOL -> SSD_POOL, time = 697 ms
+tid = 140252213659392, concurrent migration: extent id = 1037 HDD_POOL -> SSD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 1038 HDD_POOL -> SSD_POOL, time = 586 ms
+tid = 140252213659392, concurrent migration: extent id = 1039 HDD_POOL -> SSD_POOL, time = 643 ms
+tid = 140252213659392, concurrent migration: extent id = 1040 HDD_POOL -> SSD_POOL, time = 556 ms
+tid = 140252213659392, concurrent migration: extent id = 1043 HDD_POOL -> SSD_POOL, time = 707 ms
+tid = 140252213659392, concurrent migration: extent id = 1044 HDD_POOL -> SSD_POOL, time = 1123 ms
+tid = 140252213659392, concurrent migration: extent id = 1045 HDD_POOL -> SSD_POOL, time = 913 ms
+tid = 140252213659392, concurrent migration: extent id = 1046 HDD_POOL -> SSD_POOL, time = 510 ms
+tid = 140252213659392, concurrent migration: extent id = 1047 HDD_POOL -> SSD_POOL, time = 1076 ms
+tid = 140252213659392, concurrent migration: extent id = 1048 HDD_POOL -> SSD_POOL, time = 1338 ms
+tid = 140252213659392, concurrent migration: extent id = 1049 HDD_POOL -> SSD_POOL, time = 750 ms
+tid = 140252213659392, concurrent migration: extent id = 1050 HDD_POOL -> SSD_POOL, time = 859 ms
+tid = 140252213659392, concurrent migration: extent id = 1051 HDD_POOL -> SSD_POOL, time = 897 ms
+tid = 140252213659392, concurrent migration: extent id = 1052 HDD_POOL -> SSD_POOL, time = 1690 ms
+tid = 140252213659392, concurrent migration: extent id = 1053 HDD_POOL -> SSD_POOL, time = 712 ms
+tid = 140252213659392, concurrent migration: extent id = 1054 HDD_POOL -> SSD_POOL, time = 638 ms
+tid = 140252213659392, concurrent migration: extent id = 1055 HDD_POOL -> SSD_POOL, time = 1375 ms
+tid = 140252213659392, concurrent migration: extent id = 1056 HDD_POOL -> SSD_POOL, time = 722 ms
+tid = 140252213659392, concurrent migration: extent id = 1057 HDD_POOL -> SSD_POOL, time = 1123 ms
+tid = 140252213659392, concurrent migration: extent id = 1058 HDD_POOL -> SSD_POOL, time = 963 ms
+tid = 140252213659392, concurrent migration: extent id = 1059 HDD_POOL -> SSD_POOL, time = 1197 ms
+tid = 140252213659392, concurrent migration: extent id = 1060 HDD_POOL -> SSD_POOL, time = 749 ms
+tid = 140252213659392, concurrent migration: extent id = 1061 HDD_POOL -> SSD_POOL, time = 1720 ms
+tid = 140252213659392, concurrent migration: extent id = 1062 HDD_POOL -> SSD_POOL, time = 521 ms
+tid = 140252213659392, concurrent migration: extent id = 1063 HDD_POOL -> SSD_POOL, time = 1154 ms
+tid = 140252213659392, concurrent migration: extent id = 1064 HDD_POOL -> SSD_POOL, time = 1088 ms
+tid = 140252213659392, concurrent migration: extent id = 1065 HDD_POOL -> SSD_POOL, time = 1023 ms
+tid = 140252213659392, concurrent migration: extent id = 1066 HDD_POOL -> SSD_POOL, time = 1034 ms
+tid = 140252213659392, concurrent migration: extent id = 1067 HDD_POOL -> SSD_POOL, time = 1159 ms
+tid = 140252213659392, concurrent migration: extent id = 1068 HDD_POOL -> SSD_POOL, time = 737 ms
+tid = 140252213659392, concurrent migration: extent id = 1069 HDD_POOL -> SSD_POOL, time = 851 ms
+tid = 140252213659392, concurrent migration: extent id = 1070 HDD_POOL -> SSD_POOL, time = 1057 ms
+tid = 140252213659392, concurrent migration: extent id = 1071 HDD_POOL -> SSD_POOL, time = 925 ms
+tid = 140252213659392, concurrent migration: extent id = 1072 HDD_POOL -> SSD_POOL, time = 1469 ms
+tid = 140252213659392, concurrent migration: extent id = 1073 HDD_POOL -> SSD_POOL, time = 1497 ms
+tid = 140252213659392, concurrent migration: extent id = 1074 HDD_POOL -> SSD_POOL, time = 1643 ms
+tid = 140252213659392, concurrent migration: extent id = 1075 HDD_POOL -> SSD_POOL, time = 1367 ms
+tid = 140252213659392, concurrent migration: extent id = 1076 HDD_POOL -> SSD_POOL, time = 1018 ms
+tid = 140252213659392, concurrent migration: extent id = 1077 HDD_POOL -> SSD_POOL, time = 1801 ms
+tid = 140252213659392, concurrent migration: extent id = 1078 HDD_POOL -> SSD_POOL, time = 1822 ms
+tid = 140252213659392, concurrent migration: extent id = 1079 HDD_POOL -> SSD_POOL, time = 567 ms
+tid = 140252213659392, concurrent migration: extent id = 1080 HDD_POOL -> SSD_POOL, time = 1228 ms
+tid = 140252213659392, concurrent migration: extent id = 1081 HDD_POOL -> SSD_POOL, time = 1189 ms
+tid = 140252213659392, concurrent migration: extent id = 1082 HDD_POOL -> SSD_POOL, time = 948 ms
+tid = 140252213659392, concurrent migration: extent id = 1083 HDD_POOL -> SSD_POOL, time = 1568 ms
+tid = 140252213659392, concurrent migration: extent id = 1084 HDD_POOL -> SSD_POOL, time = 1215 ms
+tid = 140252213659392, concurrent migration: extent id = 1085 HDD_POOL -> SSD_POOL, time = 1314 ms
+tid = 140252213659392, concurrent migration: extent id = 1086 HDD_POOL -> SSD_POOL, time = 1000 ms
+tid = 140252213659392, concurrent migration: extent id = 1087 HDD_POOL -> SSD_POOL, time = 1276 ms
+
+sleep 57 seconds
+
+handle
+---------------Report---------------
+read iops = 6, bandwidth = 55121, seqness = 0.54918, avg latency = 38121555
+write iops = 136, bandwidth = 1734651, seqness = 0.507999, avg latency = 46064420
+hdd extent num = 1918, ssd extent num = 130, ssd ratio = 0.0634766
+---------------Report---------------
+tend to hdd: 1755, tend to ssd: 293
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1088 HDD_POOL -> SSD_POOL, time = 841 ms
+tid = 140252213659392, concurrent migration: extent id = 1089 HDD_POOL -> SSD_POOL, time = 1337 ms
+tid = 140252213659392, concurrent migration: extent id = 1090 HDD_POOL -> SSD_POOL, time = 2053 ms
+tid = 140252213659392, concurrent migration: extent id = 1091 HDD_POOL -> SSD_POOL, time = 495 ms
+tid = 140252213659392, concurrent migration: extent id = 1092 HDD_POOL -> SSD_POOL, time = 1142 ms
+tid = 140252213659392, concurrent migration: extent id = 1093 HDD_POOL -> SSD_POOL, time = 1174 ms
+tid = 140252213659392, concurrent migration: extent id = 1094 HDD_POOL -> SSD_POOL, time = 538 ms
+tid = 140252213659392, concurrent migration: extent id = 1095 HDD_POOL -> SSD_POOL, time = 824 ms
+tid = 140252213659392, concurrent migration: extent id = 1096 HDD_POOL -> SSD_POOL, time = 1254 ms
+tid = 140252213659392, concurrent migration: extent id = 1097 HDD_POOL -> SSD_POOL, time = 672 ms
+tid = 140252213659392, concurrent migration: extent id = 1098 HDD_POOL -> SSD_POOL, time = 1056 ms
+tid = 140252213659392, concurrent migration: extent id = 1099 HDD_POOL -> SSD_POOL, time = 884 ms
+tid = 140252213659392, concurrent migration: extent id = 1100 HDD_POOL -> SSD_POOL, time = 944 ms
+tid = 140252213659392, concurrent migration: extent id = 1101 HDD_POOL -> SSD_POOL, time = 937 ms
+tid = 140252213659392, concurrent migration: extent id = 1102 HDD_POOL -> SSD_POOL, time = 947 ms
+tid = 140252213659392, concurrent migration: extent id = 1103 HDD_POOL -> SSD_POOL, time = 959 ms
+tid = 140252213659392, concurrent migration: extent id = 1104 HDD_POOL -> SSD_POOL, time = 623 ms
+tid = 140252213659392, concurrent migration: extent id = 1105 HDD_POOL -> SSD_POOL, time = 599 ms
+tid = 140252213659392, concurrent migration: extent id = 1106 HDD_POOL -> SSD_POOL, time = 773 ms
+tid = 140252213659392, concurrent migration: extent id = 1107 HDD_POOL -> SSD_POOL, time = 929 ms
+tid = 140252213659392, concurrent migration: extent id = 1108 HDD_POOL -> SSD_POOL, time = 1102 ms
+tid = 140252213659392, concurrent migration: extent id = 1109 HDD_POOL -> SSD_POOL, time = 922 ms
+tid = 140252213659392, concurrent migration: extent id = 1110 HDD_POOL -> SSD_POOL, time = 806 ms
+tid = 140252213659392, concurrent migration: extent id = 1111 HDD_POOL -> SSD_POOL, time = 754 ms
+tid = 140252213659392, concurrent migration: extent id = 1112 HDD_POOL -> SSD_POOL, time = 1219 ms
+tid = 140252213659392, concurrent migration: extent id = 1113 HDD_POOL -> SSD_POOL, time = 1166 ms
+tid = 140252213659392, concurrent migration: extent id = 1114 HDD_POOL -> SSD_POOL, time = 1441 ms
+tid = 140252213659392, concurrent migration: extent id = 1115 HDD_POOL -> SSD_POOL, time = 1312 ms
+tid = 140252213659392, concurrent migration: extent id = 1116 HDD_POOL -> SSD_POOL, time = 2033 ms
+tid = 140252213659392, concurrent migration: extent id = 1117 HDD_POOL -> SSD_POOL, time = 2155 ms
+tid = 140252213659392, concurrent migration: extent id = 1118 HDD_POOL -> SSD_POOL, time = 2302 ms
+tid = 140252213659392, concurrent migration: extent id = 1119 HDD_POOL -> SSD_POOL, time = 1722 ms
+tid = 140252213659392, concurrent migration: extent id = 1120 HDD_POOL -> SSD_POOL, time = 1184 ms
+tid = 140252213659392, concurrent migration: extent id = 1121 HDD_POOL -> SSD_POOL, time = 2018 ms
+tid = 140252213659392, concurrent migration: extent id = 1122 HDD_POOL -> SSD_POOL, time = 938 ms
+tid = 140252213659392, concurrent migration: extent id = 1123 HDD_POOL -> SSD_POOL, time = 1281 ms
+tid = 140252213659392, concurrent migration: extent id = 1124 HDD_POOL -> SSD_POOL, time = 1321 ms
+tid = 140252213659392, concurrent migration: extent id = 1125 HDD_POOL -> SSD_POOL, time = 655 ms
+tid = 140252213659392, concurrent migration: extent id = 1126 HDD_POOL -> SSD_POOL, time = 647 ms
+tid = 140252213659392, concurrent migration: extent id = 1127 HDD_POOL -> SSD_POOL, time = 822 ms
+tid = 140252213659392, concurrent migration: extent id = 1128 HDD_POOL -> SSD_POOL, time = 707 ms
+tid = 140252213659392, concurrent migration: extent id = 1129 HDD_POOL -> SSD_POOL, time = 626 ms
+tid = 140252213659392, concurrent migration: extent id = 1130 HDD_POOL -> SSD_POOL, time = 1006 ms
+tid = 140252213659392, concurrent migration: extent id = 1131 HDD_POOL -> SSD_POOL, time = 715 ms
+tid = 140252213659392, concurrent migration: extent id = 1132 HDD_POOL -> SSD_POOL, time = 931 ms
+tid = 140252213659392, concurrent migration: extent id = 1133 HDD_POOL -> SSD_POOL, time = 958 ms
+tid = 140252213659392, concurrent migration: extent id = 1134 HDD_POOL -> SSD_POOL, time = 687 ms
+tid = 140252213659392, concurrent migration: extent id = 1135 HDD_POOL -> SSD_POOL, time = 1208 ms
+tid = 140252213659392, concurrent migration: extent id = 1136 HDD_POOL -> SSD_POOL, time = 1303 ms
+tid = 140252213659392, concurrent migration: extent id = 1137 HDD_POOL -> SSD_POOL, time = 1337 ms
+tid = 140252213659392, concurrent migration: extent id = 1138 HDD_POOL -> SSD_POOL, time = 1435 ms
+tid = 140252213659392, concurrent migration: extent id = 1139 HDD_POOL -> SSD_POOL, time = 998 ms
+tid = 140252213659392, concurrent migration: extent id = 1140 HDD_POOL -> SSD_POOL, time = 1187 ms
+tid = 140252213659392, concurrent migration: extent id = 1141 HDD_POOL -> SSD_POOL, time = 827 ms
+tid = 140252213659392, concurrent migration: extent id = 1142 HDD_POOL -> SSD_POOL, time = 937 ms
+tid = 140252213659392, concurrent migration: extent id = 1143 HDD_POOL -> SSD_POOL, time = 1432 ms
+
+sleep 56 seconds
+
+handle
+---------------Report---------------
+read iops = 11, bandwidth = 116701, seqness = 0.584538, avg latency = 19303748
+write iops = 245, bandwidth = 3136704, seqness = 0.524025, avg latency = 42640847
+hdd extent num = 1862, ssd extent num = 186, ssd ratio = 0.0908203
+---------------Report---------------
+tend to hdd: 1749, tend to ssd: 299
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1144 HDD_POOL -> SSD_POOL, time = 809 ms
+tid = 140252213659392, concurrent migration: extent id = 1145 HDD_POOL -> SSD_POOL, time = 916 ms
+tid = 140252213659392, concurrent migration: extent id = 1146 HDD_POOL -> SSD_POOL, time = 879 ms
+tid = 140252213659392, concurrent migration: extent id = 1147 HDD_POOL -> SSD_POOL, time = 1211 ms
+tid = 140252213659392, concurrent migration: extent id = 1148 HDD_POOL -> SSD_POOL, time = 1072 ms
+tid = 140252213659392, concurrent migration: extent id = 1149 HDD_POOL -> SSD_POOL, time = 938 ms
+tid = 140252213659392, concurrent migration: extent id = 1150 HDD_POOL -> SSD_POOL, time = 977 ms
+tid = 140252213659392, concurrent migration: extent id = 1151 HDD_POOL -> SSD_POOL, time = 1050 ms
+tid = 140252213659392, concurrent migration: extent id = 1152 HDD_POOL -> SSD_POOL, time = 1736 ms
+tid = 140252213659392, concurrent migration: extent id = 1153 HDD_POOL -> SSD_POOL, time = 1195 ms
+tid = 140252213659392, concurrent migration: extent id = 1154 HDD_POOL -> SSD_POOL, time = 947 ms
+tid = 140252213659392, concurrent migration: extent id = 1155 HDD_POOL -> SSD_POOL, time = 760 ms
+tid = 140252213659392, concurrent migration: extent id = 1156 HDD_POOL -> SSD_POOL, time = 1028 ms
+tid = 140252213659392, concurrent migration: extent id = 1157 HDD_POOL -> SSD_POOL, time = 764 ms
+tid = 140252213659392, concurrent migration: extent id = 1158 HDD_POOL -> SSD_POOL, time = 895 ms
+tid = 140252213659392, concurrent migration: extent id = 1159 HDD_POOL -> SSD_POOL, time = 845 ms
+tid = 140252213659392, concurrent migration: extent id = 1160 HDD_POOL -> SSD_POOL, time = 1237 ms
+tid = 140252213659392, concurrent migration: extent id = 1161 HDD_POOL -> SSD_POOL, time = 492 ms
+tid = 140252213659392, concurrent migration: extent id = 1162 HDD_POOL -> SSD_POOL, time = 662 ms
+tid = 140252213659392, concurrent migration: extent id = 1163 HDD_POOL -> SSD_POOL, time = 943 ms
+tid = 140252213659392, concurrent migration: extent id = 1164 HDD_POOL -> SSD_POOL, time = 995 ms
+tid = 140252213659392, concurrent migration: extent id = 1165 HDD_POOL -> SSD_POOL, time = 971 ms
+tid = 140252213659392, concurrent migration: extent id = 1166 HDD_POOL -> SSD_POOL, time = 635 ms
+tid = 140252213659392, concurrent migration: extent id = 1167 HDD_POOL -> SSD_POOL, time = 1017 ms
+tid = 140252213659392, concurrent migration: extent id = 1168 HDD_POOL -> SSD_POOL, time = 1002 ms
+tid = 140252213659392, concurrent migration: extent id = 1169 HDD_POOL -> SSD_POOL, time = 1195 ms
+tid = 140252213659392, concurrent migration: extent id = 1170 HDD_POOL -> SSD_POOL, time = 952 ms
+tid = 140252213659392, concurrent migration: extent id = 1171 HDD_POOL -> SSD_POOL, time = 1071 ms
+tid = 140252213659392, concurrent migration: extent id = 1172 HDD_POOL -> SSD_POOL, time = 1550 ms
+tid = 140252213659392, concurrent migration: extent id = 1173 HDD_POOL -> SSD_POOL, time = 1733 ms
+tid = 140252213659392, concurrent migration: extent id = 1174 HDD_POOL -> SSD_POOL, time = 1446 ms
+tid = 140252213659392, concurrent migration: extent id = 1175 HDD_POOL -> SSD_POOL, time = 832 ms
+tid = 140252213659392, concurrent migration: extent id = 1176 HDD_POOL -> SSD_POOL, time = 742 ms
+tid = 140252213659392, concurrent migration: extent id = 1177 HDD_POOL -> SSD_POOL, time = 1129 ms
+tid = 140252213659392, concurrent migration: extent id = 1178 HDD_POOL -> SSD_POOL, time = 1221 ms
+tid = 140252213659392, concurrent migration: extent id = 1179 HDD_POOL -> SSD_POOL, time = 1049 ms
+tid = 140252213659392, concurrent migration: extent id = 1180 HDD_POOL -> SSD_POOL, time = 951 ms
+tid = 140252213659392, concurrent migration: extent id = 1181 HDD_POOL -> SSD_POOL, time = 1382 ms
+tid = 140252213659392, concurrent migration: extent id = 1182 HDD_POOL -> SSD_POOL, time = 1350 ms
+tid = 140252213659392, concurrent migration: extent id = 1184 HDD_POOL -> SSD_POOL, time = 693 ms
+tid = 140252213659392, concurrent migration: extent id = 1185 HDD_POOL -> SSD_POOL, time = 1238 ms
+tid = 140252213659392, concurrent migration: extent id = 1186 HDD_POOL -> SSD_POOL, time = 1338 ms
+tid = 140252213659392, concurrent migration: extent id = 1187 HDD_POOL -> SSD_POOL, time = 1313 ms
+tid = 140252213659392, concurrent migration: extent id = 1188 HDD_POOL -> SSD_POOL, time = 1120 ms
+tid = 140252213659392, concurrent migration: extent id = 1209 HDD_POOL -> SSD_POOL, time = 1403 ms
+tid = 140252213659392, concurrent migration: extent id = 1227 HDD_POOL -> SSD_POOL, time = 1118 ms
+tid = 140252213659392, concurrent migration: extent id = 1251 HDD_POOL -> SSD_POOL, time = 1086 ms
+tid = 140252213659392, concurrent migration: extent id = 1252 HDD_POOL -> SSD_POOL, time = 1254 ms
+tid = 140252213659392, concurrent migration: extent id = 1253 HDD_POOL -> SSD_POOL, time = 1431 ms
+tid = 140252213659392, concurrent migration: extent id = 1254 HDD_POOL -> SSD_POOL, time = 1402 ms
+tid = 140252213659392, concurrent migration: extent id = 1255 HDD_POOL -> SSD_POOL, time = 965 ms
+tid = 140252213659392, concurrent migration: extent id = 1256 HDD_POOL -> SSD_POOL, time = 1168 ms
+tid = 140252213659392, concurrent migration: extent id = 1257 HDD_POOL -> SSD_POOL, time = 752 ms
+tid = 140252213659392, concurrent migration: extent id = 1258 HDD_POOL -> SSD_POOL, time = 1456 ms
+tid = 140252213659392, concurrent migration: extent id = 1259 HDD_POOL -> SSD_POOL, time = 932 ms
+tid = 140252213659392, concurrent migration: extent id = 1260 HDD_POOL -> SSD_POOL, time = 985 ms
+
+sleep 55 seconds
+
+handle
+---------------Report---------------
+read iops = 10, bandwidth = 102715, seqness = 0.588374, avg latency = 8646365
+write iops = 199, bandwidth = 2513732, seqness = 0.521349, avg latency = 37108428
+hdd extent num = 1806, ssd extent num = 242, ssd ratio = 0.118164
+---------------Report---------------
+tend to hdd: 1747, tend to ssd: 301
+placement: 0 extent -> hdd pool, 41 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1261 HDD_POOL -> SSD_POOL, time = 733 ms
+tid = 140252213659392, concurrent migration: extent id = 1262 HDD_POOL -> SSD_POOL, time = 873 ms
+tid = 140252213659392, concurrent migration: extent id = 1263 HDD_POOL -> SSD_POOL, time = 857 ms
+tid = 140252213659392, concurrent migration: extent id = 1264 HDD_POOL -> SSD_POOL, time = 973 ms
+tid = 140252213659392, concurrent migration: extent id = 1265 HDD_POOL -> SSD_POOL, time = 630 ms
+tid = 140252213659392, concurrent migration: extent id = 1266 HDD_POOL -> SSD_POOL, time = 705 ms
+tid = 140252213659392, concurrent migration: extent id = 1267 HDD_POOL -> SSD_POOL, time = 779 ms
+tid = 140252213659392, concurrent migration: extent id = 1268 HDD_POOL -> SSD_POOL, time = 897 ms
+tid = 140252213659392, concurrent migration: extent id = 1269 HDD_POOL -> SSD_POOL, time = 552 ms
+tid = 140252213659392, concurrent migration: extent id = 1270 HDD_POOL -> SSD_POOL, time = 993 ms
+tid = 140252213659392, concurrent migration: extent id = 1271 HDD_POOL -> SSD_POOL, time = 1065 ms
+tid = 140252213659392, concurrent migration: extent id = 1272 HDD_POOL -> SSD_POOL, time = 938 ms
+tid = 140252213659392, concurrent migration: extent id = 1273 HDD_POOL -> SSD_POOL, time = 744 ms
+tid = 140252213659392, concurrent migration: extent id = 1274 HDD_POOL -> SSD_POOL, time = 747 ms
+tid = 140252213659392, concurrent migration: extent id = 1275 HDD_POOL -> SSD_POOL, time = 1221 ms
+tid = 140252213659392, concurrent migration: extent id = 1276 HDD_POOL -> SSD_POOL, time = 550 ms
+tid = 140252213659392, concurrent migration: extent id = 1277 HDD_POOL -> SSD_POOL, time = 1473 ms
+tid = 140252213659392, concurrent migration: extent id = 1278 HDD_POOL -> SSD_POOL, time = 582 ms
+tid = 140252213659392, concurrent migration: extent id = 1279 HDD_POOL -> SSD_POOL, time = 1064 ms
+tid = 140252213659392, concurrent migration: extent id = 1280 HDD_POOL -> SSD_POOL, time = 794 ms
+tid = 140252213659392, concurrent migration: extent id = 1281 HDD_POOL -> SSD_POOL, time = 1154 ms
+tid = 140252213659392, concurrent migration: extent id = 1282 HDD_POOL -> SSD_POOL, time = 740 ms
+tid = 140252213659392, concurrent migration: extent id = 1283 HDD_POOL -> SSD_POOL, time = 927 ms
+tid = 140252213659392, concurrent migration: extent id = 1284 HDD_POOL -> SSD_POOL, time = 1266 ms
+tid = 140252213659392, concurrent migration: extent id = 1285 HDD_POOL -> SSD_POOL, time = 474 ms
+tid = 140252213659392, concurrent migration: extent id = 1286 HDD_POOL -> SSD_POOL, time = 1524 ms
+tid = 140252213659392, concurrent migration: extent id = 1287 HDD_POOL -> SSD_POOL, time = 809 ms
+tid = 140252213659392, concurrent migration: extent id = 1288 HDD_POOL -> SSD_POOL, time = 1187 ms
+tid = 140252213659392, concurrent migration: extent id = 1289 HDD_POOL -> SSD_POOL, time = 774 ms
+tid = 140252213659392, concurrent migration: extent id = 1290 HDD_POOL -> SSD_POOL, time = 709 ms
+tid = 140252213659392, concurrent migration: extent id = 1291 HDD_POOL -> SSD_POOL, time = 801 ms
+tid = 140252213659392, concurrent migration: extent id = 1292 HDD_POOL -> SSD_POOL, time = 736 ms
+tid = 140252213659392, concurrent migration: extent id = 1293 HDD_POOL -> SSD_POOL, time = 768 ms
+tid = 140252213659392, concurrent migration: extent id = 1294 HDD_POOL -> SSD_POOL, time = 793 ms
+tid = 140252213659392, concurrent migration: extent id = 1295 HDD_POOL -> SSD_POOL, time = 1231 ms
+tid = 140252213659392, concurrent migration: extent id = 1297 HDD_POOL -> SSD_POOL, time = 866 ms
+tid = 140252213659392, concurrent migration: extent id = 1299 HDD_POOL -> SSD_POOL, time = 1179 ms
+tid = 140252213659392, concurrent migration: extent id = 1301 HDD_POOL -> SSD_POOL, time = 815 ms
+tid = 140252213659392, concurrent migration: extent id = 1302 HDD_POOL -> SSD_POOL, time = 1034 ms
+tid = 140252213659392, concurrent migration: extent id = 1307 HDD_POOL -> SSD_POOL, time = 1084 ms
+tid = 140252213659392, concurrent migration: extent id = 1538 HDD_POOL -> SSD_POOL, time = 914 ms
+
+sleep 80 seconds
+
+handle
+---------------Report---------------
+read iops = 15, bandwidth = 174830, seqness = 0.615144, avg latency = 3753229
+write iops = 316, bandwidth = 4130496, seqness = 0.536519, avg latency = 24397759
+hdd extent num = 1765, ssd extent num = 283, ssd ratio = 0.138184
+---------------Report---------------
+tend to hdd: 1746, tend to ssd: 302
+placement: 0 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1539 HDD_POOL -> SSD_POOL, time = 886 ms
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 27, bandwidth = 277230, seqness = 0.591824, avg latency = 2646366
+write iops = 541, bandwidth = 7071441, seqness = 0.528408, avg latency = 20268220
+hdd extent num = 1764, ssd extent num = 284, ssd ratio = 0.138672
+---------------Report---------------
+tend to hdd: 1732, tend to ssd: 316
+placement: 0 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1309 HDD_POOL -> SSD_POOL, time = 960 ms
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 22, bandwidth = 235618, seqness = 0.585768, avg latency = 2647262
+write iops = 453, bandwidth = 5960742, seqness = 0.522821, avg latency = 19799122
+hdd extent num = 1763, ssd extent num = 285, ssd ratio = 0.13916
+---------------Report---------------
+tend to hdd: 1732, tend to ssd: 316
+placement: 0 extent -> hdd pool, 3 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1296 HDD_POOL -> SSD_POOL, time = 1038 ms
+tid = 140252213659392, concurrent migration: extent id = 1298 HDD_POOL -> SSD_POOL, time = 762 ms
+tid = 140252213659392, concurrent migration: extent id = 1540 HDD_POOL -> SSD_POOL, time = 705 ms
+
+sleep 117 seconds
+
+handle
+---------------Report---------------
+read iops = 27, bandwidth = 262903, seqness = 0.593702, avg latency = 2722217
+write iops = 496, bandwidth = 6343185, seqness = 0.526597, avg latency = 21458140
+hdd extent num = 1760, ssd extent num = 288, ssd ratio = 0.140625
+---------------Report---------------
+tend to hdd: 1732, tend to ssd: 316
+placement: 0 extent -> hdd pool, 3 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1 HDD_POOL -> SSD_POOL, time = 1029 ms
+tid = 140252213659392, concurrent migration: extent id = 1313 HDD_POOL -> SSD_POOL, time = 706 ms
+tid = 140252213659392, concurrent migration: extent id = 1541 HDD_POOL -> SSD_POOL, time = 783 ms
+
+sleep 117 seconds
+
+handle
+---------------Report---------------
+read iops = 23, bandwidth = 245977, seqness = 0.576204, avg latency = 2732530
+write iops = 496, bandwidth = 6520465, seqness = 0.514475, avg latency = 21401311
+hdd extent num = 1757, ssd extent num = 291, ssd ratio = 0.14209
+---------------Report---------------
+tend to hdd: 1721, tend to ssd: 327
+placement: 1 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1301 SSD_POOL -> HDD_POOL, time = 798 ms
+tid = 140252213659392, concurrent migration: extent id = 1542 HDD_POOL -> SSD_POOL, time = 857 ms
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 31, bandwidth = 308603, seqness = 0.560598, avg latency = 2871693
+write iops = 627, bandwidth = 8023274, seqness = 0.506099, avg latency = 21669915
+hdd extent num = 1757, ssd extent num = 291, ssd ratio = 0.14209
+---------------Report---------------
+tend to hdd: 1726, tend to ssd: 322
+placement: 0 extent -> hdd pool, 2 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1543 HDD_POOL -> SSD_POOL, time = 1366 ms
+tid = 140252213659392, concurrent migration: extent id = 1544 HDD_POOL -> SSD_POOL, time = 753 ms
+
+sleep 117 seconds
+
+handle
+---------------Report---------------
+read iops = 36, bandwidth = 375726, seqness = 0.559724, avg latency = 2960376
+write iops = 657, bandwidth = 8444718, seqness = 0.500907, avg latency = 20628068
+hdd extent num = 1755, ssd extent num = 293, ssd ratio = 0.143066
+---------------Report---------------
+tend to hdd: 1717, tend to ssd: 331
+placement: 1 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1309 SSD_POOL -> HDD_POOL, time = 1181 ms
+tid = 140252213659392, concurrent migration: extent id = 2 HDD_POOL -> SSD_POOL, time = 895 ms
+
+sleep 118 seconds
+
+handle
+---------------Report---------------
+read iops = 31, bandwidth = 299136, seqness = 0.572458, avg latency = 2844330
+write iops = 607, bandwidth = 7818679, seqness = 0.501043, avg latency = 20174058
+hdd extent num = 1755, ssd extent num = 293, ssd ratio = 0.143066
+---------------Report---------------
+tend to hdd: 1718, tend to ssd: 330
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 49, bandwidth = 506184, seqness = 0.576936, avg latency = 2963399
+write iops = 890, bandwidth = 11775249, seqness = 0.506412, avg latency = 20869600
+hdd extent num = 1755, ssd extent num = 293, ssd ratio = 0.143066
+---------------Report---------------
+tend to hdd: 1709, tend to ssd: 339
+placement: 1 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1302 SSD_POOL -> HDD_POOL, time = 884 ms
+tid = 140252213659392, concurrent migration: extent id = 1551 HDD_POOL -> SSD_POOL, time = 1027 ms
+
+sleep 118 seconds
+
+handle
+---------------Report---------------
+read iops = 57, bandwidth = 578065, seqness = 0.569264, avg latency = 3048564
+write iops = 1037, bandwidth = 13574400, seqness = 0.510685, avg latency = 21623746
+hdd extent num = 1755, ssd extent num = 293, ssd ratio = 0.143066
+---------------Report---------------
+tend to hdd: 1699, tend to ssd: 349
+placement: 1 extent -> hdd pool, 3 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1313 SSD_POOL -> HDD_POOL, time = 2684 ms
+tid = 140252213659392, concurrent migration: extent id = 3 HDD_POOL -> SSD_POOL, time = 823 ms
+tid = 140252213659392, concurrent migration: extent id = 684 HDD_POOL -> SSD_POOL, time = 1380 ms
+tid = 140252213659392, concurrent migration: extent id = 1554 HDD_POOL -> SSD_POOL, time = 1297 ms
+
+sleep 113 seconds
+
+handle
+---------------Report---------------
+read iops = 53, bandwidth = 530244, seqness = 0.576418, avg latency = 3681603
+write iops = 961, bandwidth = 12628462, seqness = 0.513534, avg latency = 21636989
+hdd extent num = 1753, ssd extent num = 295, ssd ratio = 0.144043
+---------------Report---------------
+tend to hdd: 1703, tend to ssd: 345
+placement: 0 extent -> hdd pool, 3 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 4 HDD_POOL -> SSD_POOL, time = 1847 ms
+tid = 140252213659392, concurrent migration: extent id = 1545 HDD_POOL -> SSD_POOL, time = 1028 ms
+tid = 140252213659392, concurrent migration: extent id = 1557 HDD_POOL -> SSD_POOL, time = 1012 ms
+
+sleep 116 seconds
+
+handle
+---------------Report---------------
+read iops = 56, bandwidth = 573529, seqness = 0.574292, avg latency = 2956314
+write iops = 968, bandwidth = 12519633, seqness = 0.515065, avg latency = 22607810
+hdd extent num = 1750, ssd extent num = 298, ssd ratio = 0.145508
+---------------Report---------------
+tend to hdd: 1701, tend to ssd: 347
+placement: 1 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1307 SSD_POOL -> HDD_POOL, time = 587 ms
+tid = 140252213659392, concurrent migration: extent id = 1560 HDD_POOL -> SSD_POOL, time = 800 ms
+
+sleep 118 seconds
+
+handle
+---------------Report---------------
+read iops = 55, bandwidth = 570385, seqness = 0.581518, avg latency = 3018761
+write iops = 994, bandwidth = 12966126, seqness = 0.510936, avg latency = 22249764
+hdd extent num = 1750, ssd extent num = 298, ssd ratio = 0.145508
+---------------Report---------------
+tend to hdd: 1700, tend to ssd: 348
+placement: 1 extent -> hdd pool, 2 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1299 SSD_POOL -> HDD_POOL, time = 590 ms
+tid = 140252213659392, concurrent migration: extent id = 5 HDD_POOL -> SSD_POOL, time = 542 ms
+tid = 140252213659392, concurrent migration: extent id = 6 HDD_POOL -> SSD_POOL, time = 962 ms
+
+sleep 118 seconds
+
+handle
+---------------Report---------------
+read iops = 62, bandwidth = 608486, seqness = 0.576138, avg latency = 2980469
+write iops = 1089, bandwidth = 14146905, seqness = 0.511161, avg latency = 22115412
+hdd extent num = 1749, ssd extent num = 299, ssd ratio = 0.145996
+---------------Report---------------
+tend to hdd: 1696, tend to ssd: 352
+placement: 0 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 685 HDD_POOL -> SSD_POOL, time = 991 ms
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 58, bandwidth = 593723, seqness = 0.580196, avg latency = 3111438
+write iops = 1024, bandwidth = 13126993, seqness = 0.510502, avg latency = 22103380
+hdd extent num = 1748, ssd extent num = 300, ssd ratio = 0.146484
+---------------Report---------------
+tend to hdd: 1700, tend to ssd: 348
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 11, bandwidth = 101533, seqness = 0.543785, avg latency = 20386059
+write iops = 265, bandwidth = 3002790, seqness = 0.488796, avg latency = 28728714
+hdd extent num = 1748, ssd extent num = 300, ssd ratio = 0.146484
+---------------Report---------------
+tend to hdd: 1568, tend to ssd: 480
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 6, bandwidth = 64375, seqness = 0.58625, avg latency = 33321249
+write iops = 212, bandwidth = 2441152, seqness = 0.509045, avg latency = 40909623
+hdd extent num = 1748, ssd extent num = 300, ssd ratio = 0.146484
+---------------Report---------------
+tend to hdd: 1819, tend to ssd: 229
+placement: 0 extent -> hdd pool, 1 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 686 HDD_POOL -> SSD_POOL, time = 542 ms
+
+sleep 119 seconds
+
+handle
+---------------Report---------------
+read iops = 9, bandwidth = 95526, seqness = 0.618842, avg latency = 46347584
+write iops = 255, bandwidth = 3117448, seqness = 0.534694, avg latency = 60856129
+hdd extent num = 1747, ssd extent num = 301, ssd ratio = 0.146973
+---------------Report---------------
+tend to hdd: 1803, tend to ssd: 245
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 10, bandwidth = 99477, seqness = 0.605285, avg latency = 69939439
+write iops = 257, bandwidth = 3187801, seqness = 0.545984, avg latency = 71445068
+hdd extent num = 1747, ssd extent num = 301, ssd ratio = 0.146973
+---------------Report---------------
+tend to hdd: 1791, tend to ssd: 257
+placement: 3 extent -> hdd pool, 2 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1538 SSD_POOL -> HDD_POOL, time = 1133 ms
+tid = 140252213659392, concurrent migration: extent id = 1551 SSD_POOL -> HDD_POOL, time = 529 ms
+tid = 140252213659392, concurrent migration: extent id = 1557 SSD_POOL -> HDD_POOL, time = 390 ms
+tid = 140252213659392, concurrent migration: extent id = 13 HDD_POOL -> SSD_POOL, time = 1149 ms
+tid = 140252213659392, concurrent migration: extent id = 1572 HDD_POOL -> SSD_POOL, time = 509 ms
+
+sleep 116 seconds
+
+handle
+---------------Report---------------
+read iops = 9, bandwidth = 95910, seqness = 0.581536, avg latency = 73900145
+write iops = 268, bandwidth = 3388377, seqness = 0.543876, avg latency = 82510150
+hdd extent num = 1748, ssd extent num = 300, ssd ratio = 0.146484
+---------------Report---------------
+tend to hdd: 1798, tend to ssd: 250
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 513 HDD_POOL -> SSD_POOL, time = 1711 ms
+tid = 140252213659392, concurrent migration: extent id = 514 HDD_POOL -> SSD_POOL, time = 813 ms
+tid = 140252213659392, concurrent migration: extent id = 515 HDD_POOL -> SSD_POOL, time = 697 ms
+tid = 140252213659392, concurrent migration: extent id = 516 HDD_POOL -> SSD_POOL, time = 2817 ms
+tid = 140252213659392, concurrent migration: extent id = 517 HDD_POOL -> SSD_POOL, time = 1719 ms
+tid = 140252213659392, concurrent migration: extent id = 518 HDD_POOL -> SSD_POOL, time = 2756 ms
+tid = 140252213659392, concurrent migration: extent id = 519 HDD_POOL -> SSD_POOL, time = 2500 ms
+tid = 140252213659392, concurrent migration: extent id = 520 HDD_POOL -> SSD_POOL, time = 1694 ms
+tid = 140252213659392, concurrent migration: extent id = 521 HDD_POOL -> SSD_POOL, time = 2086 ms
+tid = 140252213659392, concurrent migration: extent id = 522 HDD_POOL -> SSD_POOL, time = 1533 ms
+tid = 140252213659392, concurrent migration: extent id = 523 HDD_POOL -> SSD_POOL, time = 2864 ms
+tid = 140252213659392, concurrent migration: extent id = 524 HDD_POOL -> SSD_POOL, time = 1437 ms
+tid = 140252213659392, concurrent migration: extent id = 525 HDD_POOL -> SSD_POOL, time = 2544 ms
+tid = 140252213659392, concurrent migration: extent id = 526 HDD_POOL -> SSD_POOL, time = 1955 ms
+tid = 140252213659392, concurrent migration: extent id = 527 HDD_POOL -> SSD_POOL, time = 1065 ms
+tid = 140252213659392, concurrent migration: extent id = 528 HDD_POOL -> SSD_POOL, time = 2306 ms
+tid = 140252213659392, concurrent migration: extent id = 529 HDD_POOL -> SSD_POOL, time = 3735 ms
+tid = 140252213659392, concurrent migration: extent id = 530 HDD_POOL -> SSD_POOL, time = 641 ms
+tid = 140252213659392, concurrent migration: extent id = 531 HDD_POOL -> SSD_POOL, time = 2486 ms
+tid = 140252213659392, concurrent migration: extent id = 532 HDD_POOL -> SSD_POOL, time = 2370 ms
+tid = 140252213659392, concurrent migration: extent id = 533 HDD_POOL -> SSD_POOL, time = 641 ms
+tid = 140252213659392, concurrent migration: extent id = 534 HDD_POOL -> SSD_POOL, time = 1258 ms
+tid = 140252213659392, concurrent migration: extent id = 535 HDD_POOL -> SSD_POOL, time = 1529 ms
+tid = 140252213659392, concurrent migration: extent id = 536 HDD_POOL -> SSD_POOL, time = 1256 ms
+tid = 140252213659392, concurrent migration: extent id = 537 HDD_POOL -> SSD_POOL, time = 5097 ms
+tid = 140252213659392, concurrent migration: extent id = 538 HDD_POOL -> SSD_POOL, time = 4886 ms
+tid = 140252213659392, concurrent migration: extent id = 539 HDD_POOL -> SSD_POOL, time = 1453 ms
+tid = 140252213659392, concurrent migration: extent id = 540 HDD_POOL -> SSD_POOL, time = 807 ms
+tid = 140252213659392, concurrent migration: extent id = 541 HDD_POOL -> SSD_POOL, time = 2875 ms
+tid = 140252213659392, concurrent migration: extent id = 542 HDD_POOL -> SSD_POOL, time = 634 ms
+tid = 140252213659392, concurrent migration: extent id = 543 HDD_POOL -> SSD_POOL, time = 1972 ms
+tid = 140252213659392, concurrent migration: extent id = 544 HDD_POOL -> SSD_POOL, time = 1618 ms
+tid = 140252213659392, concurrent migration: extent id = 545 HDD_POOL -> SSD_POOL, time = 4711 ms
+tid = 140252213659392, concurrent migration: extent id = 546 HDD_POOL -> SSD_POOL, time = 902 ms
+tid = 140252213659392, concurrent migration: extent id = 547 HDD_POOL -> SSD_POOL, time = 1109 ms
+tid = 140252213659392, concurrent migration: extent id = 548 HDD_POOL -> SSD_POOL, time = 796 ms
+tid = 140252213659392, concurrent migration: extent id = 549 HDD_POOL -> SSD_POOL, time = 2496 ms
+tid = 140252213659392, concurrent migration: extent id = 550 HDD_POOL -> SSD_POOL, time = 1680 ms
+tid = 140252213659392, concurrent migration: extent id = 551 HDD_POOL -> SSD_POOL, time = 1126 ms
+tid = 140252213659392, concurrent migration: extent id = 552 HDD_POOL -> SSD_POOL, time = 1118 ms
+tid = 140252213659392, concurrent migration: extent id = 553 HDD_POOL -> SSD_POOL, time = 1283 ms
+tid = 140252213659392, concurrent migration: extent id = 554 HDD_POOL -> SSD_POOL, time = 2316 ms
+tid = 140252213659392, concurrent migration: extent id = 555 HDD_POOL -> SSD_POOL, time = 1693 ms
+tid = 140252213659392, concurrent migration: extent id = 556 HDD_POOL -> SSD_POOL, time = 1033 ms
+tid = 140252213659392, concurrent migration: extent id = 557 HDD_POOL -> SSD_POOL, time = 1265 ms
+tid = 140252213659392, concurrent migration: extent id = 558 HDD_POOL -> SSD_POOL, time = 1348 ms
+tid = 140252213659392, concurrent migration: extent id = 559 HDD_POOL -> SSD_POOL, time = 1022 ms
+tid = 140252213659392, concurrent migration: extent id = 560 HDD_POOL -> SSD_POOL, time = 4271 ms
+tid = 140252213659392, concurrent migration: extent id = 561 HDD_POOL -> SSD_POOL, time = 1594 ms
+tid = 140252213659392, concurrent migration: extent id = 562 HDD_POOL -> SSD_POOL, time = 1368 ms
+tid = 140252213659392, concurrent migration: extent id = 563 HDD_POOL -> SSD_POOL, time = 1424 ms
+tid = 140252213659392, concurrent migration: extent id = 564 HDD_POOL -> SSD_POOL, time = 1727 ms
+tid = 140252213659392, concurrent migration: extent id = 565 HDD_POOL -> SSD_POOL, time = 1196 ms
+tid = 140252213659392, concurrent migration: extent id = 566 HDD_POOL -> SSD_POOL, time = 1667 ms
+tid = 140252213659392, concurrent migration: extent id = 567 HDD_POOL -> SSD_POOL, time = 1049 ms
+tid = 140252213659392, concurrent migration: extent id = 568 HDD_POOL -> SSD_POOL, time = 1074 ms
+
+sleep 16 seconds
+
+handle
+---------------Report---------------
+read iops = 7, bandwidth = 62762, seqness = 0.487719, avg latency = 73448309
+write iops = 156, bandwidth = 1971323, seqness = 0.505153, avg latency = 81833872
+hdd extent num = 1692, ssd extent num = 356, ssd ratio = 0.173828
+---------------Report---------------
+tend to hdd: 1819, tend to ssd: 229
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 569 HDD_POOL -> SSD_POOL, time = 2006 ms
+tid = 140252213659392, concurrent migration: extent id = 570 HDD_POOL -> SSD_POOL, time = 578 ms
+tid = 140252213659392, concurrent migration: extent id = 571 HDD_POOL -> SSD_POOL, time = 988 ms
+tid = 140252213659392, concurrent migration: extent id = 572 HDD_POOL -> SSD_POOL, time = 641 ms
+tid = 140252213659392, concurrent migration: extent id = 573 HDD_POOL -> SSD_POOL, time = 738 ms
+tid = 140252213659392, concurrent migration: extent id = 574 HDD_POOL -> SSD_POOL, time = 532 ms
+tid = 140252213659392, concurrent migration: extent id = 575 HDD_POOL -> SSD_POOL, time = 597 ms
+tid = 140252213659392, concurrent migration: extent id = 576 HDD_POOL -> SSD_POOL, time = 640 ms
+tid = 140252213659392, concurrent migration: extent id = 577 HDD_POOL -> SSD_POOL, time = 810 ms
+tid = 140252213659392, concurrent migration: extent id = 578 HDD_POOL -> SSD_POOL, time = 640 ms
+tid = 140252213659392, concurrent migration: extent id = 579 HDD_POOL -> SSD_POOL, time = 890 ms
+tid = 140252213659392, concurrent migration: extent id = 580 HDD_POOL -> SSD_POOL, time = 622 ms
+tid = 140252213659392, concurrent migration: extent id = 581 HDD_POOL -> SSD_POOL, time = 867 ms
+tid = 140252213659392, concurrent migration: extent id = 582 HDD_POOL -> SSD_POOL, time = 848 ms
+tid = 140252213659392, concurrent migration: extent id = 583 HDD_POOL -> SSD_POOL, time = 809 ms
+tid = 140252213659392, concurrent migration: extent id = 584 HDD_POOL -> SSD_POOL, time = 918 ms
+tid = 140252213659392, concurrent migration: extent id = 585 HDD_POOL -> SSD_POOL, time = 862 ms
+tid = 140252213659392, concurrent migration: extent id = 586 HDD_POOL -> SSD_POOL, time = 1243 ms
+tid = 140252213659392, concurrent migration: extent id = 587 HDD_POOL -> SSD_POOL, time = 874 ms
+tid = 140252213659392, concurrent migration: extent id = 588 HDD_POOL -> SSD_POOL, time = 861 ms
+tid = 140252213659392, concurrent migration: extent id = 589 HDD_POOL -> SSD_POOL, time = 1034 ms
+tid = 140252213659392, concurrent migration: extent id = 590 HDD_POOL -> SSD_POOL, time = 862 ms
+tid = 140252213659392, concurrent migration: extent id = 591 HDD_POOL -> SSD_POOL, time = 898 ms
+tid = 140252213659392, concurrent migration: extent id = 592 HDD_POOL -> SSD_POOL, time = 1226 ms
+tid = 140252213659392, concurrent migration: extent id = 593 HDD_POOL -> SSD_POOL, time = 665 ms
+tid = 140252213659392, concurrent migration: extent id = 594 HDD_POOL -> SSD_POOL, time = 539 ms
+tid = 140252213659392, concurrent migration: extent id = 595 HDD_POOL -> SSD_POOL, time = 858 ms
+tid = 140252213659392, concurrent migration: extent id = 596 HDD_POOL -> SSD_POOL, time = 1316 ms
+tid = 140252213659392, concurrent migration: extent id = 597 HDD_POOL -> SSD_POOL, time = 1205 ms
+tid = 140252213659392, concurrent migration: extent id = 598 HDD_POOL -> SSD_POOL, time = 1110 ms
+tid = 140252213659392, concurrent migration: extent id = 599 HDD_POOL -> SSD_POOL, time = 1297 ms
+tid = 140252213659392, concurrent migration: extent id = 600 HDD_POOL -> SSD_POOL, time = 1378 ms
+tid = 140252213659392, concurrent migration: extent id = 601 HDD_POOL -> SSD_POOL, time = 1147 ms
+tid = 140252213659392, concurrent migration: extent id = 602 HDD_POOL -> SSD_POOL, time = 937 ms
+tid = 140252213659392, concurrent migration: extent id = 603 HDD_POOL -> SSD_POOL, time = 923 ms
+tid = 140252213659392, concurrent migration: extent id = 604 HDD_POOL -> SSD_POOL, time = 1108 ms
+tid = 140252213659392, concurrent migration: extent id = 605 HDD_POOL -> SSD_POOL, time = 921 ms
+tid = 140252213659392, concurrent migration: extent id = 606 HDD_POOL -> SSD_POOL, time = 1266 ms
+tid = 140252213659392, concurrent migration: extent id = 607 HDD_POOL -> SSD_POOL, time = 1015 ms
+tid = 140252213659392, concurrent migration: extent id = 608 HDD_POOL -> SSD_POOL, time = 1509 ms
+tid = 140252213659392, concurrent migration: extent id = 609 HDD_POOL -> SSD_POOL, time = 1024 ms
+tid = 140252213659392, concurrent migration: extent id = 610 HDD_POOL -> SSD_POOL, time = 1451 ms
+tid = 140252213659392, concurrent migration: extent id = 611 HDD_POOL -> SSD_POOL, time = 1085 ms
+tid = 140252213659392, concurrent migration: extent id = 612 HDD_POOL -> SSD_POOL, time = 1313 ms
+tid = 140252213659392, concurrent migration: extent id = 613 HDD_POOL -> SSD_POOL, time = 1595 ms
+tid = 140252213659392, concurrent migration: extent id = 614 HDD_POOL -> SSD_POOL, time = 1829 ms
+tid = 140252213659392, concurrent migration: extent id = 615 HDD_POOL -> SSD_POOL, time = 1537 ms
+tid = 140252213659392, concurrent migration: extent id = 616 HDD_POOL -> SSD_POOL, time = 1692 ms
+tid = 140252213659392, concurrent migration: extent id = 617 HDD_POOL -> SSD_POOL, time = 1608 ms
+tid = 140252213659392, concurrent migration: extent id = 618 HDD_POOL -> SSD_POOL, time = 1306 ms
+tid = 140252213659392, concurrent migration: extent id = 619 HDD_POOL -> SSD_POOL, time = 1251 ms
+tid = 140252213659392, concurrent migration: extent id = 620 HDD_POOL -> SSD_POOL, time = 1331 ms
+tid = 140252213659392, concurrent migration: extent id = 621 HDD_POOL -> SSD_POOL, time = 1162 ms
+tid = 140252213659392, concurrent migration: extent id = 622 HDD_POOL -> SSD_POOL, time = 1601 ms
+tid = 140252213659392, concurrent migration: extent id = 623 HDD_POOL -> SSD_POOL, time = 1079 ms
+tid = 140252213659392, concurrent migration: extent id = 624 HDD_POOL -> SSD_POOL, time = 1600 ms
+
+sleep 57 seconds
+
+handle
+---------------Report---------------
+read iops = 9, bandwidth = 100714, seqness = 0.557922, avg latency = 31862031
+write iops = 220, bandwidth = 2766707, seqness = 0.494768, avg latency = 50429398
+hdd extent num = 1636, ssd extent num = 412, ssd ratio = 0.201172
+---------------Report---------------
+tend to hdd: 1807, tend to ssd: 241
+placement: 0 extent -> hdd pool, 56 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 625 HDD_POOL -> SSD_POOL, time = 1534 ms
+tid = 140252213659392, concurrent migration: extent id = 626 HDD_POOL -> SSD_POOL, time = 909 ms
+tid = 140252213659392, concurrent migration: extent id = 627 HDD_POOL -> SSD_POOL, time = 1398 ms
+tid = 140252213659392, concurrent migration: extent id = 628 HDD_POOL -> SSD_POOL, time = 1551 ms
+tid = 140252213659392, concurrent migration: extent id = 629 HDD_POOL -> SSD_POOL, time = 1165 ms
+tid = 140252213659392, concurrent migration: extent id = 630 HDD_POOL -> SSD_POOL, time = 506 ms
+tid = 140252213659392, concurrent migration: extent id = 631 HDD_POOL -> SSD_POOL, time = 1465 ms
+tid = 140252213659392, concurrent migration: extent id = 632 HDD_POOL -> SSD_POOL, time = 1256 ms
+tid = 140252213659392, concurrent migration: extent id = 633 HDD_POOL -> SSD_POOL, time = 993 ms
+tid = 140252213659392, concurrent migration: extent id = 634 HDD_POOL -> SSD_POOL, time = 1484 ms
+tid = 140252213659392, concurrent migration: extent id = 635 HDD_POOL -> SSD_POOL, time = 1117 ms
+tid = 140252213659392, concurrent migration: extent id = 636 HDD_POOL -> SSD_POOL, time = 1665 ms
+tid = 140252213659392, concurrent migration: extent id = 637 HDD_POOL -> SSD_POOL, time = 686 ms
+tid = 140252213659392, concurrent migration: extent id = 638 HDD_POOL -> SSD_POOL, time = 1446 ms
+tid = 140252213659392, concurrent migration: extent id = 639 HDD_POOL -> SSD_POOL, time = 849 ms
+tid = 140252213659392, concurrent migration: extent id = 640 HDD_POOL -> SSD_POOL, time = 1425 ms
+tid = 140252213659392, concurrent migration: extent id = 641 HDD_POOL -> SSD_POOL, time = 964 ms
+tid = 140252213659392, concurrent migration: extent id = 642 HDD_POOL -> SSD_POOL, time = 1151 ms
+tid = 140252213659392, concurrent migration: extent id = 643 HDD_POOL -> SSD_POOL, time = 1453 ms
+tid = 140252213659392, concurrent migration: extent id = 644 HDD_POOL -> SSD_POOL, time = 1025 ms
+tid = 140252213659392, concurrent migration: extent id = 645 HDD_POOL -> SSD_POOL, time = 1281 ms
+tid = 140252213659392, concurrent migration: extent id = 646 HDD_POOL -> SSD_POOL, time = 981 ms
+tid = 140252213659392, concurrent migration: extent id = 647 HDD_POOL -> SSD_POOL, time = 1274 ms
+tid = 140252213659392, concurrent migration: extent id = 648 HDD_POOL -> SSD_POOL, time = 1056 ms
+tid = 140252213659392, concurrent migration: extent id = 649 HDD_POOL -> SSD_POOL, time = 1034 ms
+tid = 140252213659392, concurrent migration: extent id = 650 HDD_POOL -> SSD_POOL, time = 1435 ms
+tid = 140252213659392, concurrent migration: extent id = 651 HDD_POOL -> SSD_POOL, time = 1455 ms
+tid = 140252213659392, concurrent migration: extent id = 652 HDD_POOL -> SSD_POOL, time = 581 ms
+tid = 140252213659392, concurrent migration: extent id = 653 HDD_POOL -> SSD_POOL, time = 1372 ms
+tid = 140252213659392, concurrent migration: extent id = 654 HDD_POOL -> SSD_POOL, time = 1538 ms
+tid = 140252213659392, concurrent migration: extent id = 655 HDD_POOL -> SSD_POOL, time = 1384 ms
+tid = 140252213659392, concurrent migration: extent id = 656 HDD_POOL -> SSD_POOL, time = 1286 ms
+tid = 140252213659392, concurrent migration: extent id = 657 HDD_POOL -> SSD_POOL, time = 1059 ms
+tid = 140252213659392, concurrent migration: extent id = 658 HDD_POOL -> SSD_POOL, time = 1346 ms
+tid = 140252213659392, concurrent migration: extent id = 659 HDD_POOL -> SSD_POOL, time = 858 ms
+tid = 140252213659392, concurrent migration: extent id = 660 HDD_POOL -> SSD_POOL, time = 1121 ms
+tid = 140252213659392, concurrent migration: extent id = 661 HDD_POOL -> SSD_POOL, time = 871 ms
+tid = 140252213659392, concurrent migration: extent id = 662 HDD_POOL -> SSD_POOL, time = 1357 ms
+tid = 140252213659392, concurrent migration: extent id = 663 HDD_POOL -> SSD_POOL, time = 843 ms
+tid = 140252213659392, concurrent migration: extent id = 664 HDD_POOL -> SSD_POOL, time = 1156 ms
+tid = 140252213659392, concurrent migration: extent id = 665 HDD_POOL -> SSD_POOL, time = 1040 ms
+tid = 140252213659392, concurrent migration: extent id = 666 HDD_POOL -> SSD_POOL, time = 1255 ms
+tid = 140252213659392, concurrent migration: extent id = 667 HDD_POOL -> SSD_POOL, time = 970 ms
+tid = 140252213659392, concurrent migration: extent id = 668 HDD_POOL -> SSD_POOL, time = 884 ms
+tid = 140252213659392, concurrent migration: extent id = 669 HDD_POOL -> SSD_POOL, time = 1006 ms
+tid = 140252213659392, concurrent migration: extent id = 670 HDD_POOL -> SSD_POOL, time = 1280 ms
+tid = 140252213659392, concurrent migration: extent id = 671 HDD_POOL -> SSD_POOL, time = 1391 ms
+tid = 140252213659392, concurrent migration: extent id = 672 HDD_POOL -> SSD_POOL, time = 912 ms
+tid = 140252213659392, concurrent migration: extent id = 673 HDD_POOL -> SSD_POOL, time = 1045 ms
+tid = 140252213659392, concurrent migration: extent id = 674 HDD_POOL -> SSD_POOL, time = 1196 ms
+tid = 140252213659392, concurrent migration: extent id = 675 HDD_POOL -> SSD_POOL, time = 1135 ms
+tid = 140252213659392, concurrent migration: extent id = 676 HDD_POOL -> SSD_POOL, time = 1108 ms
+tid = 140252213659392, concurrent migration: extent id = 677 HDD_POOL -> SSD_POOL, time = 1996 ms
+tid = 140252213659392, concurrent migration: extent id = 678 HDD_POOL -> SSD_POOL, time = 1757 ms
+tid = 140252213659392, concurrent migration: extent id = 679 HDD_POOL -> SSD_POOL, time = 1855 ms
+tid = 140252213659392, concurrent migration: extent id = 689 HDD_POOL -> SSD_POOL, time = 1740 ms
+
+sleep 45 seconds
+
+handle
+---------------Report---------------
+read iops = 1, bandwidth = 9783, seqness = 0.355705, avg latency = 42125420
+write iops = 23, bandwidth = 254980, seqness = 0.416017, avg latency = 76948290
+hdd extent num = 1580, ssd extent num = 468, ssd ratio = 0.228516
+---------------Report---------------
+tend to hdd: 1839, tend to ssd: 209
+placement: 54 extent -> hdd pool, 2 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 4 SSD_POOL -> HDD_POOL, time = 343 ms
+tid = 140252213659392, concurrent migration: extent id = 684 SSD_POOL -> HDD_POOL, time = 615 ms
+tid = 140252213659392, concurrent migration: extent id = 685 SSD_POOL -> HDD_POOL, time = 755 ms
+tid = 140252213659392, concurrent migration: extent id = 1049 SSD_POOL -> HDD_POOL, time = 602 ms
+tid = 140252213659392, concurrent migration: extent id = 1050 SSD_POOL -> HDD_POOL, time = 622 ms
+tid = 140252213659392, concurrent migration: extent id = 1051 SSD_POOL -> HDD_POOL, time = 647 ms
+tid = 140252213659392, concurrent migration: extent id = 1055 SSD_POOL -> HDD_POOL, time = 622 ms
+tid = 140252213659392, concurrent migration: extent id = 1056 SSD_POOL -> HDD_POOL, time = 756 ms
+tid = 140252213659392, concurrent migration: extent id = 1057 SSD_POOL -> HDD_POOL, time = 653 ms
+tid = 140252213659392, concurrent migration: extent id = 1058 SSD_POOL -> HDD_POOL, time = 553 ms
+tid = 140252213659392, concurrent migration: extent id = 1059 SSD_POOL -> HDD_POOL, time = 704 ms
+tid = 140252213659392, concurrent migration: extent id = 1060 SSD_POOL -> HDD_POOL, time = 574 ms
+tid = 140252213659392, concurrent migration: extent id = 1061 SSD_POOL -> HDD_POOL, time = 532 ms
+tid = 140252213659392, concurrent migration: extent id = 1063 SSD_POOL -> HDD_POOL, time = 578 ms
+tid = 140252213659392, concurrent migration: extent id = 1065 SSD_POOL -> HDD_POOL, time = 502 ms
+tid = 140252213659392, concurrent migration: extent id = 1066 SSD_POOL -> HDD_POOL, time = 628 ms
+tid = 140252213659392, concurrent migration: extent id = 1067 SSD_POOL -> HDD_POOL, time = 887 ms
+tid = 140252213659392, concurrent migration: extent id = 1068 SSD_POOL -> HDD_POOL, time = 932 ms
+tid = 140252213659392, concurrent migration: extent id = 1069 SSD_POOL -> HDD_POOL, time = 496 ms
+tid = 140252213659392, concurrent migration: extent id = 1070 SSD_POOL -> HDD_POOL, time = 669 ms
+tid = 140252213659392, concurrent migration: extent id = 1071 SSD_POOL -> HDD_POOL, time = 929 ms
+tid = 140252213659392, concurrent migration: extent id = 1072 SSD_POOL -> HDD_POOL, time = 535 ms
+tid = 140252213659392, concurrent migration: extent id = 1073 SSD_POOL -> HDD_POOL, time = 767 ms
+tid = 140252213659392, concurrent migration: extent id = 1075 SSD_POOL -> HDD_POOL, time = 896 ms
+tid = 140252213659392, concurrent migration: extent id = 1076 SSD_POOL -> HDD_POOL, time = 887 ms
+tid = 140252213659392, concurrent migration: extent id = 1077 SSD_POOL -> HDD_POOL, time = 673 ms
+tid = 140252213659392, concurrent migration: extent id = 1078 SSD_POOL -> HDD_POOL, time = 695 ms
+tid = 140252213659392, concurrent migration: extent id = 1079 SSD_POOL -> HDD_POOL, time = 503 ms
+tid = 140252213659392, concurrent migration: extent id = 1080 SSD_POOL -> HDD_POOL, time = 428 ms
+tid = 140252213659392, concurrent migration: extent id = 1081 SSD_POOL -> HDD_POOL, time = 513 ms
+tid = 140252213659392, concurrent migration: extent id = 1082 SSD_POOL -> HDD_POOL, time = 712 ms
+tid = 140252213659392, concurrent migration: extent id = 1083 SSD_POOL -> HDD_POOL, time = 392 ms
+tid = 140252213659392, concurrent migration: extent id = 1084 SSD_POOL -> HDD_POOL, time = 607 ms
+tid = 140252213659392, concurrent migration: extent id = 1085 SSD_POOL -> HDD_POOL, time = 496 ms
+tid = 140252213659392, concurrent migration: extent id = 1086 SSD_POOL -> HDD_POOL, time = 474 ms
+tid = 140252213659392, concurrent migration: extent id = 1087 SSD_POOL -> HDD_POOL, time = 618 ms
+tid = 140252213659392, concurrent migration: extent id = 1088 SSD_POOL -> HDD_POOL, time = 573 ms
+tid = 140252213659392, concurrent migration: extent id = 1089 SSD_POOL -> HDD_POOL, time = 930 ms
+tid = 140252213659392, concurrent migration: extent id = 1090 SSD_POOL -> HDD_POOL, time = 841 ms
+tid = 140252213659392, concurrent migration: extent id = 1091 SSD_POOL -> HDD_POOL, time = 473 ms
+tid = 140252213659392, concurrent migration: extent id = 1092 SSD_POOL -> HDD_POOL, time = 529 ms
+tid = 140252213659392, concurrent migration: extent id = 1093 SSD_POOL -> HDD_POOL, time = 657 ms
+tid = 140252213659392, concurrent migration: extent id = 1095 SSD_POOL -> HDD_POOL, time = 581 ms
+tid = 140252213659392, concurrent migration: extent id = 1096 SSD_POOL -> HDD_POOL, time = 1984 ms
+tid = 140252213659392, concurrent migration: extent id = 1097 SSD_POOL -> HDD_POOL, time = 590 ms
+tid = 140252213659392, concurrent migration: extent id = 1098 SSD_POOL -> HDD_POOL, time = 765 ms
+tid = 140252213659392, concurrent migration: extent id = 1099 SSD_POOL -> HDD_POOL, time = 703 ms
+tid = 140252213659392, concurrent migration: extent id = 1100 SSD_POOL -> HDD_POOL, time = 474 ms
+tid = 140252213659392, concurrent migration: extent id = 1101 SSD_POOL -> HDD_POOL, time = 674 ms
+tid = 140252213659392, concurrent migration: extent id = 1102 SSD_POOL -> HDD_POOL, time = 672 ms
+tid = 140252213659392, concurrent migration: extent id = 1103 SSD_POOL -> HDD_POOL, time = 771 ms
+tid = 140252213659392, concurrent migration: extent id = 1104 SSD_POOL -> HDD_POOL, time = 470 ms
+tid = 140252213659392, concurrent migration: extent id = 1105 SSD_POOL -> HDD_POOL, time = 504 ms
+tid = 140252213659392, concurrent migration: extent id = 1106 SSD_POOL -> HDD_POOL, time = 625 ms
+tid = 140252213659392, concurrent migration: extent id = 1357 HDD_POOL -> SSD_POOL, time = 1018 ms
+tid = 140252213659392, concurrent migration: extent id = 1373 HDD_POOL -> SSD_POOL, time = 1038 ms
+
+sleep 81 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 12, seqness = 1, avg latency = 119827500
+hdd extent num = 1632, ssd extent num = 416, ssd ratio = 0.203125
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 56 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1053 SSD_POOL -> HDD_POOL, time = 711 ms
+tid = 140252213659392, concurrent migration: extent id = 1054 SSD_POOL -> HDD_POOL, time = 633 ms
+tid = 140252213659392, concurrent migration: extent id = 1062 SSD_POOL -> HDD_POOL, time = 633 ms
+tid = 140252213659392, concurrent migration: extent id = 1064 SSD_POOL -> HDD_POOL, time = 730 ms
+tid = 140252213659392, concurrent migration: extent id = 1107 SSD_POOL -> HDD_POOL, time = 637 ms
+tid = 140252213659392, concurrent migration: extent id = 1108 SSD_POOL -> HDD_POOL, time = 619 ms
+tid = 140252213659392, concurrent migration: extent id = 1109 SSD_POOL -> HDD_POOL, time = 704 ms
+tid = 140252213659392, concurrent migration: extent id = 1110 SSD_POOL -> HDD_POOL, time = 781 ms
+tid = 140252213659392, concurrent migration: extent id = 1111 SSD_POOL -> HDD_POOL, time = 557 ms
+tid = 140252213659392, concurrent migration: extent id = 1112 SSD_POOL -> HDD_POOL, time = 814 ms
+tid = 140252213659392, concurrent migration: extent id = 1113 SSD_POOL -> HDD_POOL, time = 690 ms
+tid = 140252213659392, concurrent migration: extent id = 1114 SSD_POOL -> HDD_POOL, time = 1043 ms
+tid = 140252213659392, concurrent migration: extent id = 1115 SSD_POOL -> HDD_POOL, time = 980 ms
+tid = 140252213659392, concurrent migration: extent id = 1116 SSD_POOL -> HDD_POOL, time = 502 ms
+tid = 140252213659392, concurrent migration: extent id = 1119 SSD_POOL -> HDD_POOL, time = 667 ms
+tid = 140252213659392, concurrent migration: extent id = 1120 SSD_POOL -> HDD_POOL, time = 737 ms
+tid = 140252213659392, concurrent migration: extent id = 1121 SSD_POOL -> HDD_POOL, time = 778 ms
+tid = 140252213659392, concurrent migration: extent id = 1122 SSD_POOL -> HDD_POOL, time = 1397 ms
+tid = 140252213659392, concurrent migration: extent id = 1125 SSD_POOL -> HDD_POOL, time = 865 ms
+tid = 140252213659392, concurrent migration: extent id = 1126 SSD_POOL -> HDD_POOL, time = 520 ms
+tid = 140252213659392, concurrent migration: extent id = 1127 SSD_POOL -> HDD_POOL, time = 993 ms
+tid = 140252213659392, concurrent migration: extent id = 1128 SSD_POOL -> HDD_POOL, time = 668 ms
+tid = 140252213659392, concurrent migration: extent id = 1129 SSD_POOL -> HDD_POOL, time = 487 ms
+tid = 140252213659392, concurrent migration: extent id = 1131 SSD_POOL -> HDD_POOL, time = 648 ms
+tid = 140252213659392, concurrent migration: extent id = 1132 SSD_POOL -> HDD_POOL, time = 638 ms
+tid = 140252213659392, concurrent migration: extent id = 1133 SSD_POOL -> HDD_POOL, time = 639 ms
+tid = 140252213659392, concurrent migration: extent id = 1134 SSD_POOL -> HDD_POOL, time = 656 ms
+tid = 140252213659392, concurrent migration: extent id = 1135 SSD_POOL -> HDD_POOL, time = 480 ms
+tid = 140252213659392, concurrent migration: extent id = 1136 SSD_POOL -> HDD_POOL, time = 687 ms
+tid = 140252213659392, concurrent migration: extent id = 1137 SSD_POOL -> HDD_POOL, time = 615 ms
+tid = 140252213659392, concurrent migration: extent id = 1139 SSD_POOL -> HDD_POOL, time = 619 ms
+tid = 140252213659392, concurrent migration: extent id = 1140 SSD_POOL -> HDD_POOL, time = 673 ms
+tid = 140252213659392, concurrent migration: extent id = 1142 SSD_POOL -> HDD_POOL, time = 605 ms
+tid = 140252213659392, concurrent migration: extent id = 1143 SSD_POOL -> HDD_POOL, time = 592 ms
+tid = 140252213659392, concurrent migration: extent id = 1144 SSD_POOL -> HDD_POOL, time = 637 ms
+tid = 140252213659392, concurrent migration: extent id = 1145 SSD_POOL -> HDD_POOL, time = 512 ms
+tid = 140252213659392, concurrent migration: extent id = 1146 SSD_POOL -> HDD_POOL, time = 676 ms
+tid = 140252213659392, concurrent migration: extent id = 1147 SSD_POOL -> HDD_POOL, time = 570 ms
+tid = 140252213659392, concurrent migration: extent id = 1148 SSD_POOL -> HDD_POOL, time = 551 ms
+tid = 140252213659392, concurrent migration: extent id = 1149 SSD_POOL -> HDD_POOL, time = 569 ms
+tid = 140252213659392, concurrent migration: extent id = 1150 SSD_POOL -> HDD_POOL, time = 589 ms
+tid = 140252213659392, concurrent migration: extent id = 1151 SSD_POOL -> HDD_POOL, time = 461 ms
+tid = 140252213659392, concurrent migration: extent id = 1152 SSD_POOL -> HDD_POOL, time = 924 ms
+tid = 140252213659392, concurrent migration: extent id = 1153 SSD_POOL -> HDD_POOL, time = 555 ms
+tid = 140252213659392, concurrent migration: extent id = 1154 SSD_POOL -> HDD_POOL, time = 634 ms
+tid = 140252213659392, concurrent migration: extent id = 1155 SSD_POOL -> HDD_POOL, time = 585 ms
+tid = 140252213659392, concurrent migration: extent id = 1156 SSD_POOL -> HDD_POOL, time = 666 ms
+tid = 140252213659392, concurrent migration: extent id = 1158 SSD_POOL -> HDD_POOL, time = 405 ms
+tid = 140252213659392, concurrent migration: extent id = 1159 SSD_POOL -> HDD_POOL, time = 764 ms
+tid = 140252213659392, concurrent migration: extent id = 1160 SSD_POOL -> HDD_POOL, time = 519 ms
+tid = 140252213659392, concurrent migration: extent id = 1161 SSD_POOL -> HDD_POOL, time = 845 ms
+tid = 140252213659392, concurrent migration: extent id = 1162 SSD_POOL -> HDD_POOL, time = 606 ms
+tid = 140252213659392, concurrent migration: extent id = 1163 SSD_POOL -> HDD_POOL, time = 728 ms
+tid = 140252213659392, concurrent migration: extent id = 1165 SSD_POOL -> HDD_POOL, time = 701 ms
+tid = 140252213659392, concurrent migration: extent id = 1167 SSD_POOL -> HDD_POOL, time = 486 ms
+tid = 140252213659392, concurrent migration: extent id = 1168 SSD_POOL -> HDD_POOL, time = 555 ms
+
+sleep 82 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 1688, ssd extent num = 360, ssd ratio = 0.175781
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 56 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1117 SSD_POOL -> HDD_POOL, time = 533 ms
+tid = 140252213659392, concurrent migration: extent id = 1138 SSD_POOL -> HDD_POOL, time = 528 ms
+tid = 140252213659392, concurrent migration: extent id = 1166 SSD_POOL -> HDD_POOL, time = 747 ms
+tid = 140252213659392, concurrent migration: extent id = 1169 SSD_POOL -> HDD_POOL, time = 629 ms
+tid = 140252213659392, concurrent migration: extent id = 1170 SSD_POOL -> HDD_POOL, time = 657 ms
+tid = 140252213659392, concurrent migration: extent id = 1171 SSD_POOL -> HDD_POOL, time = 740 ms
+tid = 140252213659392, concurrent migration: extent id = 1172 SSD_POOL -> HDD_POOL, time = 709 ms
+tid = 140252213659392, concurrent migration: extent id = 1173 SSD_POOL -> HDD_POOL, time = 667 ms
+tid = 140252213659392, concurrent migration: extent id = 1174 SSD_POOL -> HDD_POOL, time = 697 ms
+tid = 140252213659392, concurrent migration: extent id = 1175 SSD_POOL -> HDD_POOL, time = 479 ms
+tid = 140252213659392, concurrent migration: extent id = 1176 SSD_POOL -> HDD_POOL, time = 665 ms
+tid = 140252213659392, concurrent migration: extent id = 1179 SSD_POOL -> HDD_POOL, time = 606 ms
+tid = 140252213659392, concurrent migration: extent id = 1180 SSD_POOL -> HDD_POOL, time = 662 ms
+tid = 140252213659392, concurrent migration: extent id = 1181 SSD_POOL -> HDD_POOL, time = 536 ms
+tid = 140252213659392, concurrent migration: extent id = 1182 SSD_POOL -> HDD_POOL, time = 760 ms
+tid = 140252213659392, concurrent migration: extent id = 1184 SSD_POOL -> HDD_POOL, time = 552 ms
+tid = 140252213659392, concurrent migration: extent id = 1185 SSD_POOL -> HDD_POOL, time = 809 ms
+tid = 140252213659392, concurrent migration: extent id = 1186 SSD_POOL -> HDD_POOL, time = 660 ms
+tid = 140252213659392, concurrent migration: extent id = 1187 SSD_POOL -> HDD_POOL, time = 705 ms
+tid = 140252213659392, concurrent migration: extent id = 1188 SSD_POOL -> HDD_POOL, time = 614 ms
+tid = 140252213659392, concurrent migration: extent id = 1189 SSD_POOL -> HDD_POOL, time = 815 ms
+tid = 140252213659392, concurrent migration: extent id = 1190 SSD_POOL -> HDD_POOL, time = 551 ms
+tid = 140252213659392, concurrent migration: extent id = 1191 SSD_POOL -> HDD_POOL, time = 791 ms
+tid = 140252213659392, concurrent migration: extent id = 1192 SSD_POOL -> HDD_POOL, time = 568 ms
+tid = 140252213659392, concurrent migration: extent id = 1193 SSD_POOL -> HDD_POOL, time = 633 ms
+tid = 140252213659392, concurrent migration: extent id = 1194 SSD_POOL -> HDD_POOL, time = 379 ms
+tid = 140252213659392, concurrent migration: extent id = 1196 SSD_POOL -> HDD_POOL, time = 668 ms
+tid = 140252213659392, concurrent migration: extent id = 1197 SSD_POOL -> HDD_POOL, time = 931 ms
+tid = 140252213659392, concurrent migration: extent id = 1198 SSD_POOL -> HDD_POOL, time = 606 ms
+tid = 140252213659392, concurrent migration: extent id = 1199 SSD_POOL -> HDD_POOL, time = 440 ms
+tid = 140252213659392, concurrent migration: extent id = 1200 SSD_POOL -> HDD_POOL, time = 691 ms
+tid = 140252213659392, concurrent migration: extent id = 1201 SSD_POOL -> HDD_POOL, time = 681 ms
+tid = 140252213659392, concurrent migration: extent id = 1202 SSD_POOL -> HDD_POOL, time = 613 ms
+tid = 140252213659392, concurrent migration: extent id = 1203 SSD_POOL -> HDD_POOL, time = 697 ms
+tid = 140252213659392, concurrent migration: extent id = 1204 SSD_POOL -> HDD_POOL, time = 602 ms
+tid = 140252213659392, concurrent migration: extent id = 1205 SSD_POOL -> HDD_POOL, time = 690 ms
+tid = 140252213659392, concurrent migration: extent id = 1206 SSD_POOL -> HDD_POOL, time = 642 ms
+tid = 140252213659392, concurrent migration: extent id = 1207 SSD_POOL -> HDD_POOL, time = 547 ms
+tid = 140252213659392, concurrent migration: extent id = 1208 SSD_POOL -> HDD_POOL, time = 443 ms
+tid = 140252213659392, concurrent migration: extent id = 1209 SSD_POOL -> HDD_POOL, time = 692 ms
+tid = 140252213659392, concurrent migration: extent id = 1210 SSD_POOL -> HDD_POOL, time = 767 ms
+tid = 140252213659392, concurrent migration: extent id = 1212 SSD_POOL -> HDD_POOL, time = 714 ms
+tid = 140252213659392, concurrent migration: extent id = 1213 SSD_POOL -> HDD_POOL, time = 820 ms
+tid = 140252213659392, concurrent migration: extent id = 1214 SSD_POOL -> HDD_POOL, time = 735 ms
+tid = 140252213659392, concurrent migration: extent id = 1215 SSD_POOL -> HDD_POOL, time = 705 ms
+tid = 140252213659392, concurrent migration: extent id = 1216 SSD_POOL -> HDD_POOL, time = 1088 ms
+tid = 140252213659392, concurrent migration: extent id = 1217 SSD_POOL -> HDD_POOL, time = 585 ms
+tid = 140252213659392, concurrent migration: extent id = 1218 SSD_POOL -> HDD_POOL, time = 597 ms
+tid = 140252213659392, concurrent migration: extent id = 1219 SSD_POOL -> HDD_POOL, time = 564 ms
+tid = 140252213659392, concurrent migration: extent id = 1220 SSD_POOL -> HDD_POOL, time = 748 ms
+tid = 140252213659392, concurrent migration: extent id = 1221 SSD_POOL -> HDD_POOL, time = 808 ms
+tid = 140252213659392, concurrent migration: extent id = 1222 SSD_POOL -> HDD_POOL, time = 829 ms
+tid = 140252213659392, concurrent migration: extent id = 1223 SSD_POOL -> HDD_POOL, time = 551 ms
+tid = 140252213659392, concurrent migration: extent id = 1224 SSD_POOL -> HDD_POOL, time = 488 ms
+tid = 140252213659392, concurrent migration: extent id = 1225 SSD_POOL -> HDD_POOL, time = 564 ms
+tid = 140252213659392, concurrent migration: extent id = 1227 SSD_POOL -> HDD_POOL, time = 606 ms
+
+sleep 82 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 1744, ssd extent num = 304, ssd ratio = 0.148438
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 56 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 1040 SSD_POOL -> HDD_POOL, time = 605 ms
+tid = 140252213659392, concurrent migration: extent id = 1052 SSD_POOL -> HDD_POOL, time = 485 ms
+tid = 140252213659392, concurrent migration: extent id = 1074 SSD_POOL -> HDD_POOL, time = 830 ms
+tid = 140252213659392, concurrent migration: extent id = 1118 SSD_POOL -> HDD_POOL, time = 592 ms
+tid = 140252213659392, concurrent migration: extent id = 1124 SSD_POOL -> HDD_POOL, time = 508 ms
+tid = 140252213659392, concurrent migration: extent id = 1130 SSD_POOL -> HDD_POOL, time = 777 ms
+tid = 140252213659392, concurrent migration: extent id = 1164 SSD_POOL -> HDD_POOL, time = 625 ms
+tid = 140252213659392, concurrent migration: extent id = 1183 SSD_POOL -> HDD_POOL, time = 604 ms
+tid = 140252213659392, concurrent migration: extent id = 1195 SSD_POOL -> HDD_POOL, time = 597 ms
+tid = 140252213659392, concurrent migration: extent id = 1228 SSD_POOL -> HDD_POOL, time = 741 ms
+tid = 140252213659392, concurrent migration: extent id = 1229 SSD_POOL -> HDD_POOL, time = 677 ms
+tid = 140252213659392, concurrent migration: extent id = 1230 SSD_POOL -> HDD_POOL, time = 515 ms
+tid = 140252213659392, concurrent migration: extent id = 1231 SSD_POOL -> HDD_POOL, time = 481 ms
+tid = 140252213659392, concurrent migration: extent id = 1232 SSD_POOL -> HDD_POOL, time = 1916 ms
+tid = 140252213659392, concurrent migration: extent id = 1233 SSD_POOL -> HDD_POOL, time = 590 ms
+tid = 140252213659392, concurrent migration: extent id = 1234 SSD_POOL -> HDD_POOL, time = 847 ms
+tid = 140252213659392, concurrent migration: extent id = 1235 SSD_POOL -> HDD_POOL, time = 584 ms
+tid = 140252213659392, concurrent migration: extent id = 1236 SSD_POOL -> HDD_POOL, time = 527 ms
+tid = 140252213659392, concurrent migration: extent id = 1237 SSD_POOL -> HDD_POOL, time = 668 ms
+tid = 140252213659392, concurrent migration: extent id = 1238 SSD_POOL -> HDD_POOL, time = 643 ms
+tid = 140252213659392, concurrent migration: extent id = 1239 SSD_POOL -> HDD_POOL, time = 795 ms
+tid = 140252213659392, concurrent migration: extent id = 1242 SSD_POOL -> HDD_POOL, time = 749 ms
+tid = 140252213659392, concurrent migration: extent id = 1243 SSD_POOL -> HDD_POOL, time = 751 ms
+tid = 140252213659392, concurrent migration: extent id = 1244 SSD_POOL -> HDD_POOL, time = 865 ms
+tid = 140252213659392, concurrent migration: extent id = 1245 SSD_POOL -> HDD_POOL, time = 657 ms
+tid = 140252213659392, concurrent migration: extent id = 1246 SSD_POOL -> HDD_POOL, time = 626 ms
+tid = 140252213659392, concurrent migration: extent id = 1247 SSD_POOL -> HDD_POOL, time = 543 ms
+tid = 140252213659392, concurrent migration: extent id = 1248 SSD_POOL -> HDD_POOL, time = 591 ms
+tid = 140252213659392, concurrent migration: extent id = 1249 SSD_POOL -> HDD_POOL, time = 753 ms
+tid = 140252213659392, concurrent migration: extent id = 1250 SSD_POOL -> HDD_POOL, time = 796 ms
+tid = 140252213659392, concurrent migration: extent id = 1251 SSD_POOL -> HDD_POOL, time = 763 ms
+tid = 140252213659392, concurrent migration: extent id = 1252 SSD_POOL -> HDD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 1253 SSD_POOL -> HDD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 1254 SSD_POOL -> HDD_POOL, time = 663 ms
+tid = 140252213659392, concurrent migration: extent id = 1255 SSD_POOL -> HDD_POOL, time = 660 ms
+tid = 140252213659392, concurrent migration: extent id = 1256 SSD_POOL -> HDD_POOL, time = 655 ms
+tid = 140252213659392, concurrent migration: extent id = 1257 SSD_POOL -> HDD_POOL, time = 576 ms
+tid = 140252213659392, concurrent migration: extent id = 1258 SSD_POOL -> HDD_POOL, time = 650 ms
+tid = 140252213659392, concurrent migration: extent id = 1259 SSD_POOL -> HDD_POOL, time = 729 ms
+tid = 140252213659392, concurrent migration: extent id = 1261 SSD_POOL -> HDD_POOL, time = 432 ms
+tid = 140252213659392, concurrent migration: extent id = 1262 SSD_POOL -> HDD_POOL, time = 727 ms
+tid = 140252213659392, concurrent migration: extent id = 1263 SSD_POOL -> HDD_POOL, time = 575 ms
+tid = 140252213659392, concurrent migration: extent id = 1265 SSD_POOL -> HDD_POOL, time = 1096 ms
+tid = 140252213659392, concurrent migration: extent id = 1267 SSD_POOL -> HDD_POOL, time = 650 ms
+tid = 140252213659392, concurrent migration: extent id = 1268 SSD_POOL -> HDD_POOL, time = 2405 ms
+tid = 140252213659392, concurrent migration: extent id = 1269 SSD_POOL -> HDD_POOL, time = 1153 ms
+tid = 140252213659392, concurrent migration: extent id = 1270 SSD_POOL -> HDD_POOL, time = 671 ms
+tid = 140252213659392, concurrent migration: extent id = 1271 SSD_POOL -> HDD_POOL, time = 436 ms
+tid = 140252213659392, concurrent migration: extent id = 1272 SSD_POOL -> HDD_POOL, time = 563 ms
+tid = 140252213659392, concurrent migration: extent id = 1273 SSD_POOL -> HDD_POOL, time = 695 ms
+tid = 140252213659392, concurrent migration: extent id = 1274 SSD_POOL -> HDD_POOL, time = 795 ms
+tid = 140252213659392, concurrent migration: extent id = 1275 SSD_POOL -> HDD_POOL, time = 600 ms
+tid = 140252213659392, concurrent migration: extent id = 1276 SSD_POOL -> HDD_POOL, time = 837 ms
+tid = 140252213659392, concurrent migration: extent id = 1277 SSD_POOL -> HDD_POOL, time = 357 ms
+tid = 140252213659392, concurrent migration: extent id = 1278 SSD_POOL -> HDD_POOL, time = 567 ms
+tid = 140252213659392, concurrent migration: extent id = 1279 SSD_POOL -> HDD_POOL, time = 698 ms
+
+sleep 79 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 1800, ssd extent num = 248, ssd ratio = 0.121094
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 48 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 2 SSD_POOL -> HDD_POOL, time = 625 ms
+tid = 140252213659392, concurrent migration: extent id = 5 SSD_POOL -> HDD_POOL, time = 698 ms
+tid = 140252213659392, concurrent migration: extent id = 6 SSD_POOL -> HDD_POOL, time = 761 ms
+tid = 140252213659392, concurrent migration: extent id = 547 SSD_POOL -> HDD_POOL, time = 605 ms
+tid = 140252213659392, concurrent migration: extent id = 627 SSD_POOL -> HDD_POOL, time = 723 ms
+tid = 140252213659392, concurrent migration: extent id = 686 SSD_POOL -> HDD_POOL, time = 476 ms
+tid = 140252213659392, concurrent migration: extent id = 1039 SSD_POOL -> HDD_POOL, time = 678 ms
+tid = 140252213659392, concurrent migration: extent id = 1041 SSD_POOL -> HDD_POOL, time = 1035 ms
+tid = 140252213659392, concurrent migration: extent id = 1042 SSD_POOL -> HDD_POOL, time = 750 ms
+tid = 140252213659392, concurrent migration: extent id = 1043 SSD_POOL -> HDD_POOL, time = 1534 ms
+tid = 140252213659392, concurrent migration: extent id = 1044 SSD_POOL -> HDD_POOL, time = 1293 ms
+tid = 140252213659392, concurrent migration: extent id = 1045 SSD_POOL -> HDD_POOL, time = 1170 ms
+tid = 140252213659392, concurrent migration: extent id = 1046 SSD_POOL -> HDD_POOL, time = 633 ms
+tid = 140252213659392, concurrent migration: extent id = 1047 SSD_POOL -> HDD_POOL, time = 1189 ms
+tid = 140252213659392, concurrent migration: extent id = 1094 SSD_POOL -> HDD_POOL, time = 1132 ms
+tid = 140252213659392, concurrent migration: extent id = 1141 SSD_POOL -> HDD_POOL, time = 1116 ms
+tid = 140252213659392, concurrent migration: extent id = 1157 SSD_POOL -> HDD_POOL, time = 1192 ms
+tid = 140252213659392, concurrent migration: extent id = 1177 SSD_POOL -> HDD_POOL, time = 785 ms
+tid = 140252213659392, concurrent migration: extent id = 1178 SSD_POOL -> HDD_POOL, time = 784 ms
+tid = 140252213659392, concurrent migration: extent id = 1211 SSD_POOL -> HDD_POOL, time = 924 ms
+tid = 140252213659392, concurrent migration: extent id = 1226 SSD_POOL -> HDD_POOL, time = 866 ms
+tid = 140252213659392, concurrent migration: extent id = 1241 SSD_POOL -> HDD_POOL, time = 1380 ms
+tid = 140252213659392, concurrent migration: extent id = 1264 SSD_POOL -> HDD_POOL, time = 1458 ms
+tid = 140252213659392, concurrent migration: extent id = 1266 SSD_POOL -> HDD_POOL, time = 604 ms
+tid = 140252213659392, concurrent migration: extent id = 1280 SSD_POOL -> HDD_POOL, time = 1042 ms
+tid = 140252213659392, concurrent migration: extent id = 1281 SSD_POOL -> HDD_POOL, time = 829 ms
+tid = 140252213659392, concurrent migration: extent id = 1282 SSD_POOL -> HDD_POOL, time = 1303 ms
+tid = 140252213659392, concurrent migration: extent id = 1283 SSD_POOL -> HDD_POOL, time = 1213 ms
+tid = 140252213659392, concurrent migration: extent id = 1284 SSD_POOL -> HDD_POOL, time = 828 ms
+tid = 140252213659392, concurrent migration: extent id = 1285 SSD_POOL -> HDD_POOL, time = 1232 ms
+tid = 140252213659392, concurrent migration: extent id = 1286 SSD_POOL -> HDD_POOL, time = 934 ms
+tid = 140252213659392, concurrent migration: extent id = 1287 SSD_POOL -> HDD_POOL, time = 887 ms
+tid = 140252213659392, concurrent migration: extent id = 1288 SSD_POOL -> HDD_POOL, time = 746 ms
+tid = 140252213659392, concurrent migration: extent id = 1289 SSD_POOL -> HDD_POOL, time = 972 ms
+tid = 140252213659392, concurrent migration: extent id = 1291 SSD_POOL -> HDD_POOL, time = 480 ms
+tid = 140252213659392, concurrent migration: extent id = 1292 SSD_POOL -> HDD_POOL, time = 959 ms
+tid = 140252213659392, concurrent migration: extent id = 1293 SSD_POOL -> HDD_POOL, time = 534 ms
+tid = 140252213659392, concurrent migration: extent id = 1294 SSD_POOL -> HDD_POOL, time = 646 ms
+tid = 140252213659392, concurrent migration: extent id = 1295 SSD_POOL -> HDD_POOL, time = 649 ms
+tid = 140252213659392, concurrent migration: extent id = 1296 SSD_POOL -> HDD_POOL, time = 537 ms
+tid = 140252213659392, concurrent migration: extent id = 1297 SSD_POOL -> HDD_POOL, time = 582 ms
+tid = 140252213659392, concurrent migration: extent id = 1298 SSD_POOL -> HDD_POOL, time = 556 ms
+tid = 140252213659392, concurrent migration: extent id = 1539 SSD_POOL -> HDD_POOL, time = 577 ms
+tid = 140252213659392, concurrent migration: extent id = 1540 SSD_POOL -> HDD_POOL, time = 469 ms
+tid = 140252213659392, concurrent migration: extent id = 1541 SSD_POOL -> HDD_POOL, time = 719 ms
+tid = 140252213659392, concurrent migration: extent id = 1543 SSD_POOL -> HDD_POOL, time = 630 ms
+tid = 140252213659392, concurrent migration: extent id = 1544 SSD_POOL -> HDD_POOL, time = 767 ms
+tid = 140252213659392, concurrent migration: extent id = 1545 SSD_POOL -> HDD_POOL, time = 553 ms
+
+sleep 74 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 1848, ssd extent num = 200, ssd ratio = 0.0976562
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 56 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 0 SSD_POOL -> HDD_POOL, time = 663 ms
+tid = 140252213659392, concurrent migration: extent id = 1 SSD_POOL -> HDD_POOL, time = 571 ms
+tid = 140252213659392, concurrent migration: extent id = 3 SSD_POOL -> HDD_POOL, time = 674 ms
+tid = 140252213659392, concurrent migration: extent id = 13 SSD_POOL -> HDD_POOL, time = 668 ms
+tid = 140252213659392, concurrent migration: extent id = 512 SSD_POOL -> HDD_POOL, time = 716 ms
+tid = 140252213659392, concurrent migration: extent id = 513 SSD_POOL -> HDD_POOL, time = 420 ms
+tid = 140252213659392, concurrent migration: extent id = 514 SSD_POOL -> HDD_POOL, time = 662 ms
+tid = 140252213659392, concurrent migration: extent id = 515 SSD_POOL -> HDD_POOL, time = 750 ms
+tid = 140252213659392, concurrent migration: extent id = 516 SSD_POOL -> HDD_POOL, time = 601 ms
+tid = 140252213659392, concurrent migration: extent id = 517 SSD_POOL -> HDD_POOL, time = 519 ms
+tid = 140252213659392, concurrent migration: extent id = 518 SSD_POOL -> HDD_POOL, time = 885 ms
+tid = 140252213659392, concurrent migration: extent id = 519 SSD_POOL -> HDD_POOL, time = 735 ms
+tid = 140252213659392, concurrent migration: extent id = 520 SSD_POOL -> HDD_POOL, time = 346 ms
+tid = 140252213659392, concurrent migration: extent id = 521 SSD_POOL -> HDD_POOL, time = 910 ms
+tid = 140252213659392, concurrent migration: extent id = 522 SSD_POOL -> HDD_POOL, time = 570 ms
+tid = 140252213659392, concurrent migration: extent id = 523 SSD_POOL -> HDD_POOL, time = 521 ms
+tid = 140252213659392, concurrent migration: extent id = 524 SSD_POOL -> HDD_POOL, time = 465 ms
+tid = 140252213659392, concurrent migration: extent id = 525 SSD_POOL -> HDD_POOL, time = 860 ms
+tid = 140252213659392, concurrent migration: extent id = 526 SSD_POOL -> HDD_POOL, time = 407 ms
+tid = 140252213659392, concurrent migration: extent id = 527 SSD_POOL -> HDD_POOL, time = 723 ms
+tid = 140252213659392, concurrent migration: extent id = 528 SSD_POOL -> HDD_POOL, time = 618 ms
+tid = 140252213659392, concurrent migration: extent id = 529 SSD_POOL -> HDD_POOL, time = 728 ms
+tid = 140252213659392, concurrent migration: extent id = 530 SSD_POOL -> HDD_POOL, time = 829 ms
+tid = 140252213659392, concurrent migration: extent id = 531 SSD_POOL -> HDD_POOL, time = 841 ms
+tid = 140252213659392, concurrent migration: extent id = 532 SSD_POOL -> HDD_POOL, time = 672 ms
+tid = 140252213659392, concurrent migration: extent id = 533 SSD_POOL -> HDD_POOL, time = 692 ms
+tid = 140252213659392, concurrent migration: extent id = 534 SSD_POOL -> HDD_POOL, time = 671 ms
+tid = 140252213659392, concurrent migration: extent id = 535 SSD_POOL -> HDD_POOL, time = 685 ms
+tid = 140252213659392, concurrent migration: extent id = 536 SSD_POOL -> HDD_POOL, time = 516 ms
+tid = 140252213659392, concurrent migration: extent id = 537 SSD_POOL -> HDD_POOL, time = 678 ms
+tid = 140252213659392, concurrent migration: extent id = 538 SSD_POOL -> HDD_POOL, time = 507 ms
+tid = 140252213659392, concurrent migration: extent id = 539 SSD_POOL -> HDD_POOL, time = 464 ms
+tid = 140252213659392, concurrent migration: extent id = 540 SSD_POOL -> HDD_POOL, time = 657 ms
+tid = 140252213659392, concurrent migration: extent id = 541 SSD_POOL -> HDD_POOL, time = 1739 ms
+tid = 140252213659392, concurrent migration: extent id = 542 SSD_POOL -> HDD_POOL, time = 740 ms
+tid = 140252213659392, concurrent migration: extent id = 543 SSD_POOL -> HDD_POOL, time = 947 ms
+tid = 140252213659392, concurrent migration: extent id = 544 SSD_POOL -> HDD_POOL, time = 571 ms
+tid = 140252213659392, concurrent migration: extent id = 545 SSD_POOL -> HDD_POOL, time = 776 ms
+tid = 140252213659392, concurrent migration: extent id = 546 SSD_POOL -> HDD_POOL, time = 942 ms
+tid = 140252213659392, concurrent migration: extent id = 548 SSD_POOL -> HDD_POOL, time = 652 ms
+tid = 140252213659392, concurrent migration: extent id = 549 SSD_POOL -> HDD_POOL, time = 536 ms
+tid = 140252213659392, concurrent migration: extent id = 550 SSD_POOL -> HDD_POOL, time = 551 ms
+tid = 140252213659392, concurrent migration: extent id = 551 SSD_POOL -> HDD_POOL, time = 625 ms
+tid = 140252213659392, concurrent migration: extent id = 552 SSD_POOL -> HDD_POOL, time = 693 ms
+tid = 140252213659392, concurrent migration: extent id = 553 SSD_POOL -> HDD_POOL, time = 579 ms
+tid = 140252213659392, concurrent migration: extent id = 554 SSD_POOL -> HDD_POOL, time = 585 ms
+tid = 140252213659392, concurrent migration: extent id = 555 SSD_POOL -> HDD_POOL, time = 729 ms
+tid = 140252213659392, concurrent migration: extent id = 556 SSD_POOL -> HDD_POOL, time = 589 ms
+tid = 140252213659392, concurrent migration: extent id = 557 SSD_POOL -> HDD_POOL, time = 395 ms
+tid = 140252213659392, concurrent migration: extent id = 558 SSD_POOL -> HDD_POOL, time = 688 ms
+tid = 140252213659392, concurrent migration: extent id = 559 SSD_POOL -> HDD_POOL, time = 562 ms
+tid = 140252213659392, concurrent migration: extent id = 560 SSD_POOL -> HDD_POOL, time = 658 ms
+tid = 140252213659392, concurrent migration: extent id = 561 SSD_POOL -> HDD_POOL, time = 702 ms
+tid = 140252213659392, concurrent migration: extent id = 562 SSD_POOL -> HDD_POOL, time = 717 ms
+tid = 140252213659392, concurrent migration: extent id = 563 SSD_POOL -> HDD_POOL, time = 620 ms
+tid = 140252213659392, concurrent migration: extent id = 564 SSD_POOL -> HDD_POOL, time = 603 ms
+
+sleep 82 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 1904, ssd extent num = 144, ssd ratio = 0.0703125
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 56 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 565 SSD_POOL -> HDD_POOL, time = 588 ms
+tid = 140252213659392, concurrent migration: extent id = 566 SSD_POOL -> HDD_POOL, time = 553 ms
+tid = 140252213659392, concurrent migration: extent id = 567 SSD_POOL -> HDD_POOL, time = 609 ms
+tid = 140252213659392, concurrent migration: extent id = 568 SSD_POOL -> HDD_POOL, time = 650 ms
+tid = 140252213659392, concurrent migration: extent id = 569 SSD_POOL -> HDD_POOL, time = 617 ms
+tid = 140252213659392, concurrent migration: extent id = 570 SSD_POOL -> HDD_POOL, time = 458 ms
+tid = 140252213659392, concurrent migration: extent id = 571 SSD_POOL -> HDD_POOL, time = 496 ms
+tid = 140252213659392, concurrent migration: extent id = 572 SSD_POOL -> HDD_POOL, time = 625 ms
+tid = 140252213659392, concurrent migration: extent id = 573 SSD_POOL -> HDD_POOL, time = 731 ms
+tid = 140252213659392, concurrent migration: extent id = 574 SSD_POOL -> HDD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 575 SSD_POOL -> HDD_POOL, time = 515 ms
+tid = 140252213659392, concurrent migration: extent id = 576 SSD_POOL -> HDD_POOL, time = 347 ms
+tid = 140252213659392, concurrent migration: extent id = 577 SSD_POOL -> HDD_POOL, time = 730 ms
+tid = 140252213659392, concurrent migration: extent id = 578 SSD_POOL -> HDD_POOL, time = 551 ms
+tid = 140252213659392, concurrent migration: extent id = 579 SSD_POOL -> HDD_POOL, time = 580 ms
+tid = 140252213659392, concurrent migration: extent id = 580 SSD_POOL -> HDD_POOL, time = 664 ms
+tid = 140252213659392, concurrent migration: extent id = 581 SSD_POOL -> HDD_POOL, time = 987 ms
+tid = 140252213659392, concurrent migration: extent id = 582 SSD_POOL -> HDD_POOL, time = 643 ms
+tid = 140252213659392, concurrent migration: extent id = 583 SSD_POOL -> HDD_POOL, time = 1088 ms
+tid = 140252213659392, concurrent migration: extent id = 584 SSD_POOL -> HDD_POOL, time = 657 ms
+tid = 140252213659392, concurrent migration: extent id = 585 SSD_POOL -> HDD_POOL, time = 615 ms
+tid = 140252213659392, concurrent migration: extent id = 586 SSD_POOL -> HDD_POOL, time = 585 ms
+tid = 140252213659392, concurrent migration: extent id = 587 SSD_POOL -> HDD_POOL, time = 556 ms
+tid = 140252213659392, concurrent migration: extent id = 588 SSD_POOL -> HDD_POOL, time = 597 ms
+tid = 140252213659392, concurrent migration: extent id = 589 SSD_POOL -> HDD_POOL, time = 487 ms
+tid = 140252213659392, concurrent migration: extent id = 590 SSD_POOL -> HDD_POOL, time = 591 ms
+tid = 140252213659392, concurrent migration: extent id = 591 SSD_POOL -> HDD_POOL, time = 1060 ms
+tid = 140252213659392, concurrent migration: extent id = 592 SSD_POOL -> HDD_POOL, time = 776 ms
+tid = 140252213659392, concurrent migration: extent id = 593 SSD_POOL -> HDD_POOL, time = 494 ms
+tid = 140252213659392, concurrent migration: extent id = 594 SSD_POOL -> HDD_POOL, time = 691 ms
+tid = 140252213659392, concurrent migration: extent id = 595 SSD_POOL -> HDD_POOL, time = 576 ms
+tid = 140252213659392, concurrent migration: extent id = 596 SSD_POOL -> HDD_POOL, time = 641 ms
+tid = 140252213659392, concurrent migration: extent id = 597 SSD_POOL -> HDD_POOL, time = 574 ms
+tid = 140252213659392, concurrent migration: extent id = 598 SSD_POOL -> HDD_POOL, time = 618 ms
+tid = 140252213659392, concurrent migration: extent id = 599 SSD_POOL -> HDD_POOL, time = 586 ms
+tid = 140252213659392, concurrent migration: extent id = 600 SSD_POOL -> HDD_POOL, time = 557 ms
+tid = 140252213659392, concurrent migration: extent id = 601 SSD_POOL -> HDD_POOL, time = 513 ms
+tid = 140252213659392, concurrent migration: extent id = 602 SSD_POOL -> HDD_POOL, time = 645 ms
+tid = 140252213659392, concurrent migration: extent id = 603 SSD_POOL -> HDD_POOL, time = 526 ms
+tid = 140252213659392, concurrent migration: extent id = 604 SSD_POOL -> HDD_POOL, time = 543 ms
+tid = 140252213659392, concurrent migration: extent id = 605 SSD_POOL -> HDD_POOL, time = 582 ms
+tid = 140252213659392, concurrent migration: extent id = 606 SSD_POOL -> HDD_POOL, time = 599 ms
+tid = 140252213659392, concurrent migration: extent id = 607 SSD_POOL -> HDD_POOL, time = 724 ms
+tid = 140252213659392, concurrent migration: extent id = 608 SSD_POOL -> HDD_POOL, time = 645 ms
+tid = 140252213659392, concurrent migration: extent id = 609 SSD_POOL -> HDD_POOL, time = 869 ms
+tid = 140252213659392, concurrent migration: extent id = 610 SSD_POOL -> HDD_POOL, time = 498 ms
+tid = 140252213659392, concurrent migration: extent id = 611 SSD_POOL -> HDD_POOL, time = 380 ms
+tid = 140252213659392, concurrent migration: extent id = 612 SSD_POOL -> HDD_POOL, time = 616 ms
+tid = 140252213659392, concurrent migration: extent id = 613 SSD_POOL -> HDD_POOL, time = 654 ms
+tid = 140252213659392, concurrent migration: extent id = 614 SSD_POOL -> HDD_POOL, time = 727 ms
+tid = 140252213659392, concurrent migration: extent id = 615 SSD_POOL -> HDD_POOL, time = 467 ms
+tid = 140252213659392, concurrent migration: extent id = 616 SSD_POOL -> HDD_POOL, time = 880 ms
+tid = 140252213659392, concurrent migration: extent id = 617 SSD_POOL -> HDD_POOL, time = 485 ms
+tid = 140252213659392, concurrent migration: extent id = 618 SSD_POOL -> HDD_POOL, time = 510 ms
+tid = 140252213659392, concurrent migration: extent id = 619 SSD_POOL -> HDD_POOL, time = 798 ms
+tid = 140252213659392, concurrent migration: extent id = 620 SSD_POOL -> HDD_POOL, time = 396 ms
+
+sleep 85 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 1960, ssd extent num = 88, ssd ratio = 0.0429688
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 56 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 621 SSD_POOL -> HDD_POOL, time = 768 ms
+tid = 140252213659392, concurrent migration: extent id = 622 SSD_POOL -> HDD_POOL, time = 587 ms
+tid = 140252213659392, concurrent migration: extent id = 623 SSD_POOL -> HDD_POOL, time = 529 ms
+tid = 140252213659392, concurrent migration: extent id = 624 SSD_POOL -> HDD_POOL, time = 661 ms
+tid = 140252213659392, concurrent migration: extent id = 625 SSD_POOL -> HDD_POOL, time = 797 ms
+tid = 140252213659392, concurrent migration: extent id = 626 SSD_POOL -> HDD_POOL, time = 753 ms
+tid = 140252213659392, concurrent migration: extent id = 628 SSD_POOL -> HDD_POOL, time = 707 ms
+tid = 140252213659392, concurrent migration: extent id = 629 SSD_POOL -> HDD_POOL, time = 1119 ms
+tid = 140252213659392, concurrent migration: extent id = 630 SSD_POOL -> HDD_POOL, time = 919 ms
+tid = 140252213659392, concurrent migration: extent id = 631 SSD_POOL -> HDD_POOL, time = 560 ms
+tid = 140252213659392, concurrent migration: extent id = 632 SSD_POOL -> HDD_POOL, time = 1136 ms
+tid = 140252213659392, concurrent migration: extent id = 633 SSD_POOL -> HDD_POOL, time = 623 ms
+tid = 140252213659392, concurrent migration: extent id = 634 SSD_POOL -> HDD_POOL, time = 708 ms
+tid = 140252213659392, concurrent migration: extent id = 635 SSD_POOL -> HDD_POOL, time = 572 ms
+tid = 140252213659392, concurrent migration: extent id = 636 SSD_POOL -> HDD_POOL, time = 557 ms
+tid = 140252213659392, concurrent migration: extent id = 637 SSD_POOL -> HDD_POOL, time = 566 ms
+tid = 140252213659392, concurrent migration: extent id = 638 SSD_POOL -> HDD_POOL, time = 600 ms
+tid = 140252213659392, concurrent migration: extent id = 639 SSD_POOL -> HDD_POOL, time = 697 ms
+tid = 140252213659392, concurrent migration: extent id = 640 SSD_POOL -> HDD_POOL, time = 525 ms
+tid = 140252213659392, concurrent migration: extent id = 641 SSD_POOL -> HDD_POOL, time = 456 ms
+tid = 140252213659392, concurrent migration: extent id = 642 SSD_POOL -> HDD_POOL, time = 442 ms
+tid = 140252213659392, concurrent migration: extent id = 643 SSD_POOL -> HDD_POOL, time = 654 ms
+tid = 140252213659392, concurrent migration: extent id = 644 SSD_POOL -> HDD_POOL, time = 748 ms
+tid = 140252213659392, concurrent migration: extent id = 645 SSD_POOL -> HDD_POOL, time = 895 ms
+tid = 140252213659392, concurrent migration: extent id = 646 SSD_POOL -> HDD_POOL, time = 711 ms
+tid = 140252213659392, concurrent migration: extent id = 647 SSD_POOL -> HDD_POOL, time = 933 ms
+tid = 140252213659392, concurrent migration: extent id = 648 SSD_POOL -> HDD_POOL, time = 618 ms
+tid = 140252213659392, concurrent migration: extent id = 649 SSD_POOL -> HDD_POOL, time = 586 ms
+tid = 140252213659392, concurrent migration: extent id = 650 SSD_POOL -> HDD_POOL, time = 653 ms
+tid = 140252213659392, concurrent migration: extent id = 651 SSD_POOL -> HDD_POOL, time = 595 ms
+tid = 140252213659392, concurrent migration: extent id = 652 SSD_POOL -> HDD_POOL, time = 659 ms
+tid = 140252213659392, concurrent migration: extent id = 653 SSD_POOL -> HDD_POOL, time = 469 ms
+tid = 140252213659392, concurrent migration: extent id = 654 SSD_POOL -> HDD_POOL, time = 566 ms
+tid = 140252213659392, concurrent migration: extent id = 655 SSD_POOL -> HDD_POOL, time = 499 ms
+tid = 140252213659392, concurrent migration: extent id = 656 SSD_POOL -> HDD_POOL, time = 650 ms
+tid = 140252213659392, concurrent migration: extent id = 657 SSD_POOL -> HDD_POOL, time = 851 ms
+tid = 140252213659392, concurrent migration: extent id = 658 SSD_POOL -> HDD_POOL, time = 411 ms
+tid = 140252213659392, concurrent migration: extent id = 659 SSD_POOL -> HDD_POOL, time = 766 ms
+tid = 140252213659392, concurrent migration: extent id = 660 SSD_POOL -> HDD_POOL, time = 452 ms
+tid = 140252213659392, concurrent migration: extent id = 661 SSD_POOL -> HDD_POOL, time = 496 ms
+tid = 140252213659392, concurrent migration: extent id = 662 SSD_POOL -> HDD_POOL, time = 512 ms
+tid = 140252213659392, concurrent migration: extent id = 663 SSD_POOL -> HDD_POOL, time = 1038 ms
+tid = 140252213659392, concurrent migration: extent id = 664 SSD_POOL -> HDD_POOL, time = 762 ms
+tid = 140252213659392, concurrent migration: extent id = 665 SSD_POOL -> HDD_POOL, time = 558 ms
+tid = 140252213659392, concurrent migration: extent id = 666 SSD_POOL -> HDD_POOL, time = 554 ms
+tid = 140252213659392, concurrent migration: extent id = 667 SSD_POOL -> HDD_POOL, time = 1161 ms
+tid = 140252213659392, concurrent migration: extent id = 668 SSD_POOL -> HDD_POOL, time = 736 ms
+tid = 140252213659392, concurrent migration: extent id = 669 SSD_POOL -> HDD_POOL, time = 935 ms
+tid = 140252213659392, concurrent migration: extent id = 670 SSD_POOL -> HDD_POOL, time = 619 ms
+tid = 140252213659392, concurrent migration: extent id = 671 SSD_POOL -> HDD_POOL, time = 533 ms
+tid = 140252213659392, concurrent migration: extent id = 672 SSD_POOL -> HDD_POOL, time = 603 ms
+tid = 140252213659392, concurrent migration: extent id = 673 SSD_POOL -> HDD_POOL, time = 536 ms
+tid = 140252213659392, concurrent migration: extent id = 674 SSD_POOL -> HDD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 675 SSD_POOL -> HDD_POOL, time = 797 ms
+tid = 140252213659392, concurrent migration: extent id = 676 SSD_POOL -> HDD_POOL, time = 526 ms
+tid = 140252213659392, concurrent migration: extent id = 677 SSD_POOL -> HDD_POOL, time = 609 ms
+
+sleep 81 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2016, ssd extent num = 32, ssd ratio = 0.015625
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 32 extent -> hdd pool, 0 extent -> ssd pool
+tid = 140252213659392, concurrent migration: extent id = 678 SSD_POOL -> HDD_POOL, time = 971 ms
+tid = 140252213659392, concurrent migration: extent id = 679 SSD_POOL -> HDD_POOL, time = 794 ms
+tid = 140252213659392, concurrent migration: extent id = 683 SSD_POOL -> HDD_POOL, time = 412 ms
+tid = 140252213659392, concurrent migration: extent id = 689 SSD_POOL -> HDD_POOL, time = 631 ms
+tid = 140252213659392, concurrent migration: extent id = 1024 SSD_POOL -> HDD_POOL, time = 622 ms
+tid = 140252213659392, concurrent migration: extent id = 1025 SSD_POOL -> HDD_POOL, time = 441 ms
+tid = 140252213659392, concurrent migration: extent id = 1026 SSD_POOL -> HDD_POOL, time = 626 ms
+tid = 140252213659392, concurrent migration: extent id = 1027 SSD_POOL -> HDD_POOL, time = 619 ms
+tid = 140252213659392, concurrent migration: extent id = 1028 SSD_POOL -> HDD_POOL, time = 451 ms
+tid = 140252213659392, concurrent migration: extent id = 1029 SSD_POOL -> HDD_POOL, time = 398 ms
+tid = 140252213659392, concurrent migration: extent id = 1030 SSD_POOL -> HDD_POOL, time = 465 ms
+tid = 140252213659392, concurrent migration: extent id = 1031 SSD_POOL -> HDD_POOL, time = 716 ms
+tid = 140252213659392, concurrent migration: extent id = 1032 SSD_POOL -> HDD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 1033 SSD_POOL -> HDD_POOL, time = 476 ms
+tid = 140252213659392, concurrent migration: extent id = 1034 SSD_POOL -> HDD_POOL, time = 611 ms
+tid = 140252213659392, concurrent migration: extent id = 1035 SSD_POOL -> HDD_POOL, time = 654 ms
+tid = 140252213659392, concurrent migration: extent id = 1036 SSD_POOL -> HDD_POOL, time = 820 ms
+tid = 140252213659392, concurrent migration: extent id = 1037 SSD_POOL -> HDD_POOL, time = 604 ms
+tid = 140252213659392, concurrent migration: extent id = 1038 SSD_POOL -> HDD_POOL, time = 2190 ms
+tid = 140252213659392, concurrent migration: extent id = 1048 SSD_POOL -> HDD_POOL, time = 447 ms
+tid = 140252213659392, concurrent migration: extent id = 1123 SSD_POOL -> HDD_POOL, time = 628 ms
+tid = 140252213659392, concurrent migration: extent id = 1240 SSD_POOL -> HDD_POOL, time = 726 ms
+tid = 140252213659392, concurrent migration: extent id = 1260 SSD_POOL -> HDD_POOL, time = 811 ms
+tid = 140252213659392, concurrent migration: extent id = 1290 SSD_POOL -> HDD_POOL, time = 792 ms
+tid = 140252213659392, concurrent migration: extent id = 1357 SSD_POOL -> HDD_POOL, time = 668 ms
+tid = 140252213659392, concurrent migration: extent id = 1373 SSD_POOL -> HDD_POOL, time = 530 ms
+tid = 140252213659392, concurrent migration: extent id = 1536 SSD_POOL -> HDD_POOL, time = 695 ms
+tid = 140252213659392, concurrent migration: extent id = 1537 SSD_POOL -> HDD_POOL, time = 702 ms
+tid = 140252213659392, concurrent migration: extent id = 1542 SSD_POOL -> HDD_POOL, time = 643 ms
+tid = 140252213659392, concurrent migration: extent id = 1554 SSD_POOL -> HDD_POOL, time = 692 ms
+tid = 140252213659392, concurrent migration: extent id = 1560 SSD_POOL -> HDD_POOL, time = 2200 ms
+tid = 140252213659392, concurrent migration: extent id = 1572 SSD_POOL -> HDD_POOL, time = 755 ms
+
+sleep 96 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+
+handle
+---------------Report---------------
+read iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 2048, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 2048, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 120 seconds
+qemu: terminating on signal 15 from pid 1659
+finalize WHOBBS
+restore to the default pool
+2014-03-28 05:04:45.167+0000: shutting down

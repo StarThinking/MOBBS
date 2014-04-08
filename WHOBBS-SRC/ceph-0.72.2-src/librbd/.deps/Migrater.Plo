@@ -623,7 +623,17 @@ librbd/Migrater.lo: librbd/Migrater.cc common/ceph_context.h \
  /usr/include/c++/4.6/bits/stl_queue.h osdc/WritebackHandler.h \
  librbd/SnapInfo.h librbd/WHOBBS.h librbd/Mapper.h librbd/Analyzer.h \
  librbd/Migrater.h librbd/internal.h librbd/WatchCtx.h \
- /usr/include/c++/4.6/ctime
+ /usr/include/c++/4.6/ctime /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/include/signal.h /usr/include/x86_64-linux-gnu/bits/signum.h \
+ /usr/include/x86_64-linux-gnu/bits/siginfo.h \
+ /usr/include/x86_64-linux-gnu/bits/sigaction.h \
+ /usr/include/x86_64-linux-gnu/bits/sigcontext.h \
+ /usr/include/x86_64-linux-gnu/bits/sigstack.h \
+ /usr/include/x86_64-linux-gnu/sys/ucontext.h \
+ /usr/include/x86_64-linux-gnu/bits/sigthread.h \
+ /usr/include/x86_64-linux-gnu/sys/resource.h \
+ /usr/include/x86_64-linux-gnu/bits/resource.h /usr/include/dlfcn.h \
+ /usr/include/x86_64-linux-gnu/bits/dlfcn.h
 
 common/ceph_context.h:
 
@@ -2226,3 +2236,29 @@ librbd/internal.h:
 librbd/WatchCtx.h:
 
 /usr/include/c++/4.6/ctime:
+
+/usr/include/x86_64-linux-gnu/sys/wait.h:
+
+/usr/include/signal.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigaction.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigstack.h:
+
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigthread.h:
+
+/usr/include/x86_64-linux-gnu/sys/resource.h:
+
+/usr/include/x86_64-linux-gnu/bits/resource.h:
+
+/usr/include/dlfcn.h:
+
+/usr/include/x86_64-linux-gnu/bits/dlfcn.h:

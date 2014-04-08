@@ -568,10 +568,11 @@ librbd/Analyzer.lo: librbd/Analyzer.cc common/ceph_context.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  common/strtol.h log/Log.h common/Thread.h log/Entry.h \
  common/PrebufferedStreambuf.h log/EntryQueue.h log/SubsystemMap.h \
- common/errno.h /usr/include/c++/4.6/ctime librbd/Analyzer.h \
- /usr/include/c++/4.6/queue /usr/include/c++/4.6/bits/stl_queue.h \
- librbd/WHOBBS.h librbd/Migrater.h librbd/ImageCtx.h common/RWLock.h \
- common/snap_types.h include/rbd/librbd.hpp \
+ common/errno.h /usr/include/c++/4.6/ctime /usr/include/c++/4.6/cmath \
+ librbd/Analyzer.h /usr/include/c++/4.6/queue \
+ /usr/include/c++/4.6/bits/stl_queue.h librbd/WHOBBS.h librbd/Migrater.h \
+ librbd/ImageCtx.h common/RWLock.h common/snap_types.h \
+ include/rbd/librbd.hpp \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdbool.h \
  include/rbd/../rados/buffer.h include/rbd/../rados/librados.hpp \
  include/rbd/../rados/buffer.h include/rbd/../rados/librados.h \
@@ -2007,6 +2008,8 @@ log/SubsystemMap.h:
 common/errno.h:
 
 /usr/include/c++/4.6/ctime:
+
+/usr/include/c++/4.6/cmath:
 
 librbd/Analyzer.h:
 

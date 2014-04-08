@@ -23,6 +23,7 @@ namespace librbd {
     void add_op(AnalyzerOp op);
     void add_read_lat(utime_t elapsed);
     void add_write_lat(utime_t elapsed);
+    static bool to_finilize;
 
   protected:
     void handle();
@@ -42,10 +43,13 @@ namespace librbd {
     Migrater *migrater;
   };
 
+//bool Analyzer::to_finilize = false;
+
   class AnalyzerReport
   {
   public:
     AnalyzerReport();
+    ~AnalyzerReport();
     AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat);
     void print_report();
     std::list<uint64_t> tend_to(int pool);

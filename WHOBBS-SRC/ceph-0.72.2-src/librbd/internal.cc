@@ -2075,8 +2075,10 @@ reprotect_and_return_err:
   void close_image(ImageCtx *ictx)
   {
     ldout(ictx->cct, 20) << "close_image " << ictx << dendl;
+
     // finalize WHOBBS
     ictx->finilize_WHOBBS();
+
     if (ictx->object_cacher)
       ictx->shutdown_cache(); // implicitly flushes
     else
@@ -2934,9 +2936,13 @@ reprotect_and_return_err:
           if(pool != MIGRATING_TO_SSD && pool != MIGRATING_TO_HDD)
             break;
           else {
+            cout << "write, during migration, sleep for 50 ms" << std::endl;
             msleep(50);
           }
         } while(1);
+
+        //cout << "aio write: pool = " << pool << ", objectno = " << p->objectno 
+	//<< ", oid.name = " << p->oid.name << std::endl;
 
 	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
@@ -3118,6 +3124,7 @@ reprotect_and_return_err:
           if(pool != MIGRATING_TO_SSD && pool != MIGRATING_TO_HDD)
             break;
           else {
+	    cout << "read, during migration, sleep for 50 ms" << std::endl;
             msleep(50);
           }
         } while(1);

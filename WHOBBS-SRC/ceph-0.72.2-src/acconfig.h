@@ -55,7 +55,7 @@
 
 /* Define to 1 if you have the `boost_system-mt' library (-lboost_system-mt).
    */
-/* #undef HAVE_LIBBOOST_SYSTEM_MT */
+#define HAVE_LIBBOOST_SYSTEM_MT 1
 
 /* Define to 1 if you have the `boost_thread' library (-lboost_thread). */
 /* #undef HAVE_LIBBOOST_THREAD */

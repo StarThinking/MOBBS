@@ -568,7 +568,61 @@ librbd/Mapper.lo: librbd/Mapper.cc common/ceph_context.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  common/strtol.h log/Log.h common/Thread.h log/Entry.h \
  common/PrebufferedStreambuf.h log/EntryQueue.h log/SubsystemMap.h \
- common/errno.h librbd/Mapper.h librbd/WHOBBS.h
+ common/errno.h librbd/ImageCtx.h common/RWLock.h common/snap_types.h \
+ include/rbd/librbd.hpp \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdbool.h \
+ include/rbd/../rados/buffer.h include/rbd/../rados/librados.hpp \
+ include/rbd/../rados/buffer.h include/rbd/../rados/librados.h \
+ include/rbd/../rados/rados_types.h include/rbd/../rados/rados_types.hpp \
+ include/rbd/librbd.h include/rbd/../rados/librados.h \
+ include/rbd/features.h include/rbd_types.h osdc/ObjectCacher.h \
+ include/lru.h include/Context.h include/xlist.h common/Cond.h \
+ common/Mutex.h common/Clock.h common/Finisher.h common/perf_counters.h \
+ osdc/Objecter.h osd/OSDMap.h osd/osd_types.h include/CompatSet.h \
+ include/histogram.h include/interval_set.h common/hobject.h \
+ include/object.h include/cmp.h json_spirit/json_spirit_value.h \
+ /usr/include/c++/4.6/cassert /usr/include/boost/cstdint.hpp \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+ /usr/include/boost/shared_ptr.hpp \
+ /usr/include/boost/smart_ptr/shared_ptr.hpp \
+ /usr/include/boost/config/no_tr1/memory.hpp \
+ /usr/include/boost/throw_exception.hpp \
+ /usr/include/boost/exception/detail/attribute_noreturn.hpp \
+ /usr/include/boost/exception/exception.hpp \
+ /usr/include/boost/smart_ptr/detail/shared_count.hpp \
+ /usr/include/boost/smart_ptr/bad_weak_ptr.hpp \
+ /usr/include/boost/smart_ptr/detail/sp_counted_base.hpp \
+ /usr/include/boost/smart_ptr/detail/sp_has_sync.hpp \
+ /usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp \
+ /usr/include/boost/detail/sp_typeinfo.hpp \
+ /usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp \
+ /usr/include/c++/4.6/functional \
+ /usr/include/boost/smart_ptr/detail/sp_convertible.hpp \
+ /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp \
+ /usr/include/boost/smart_ptr/detail/spinlock.hpp \
+ /usr/include/boost/smart_ptr/detail/spinlock_sync.hpp \
+ /usr/include/boost/smart_ptr/detail/yield_k.hpp \
+ /usr/include/boost/memory_order.hpp \
+ /usr/include/boost/smart_ptr/detail/operator_bool.hpp osd/Watch.h \
+ /usr/include/boost/intrusive_ptr.hpp \
+ /usr/include/boost/smart_ptr/intrusive_ptr.hpp \
+ /usr/include/boost/config/no_tr1/functional.hpp msg/Messenger.h \
+ msg/Message.h common/Throttle.h common/Cond.h msg/msg_types.h \
+ common/RefCountedObj.h common/debug.h msg/Dispatcher.h auth/Auth.h \
+ auth/Crypto.h include/ceph_features.h auth/Crypto.h osd/OpRequest.h \
+ msg/Message.h common/TrackedOp.h crush/CrushWrapper.h crush/crush.h \
+ crush/hash.h crush/mapper.h crush/builder.h include/err.h \
+ messages/MOSDOp.h osd/osd_types.h common/admin_socket.h common/Timer.h \
+ include/rados/rados_types.h include/rados/rados_types.hpp osdc/Striper.h \
+ cls/rbd/cls_rbd_client.h cls/lock/cls_lock_types.h \
+ include/rados/librados.hpp librbd/parent_types.h \
+ librbd/LibrbdWriteback.h /usr/include/c++/4.6/queue \
+ /usr/include/c++/4.6/bits/stl_queue.h osdc/WritebackHandler.h \
+ librbd/SnapInfo.h librbd/WHOBBS.h librbd/Mapper.h librbd/Analyzer.h \
+ librbd/Migrater.h
 
 common/ceph_context.h:
 
@@ -1952,6 +2006,216 @@ log/SubsystemMap.h:
 
 common/errno.h:
 
-librbd/Mapper.h:
+librbd/ImageCtx.h:
+
+common/RWLock.h:
+
+common/snap_types.h:
+
+include/rbd/librbd.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdbool.h:
+
+include/rbd/../rados/buffer.h:
+
+include/rbd/../rados/librados.hpp:
+
+include/rbd/../rados/buffer.h:
+
+include/rbd/../rados/librados.h:
+
+include/rbd/../rados/rados_types.h:
+
+include/rbd/../rados/rados_types.hpp:
+
+include/rbd/librbd.h:
+
+include/rbd/../rados/librados.h:
+
+include/rbd/features.h:
+
+include/rbd_types.h:
+
+osdc/ObjectCacher.h:
+
+include/lru.h:
+
+include/Context.h:
+
+include/xlist.h:
+
+common/Cond.h:
+
+common/Mutex.h:
+
+common/Clock.h:
+
+common/Finisher.h:
+
+common/perf_counters.h:
+
+osdc/Objecter.h:
+
+osd/OSDMap.h:
+
+osd/osd_types.h:
+
+include/CompatSet.h:
+
+include/histogram.h:
+
+include/interval_set.h:
+
+common/hobject.h:
+
+include/object.h:
+
+include/cmp.h:
+
+json_spirit/json_spirit_value.h:
+
+/usr/include/c++/4.6/cassert:
+
+/usr/include/boost/cstdint.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/limits.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
+
+/usr/include/boost/shared_ptr.hpp:
+
+/usr/include/boost/smart_ptr/shared_ptr.hpp:
+
+/usr/include/boost/config/no_tr1/memory.hpp:
+
+/usr/include/boost/throw_exception.hpp:
+
+/usr/include/boost/exception/detail/attribute_noreturn.hpp:
+
+/usr/include/boost/exception/exception.hpp:
+
+/usr/include/boost/smart_ptr/detail/shared_count.hpp:
+
+/usr/include/boost/smart_ptr/bad_weak_ptr.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_base.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_has_sync.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp:
+
+/usr/include/boost/detail/sp_typeinfo.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp:
+
+/usr/include/c++/4.6/functional:
+
+/usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
+
+/usr/include/boost/smart_ptr/detail/spinlock_pool.hpp:
+
+/usr/include/boost/smart_ptr/detail/spinlock.hpp:
+
+/usr/include/boost/smart_ptr/detail/spinlock_sync.hpp:
+
+/usr/include/boost/smart_ptr/detail/yield_k.hpp:
+
+/usr/include/boost/memory_order.hpp:
+
+/usr/include/boost/smart_ptr/detail/operator_bool.hpp:
+
+osd/Watch.h:
+
+/usr/include/boost/intrusive_ptr.hpp:
+
+/usr/include/boost/smart_ptr/intrusive_ptr.hpp:
+
+/usr/include/boost/config/no_tr1/functional.hpp:
+
+msg/Messenger.h:
+
+msg/Message.h:
+
+common/Throttle.h:
+
+common/Cond.h:
+
+msg/msg_types.h:
+
+common/RefCountedObj.h:
+
+common/debug.h:
+
+msg/Dispatcher.h:
+
+auth/Auth.h:
+
+auth/Crypto.h:
+
+include/ceph_features.h:
+
+auth/Crypto.h:
+
+osd/OpRequest.h:
+
+msg/Message.h:
+
+common/TrackedOp.h:
+
+crush/CrushWrapper.h:
+
+crush/crush.h:
+
+crush/hash.h:
+
+crush/mapper.h:
+
+crush/builder.h:
+
+include/err.h:
+
+messages/MOSDOp.h:
+
+osd/osd_types.h:
+
+common/admin_socket.h:
+
+common/Timer.h:
+
+include/rados/rados_types.h:
+
+include/rados/rados_types.hpp:
+
+osdc/Striper.h:
+
+cls/rbd/cls_rbd_client.h:
+
+cls/lock/cls_lock_types.h:
+
+include/rados/librados.hpp:
+
+librbd/parent_types.h:
+
+librbd/LibrbdWriteback.h:
+
+/usr/include/c++/4.6/queue:
+
+/usr/include/c++/4.6/bits/stl_queue.h:
+
+osdc/WritebackHandler.h:
+
+librbd/SnapInfo.h:
 
 librbd/WHOBBS.h:
+
+librbd/Mapper.h:
+
+librbd/Analyzer.h:
+
+librbd/Migrater.h:

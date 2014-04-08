@@ -36,23 +36,28 @@ namespace librbd {
     extent_map.map_size = size / EXTENT_SIZE;
     cout << "extent_map: map_size = " << extent_map.map_size << " ,extent_size = " << extent_map.extent_size << std::endl;
 
+    object_name = "extent-table";
+
     // initilize extent_map
-    std::map<uint64_t, int> *p = &(extent_map.map);
-   
+#ifdef RESTORE
+    std::map<uint64_t, int> *p = &(extent_map.map);   
     // set the default position 
     for(uint64_t i = 0; i < extent_map.map_size; i++) {
       int value = HDD_STRIDE;
       if(DEFAULT_POOL == SSD_POOL)
-        value = SSD_STRIDE;
-      
+        value = SSD_STRIDE;      
       (*p).insert( std::pair<uint64_t, int>(i, value));
     }
+#else
+    librados::bufferlist read_buf = Mapper::fetch_extent_table(this, object_name);
+    //cout << read_buf.c_str() << std::endl;
+#endif
 
     migrater = new Migrater(&extent_map, this);
     analyzer = new Analyzer(&extent_map, migrater);
+    
     // start a new thread to perform tasks of Analyzer
-    pthread_t id;
-    int ret = pthread_create(&id, NULL, Analyzer::startAnalyzer, analyzer);
+    int ret = pthread_create(&analyzer_pid, NULL, Analyzer::startAnalyzer, analyzer);
     if(ret != 0) {
       printf("Create pthread error!\n");
       exit(1);
@@ -64,7 +69,22 @@ namespace librbd {
   int ImageCtx::finilize_WHOBBS()
   {
     cout << "finalize WHOBBS" << std::endl;
-    migrater->restore_to_default_pool();
+    if(migrater->get_migrating()) {
+      cout << "notify migrater and analyzer to stop work" << std::endl;
+      migrater->to_finilize = true;
+      Analyzer::to_finilize = true;
+      while(migrater->get_migrating()) {
+        cout << "sleep 1 second and wait for migrater and analyzer stopping"  << std::endl;
+        sleep(1);
+      }
+    }
+    cout << "cancel and join analyzer thread" << std::endl;
+    pthread_cancel(analyzer_pid);
+    pthread_join(analyzer_pid, NULL);
+#ifndef RESTORE
+    Mapper::save_extent_table(this, object_name);
+#endif
+    cout << "succesfully saved extent table"  << std::endl;
     return 0;
   }
 

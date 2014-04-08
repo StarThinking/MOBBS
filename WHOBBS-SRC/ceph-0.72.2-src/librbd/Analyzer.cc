@@ -4,6 +4,7 @@
 #include "common/dout.h"
 #include "common/errno.h"
 #include <ctime>
+#include <cmath>
 
 #include "librbd/Analyzer.h"
 #include "librbd/Mapper.h"
@@ -14,19 +15,26 @@ namespace librbd {
     : extent_map_p(extent_map_p), migrater(migrater)
   {}
 
+  bool Analyzer::to_finilize = false;
+
   void *Analyzer::startAnalyzer(void *arg)
   {
     Analyzer *analyzer = (Analyzer *)arg;
     cout << "startAnalyzer" << std::endl;
     int analyze_time = 0;
+    int sleep_time;
     while(true) {
-      int sleep_time = INTERVAL - analyze_time;
+      if(!Analyzer::to_finilize)
+        sleep_time = INTERVAL - analyze_time;
+      else
+        sleep_time = INTERVAL;
+
       if(sleep_time > 0) {
         cout << "sleep " << sleep_time << " seconds" << std::endl;
 	sleep(sleep_time);
-    }
-    else
-      cout << "no sleep time" << std::endl;
+      }
+      else
+        cout << "no sleep time" << std::endl;
 
       time_t start = std::time(NULL);
       analyzer->handle();
@@ -68,17 +76,30 @@ namespace librbd {
     cout << "placement: " << placement_map_filtered[HDD_POOL].size() << " extent -> hdd pool" << ", " 
     	<< placement_map_filtered[SSD_POOL].size() << " extent -> ssd pool" << std::endl;
 
+    migrater->set_migrating(true);
     for(std::list<uint64_t>::iterator it = placement_map_filtered[HDD_POOL].begin(); it != placement_map_filtered[HDD_POOL].end(); it++) {
       uint64_t extent_id = *it;
       migrater->do_concurrent_migrate(extent_id, SSD_POOL, HDD_POOL);
+      sleep(1);
+      if(migrater->to_finilize) {
+        cout << "stop migration to shutdown"  << std::endl;
+        break;
+      }
     }
     
     for(std::list<uint64_t>::iterator it = placement_map_filtered[SSD_POOL].begin(); it != placement_map_filtered[SSD_POOL].end(); it++) {
       uint64_t extent_id = *it;
       migrater->do_concurrent_migrate(extent_id, HDD_POOL, SSD_POOL);
+      sleep(1);
+      if(migrater->to_finilize) {
+        cout << "stop migration to shutdown"  << std::endl;
+        break;
+      }
     }
+    migrater->set_migrating(false);
 #endif
     cout << std::endl;
+    
   }
 
   AnalyzerReport* Analyzer::create_report(ExtentMap *extent_map_p, std::queue<AnalyzerOp> *op_queue, std::queue<utime_t> *read_latency_queue, std::queue<utime_t> *write_latency_queue)
@@ -166,21 +187,28 @@ namespace librbd {
     bool type = op->get_type();
     uint64_t off = op->get_off();
     uint64_t len = op->get_len();
-
-    if(is_sequential(off)) {
+    uint64_t x1 = 8;
+    uint64_t x2 = (type == READ_OP)? SMALL_READ_SIZE : SMALL_WRITE_SIZE;
+    
+    if(is_sequential(off)) 
       score = 0;
-    } else {
-      if(type == READ_OP) {
-        if(len <= SMALL_READ_SIZE) {
-          score = 1;
-        }
-      } else {
-        if(len <= SMALL_WRITE_SIZE) {
-          score = 1;
-        }
+    else {
+      if(len <= x2)
+        score = 1;
+      else {
+        double fenmu = pow(2, x1);
+        double tmp = 8 - (std::log(len/x2) / std::log(2));
+        double fenzi = 0;
+        if(tmp < 0)
+          fenzi = 0;
+        else 
+          fenzi = pow(2, tmp);
+	//cout << "len = " << len << ", fenzi = " << fenzi << ", fenmu = " << fenmu << std::endl;
+        score = fenzi / fenmu;
       }
     }
-    return score;
+   // cout << "score = " << score << std::endl;
+    return (score / SLACKNESS);
   }
 
   bool Analyzer::is_sequential(uint64_t off)
@@ -243,7 +271,8 @@ namespace librbd {
 	    ssd_placement.push_back(id);
 	} else {
 	  if(value < SSD_STRIDE)
-	    extent_map_p->map[id] ++;
+	    extent_map_p->map[id] = SSD_STRIDE;
+	    //extent_map_p->map[id] ++;
 	}
       } else {
         if(value > 0) {
@@ -253,7 +282,8 @@ namespace librbd {
 	    hdd_placement.push_back(id);
 	} else {
 	  if(value > HDD_STRIDE)
-	    extent_map_p->map[id] --;
+	    extent_map_p->map[id] = HDD_STRIDE;
+	    //extent_map_p->map[id] --;
 	}
       }
       
@@ -303,6 +333,9 @@ namespace librbd {
 
   AnalyzerReport::AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat) :
   	extent_map_p(extent_map_p), read_score_map(read_score_map), write_score_map(write_score_map), ran_reads(ran_reads), ran_writes(ran_writes), seq_reads(seq_reads), seq_writes(seq_writes), read_bytes(read_bytes), write_bytes(write_bytes), read_avg_lat(read_avg_lat), write_avg_lat(write_avg_lat)
+  {}
+
+  AnalyzerReport::~AnalyzerReport()
   {}
 
   void AnalyzerReport::print_report()

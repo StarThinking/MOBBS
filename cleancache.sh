@@ -1,5 +1,7 @@
 #! /bin/bash
 
+sleep_time=$1
+
 ips[1]=6
 ips[2]=15
 ips[3]=19
@@ -22,7 +24,6 @@ function clean() {
 	done
 }
 
-sleep_time=120
 while true
 do
         clean

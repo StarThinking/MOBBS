@@ -43,6 +43,8 @@ namespace librbd {
     int finilize_WHOBBS();
     Analyzer *analyzer;
     Migrater *migrater;
+    pthread_t analyzer_pid;
+    std::string object_name;
     // WHOBBS
    
     CephContext *cct;
