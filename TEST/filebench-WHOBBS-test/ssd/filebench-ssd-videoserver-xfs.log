@@ -1,0 +1,9 @@
+Filebench Version 1.4.9.1
+ 1389: 0.000: Allocated 170MB of shared memory
+ 1389: 0.001: Eventgen rate taken from variable
+ 1389: 0.001: Video Server Version 3.0 personality successfully loaded
+ 1389: 0.001: Creating/pre-allocating files and filesets
+ 1389: 0.001: Fileset passivevids: 194 files, 0 leafdirs, avg dir width = 20, avg dir depth = 1.8, 3747216.091MB
+ 1389: 0.004: Removed any existing fileset passivevids in 1 seconds
+ 1389: 0.004: making tree for filset /mnt/passivevids
+ 1389: 0.035: Creating fileset passivevids...

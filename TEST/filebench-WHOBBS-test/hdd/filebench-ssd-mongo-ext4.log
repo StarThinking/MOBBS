@@ -1,0 +1,4 @@
+Filebench Version 1.4.9.1
+ 1382: 0.000: Allocated 170MB of shared memory
+ 1382: 0.001: Mongo-like Version 2.3 personality successfully loaded
+ 1382: 0.001: Creating/pre-allocating files and filesets

@@ -1,0 +1,670 @@
+Filebench Version 1.4.9.1
+ 1438: 0.000: Allocated 170MB of shared memory
+ 1438: 0.001: Eventgen rate taken from variable
+ 1438: 0.002: OLTP Version 3.0  personality successfully loaded
+ 1438: 0.002: Creating/pre-allocating files and filesets
+ 1438: 0.004: Fileset logfile: 1 files, 0 leafdirs, avg dir width = 1024, avg dir depth = 0.0, 20.000MB
+ 1438: 0.006: Removed any existing fileset logfile in 1 seconds
+ 1438: 0.006: making tree for filset /mnt/logfile
+ 1438: 0.220: Creating fileset logfile...
+ 1438: 0.234: Preallocated 1 of 1 of fileset logfile in 1 seconds
+ 1438: 0.234: Fileset datafiles: 10 files, 0 leafdirs, avg dir width = 1024, avg dir depth = 0.3, 16000.000MB
+ 1438: 0.236: Removed any existing fileset datafiles in 1 seconds
+ 1438: 0.236: making tree for filset /mnt/datafiles
+ 1438: 0.238: Creating fileset datafiles...
+ 1438: 203.245: Preallocated 10 of 10 of fileset datafiles in 204 seconds
+ 1438: 203.248: waiting for fileset pre-allocation to finish
+ 1445: 203.249: Starting 200 shadow instances
+ 1447: 203.263: Starting 1 shadow threads
+ 1465: 203.268: Starting 1 shadow threads
+ 1449: 203.268: Starting 1 shadow threads
+ 1448: 203.268: Starting 1 shadow threads
+ 1462: 203.268: Starting 1 shadow threads
+ 1450: 203.270: Starting 1 shadow threads
+ 1455: 203.270: Starting 1 shadow threads
+ 1471: 203.271: Starting 1 shadow threads
+ 1482: 203.273: Starting 1 shadow threads
+ 1478: 203.273: Starting 1 shadow threads
+ 1479: 203.273: Starting 1 shadow threads
+ 1468: 203.273: Starting 1 shadow threads
+ 1452: 203.273: Starting 1 shadow threads
+ 1457: 203.273: Starting 1 shadow threads
+ 1453: 203.273: Starting 1 shadow threads
+ 1446: 203.273: Starting 1 shadow threads
+ 1460: 203.273: Starting 1 shadow threads
+ 1459: 203.274: Starting 1 shadow threads
+ 1472: 203.274: Starting 1 shadow threads
+ 1483: 203.274: Starting 1 shadow threads
+ 1451: 203.276: Starting 1 shadow threads
+ 1463: 203.280: Starting 1 shadow threads
+ 1464: 203.280: Starting 1 shadow threads
+ 1461: 203.280: Starting 1 shadow threads
+ 1454: 203.280: Starting 1 shadow threads
+ 1467: 203.281: Starting 1 shadow threads
+ 1469: 203.281: Starting 1 shadow threads
+ 1477: 203.281: Starting 1 shadow threads
+ 1476: 203.281: Starting 1 shadow threads
+ 1473: 203.281: Starting 1 shadow threads
+ 1475: 203.281: Starting 1 shadow threads
+ 1474: 203.282: Starting 1 shadow threads
+ 1480: 203.282: Starting 1 shadow threads
+ 1470: 203.282: Starting 1 shadow threads
+ 1458: 203.282: Starting 1 shadow threads
+ 1481: 203.282: Starting 1 shadow threads
+ 1466: 203.282: Starting 1 shadow threads
+ 1456: 203.282: Starting 1 shadow threads
+ 1524: 203.290: Starting 1 shadow threads
+ 1484: 203.290: Starting 1 shadow threads
+ 1526: 203.290: Starting 1 shadow threads
+ 1530: 203.291: Starting 1 shadow threads
+ 1493: 203.292: Starting 1 shadow threads
+ 1534: 203.292: Starting 1 shadow threads
+ 1542: 203.294: Starting 1 shadow threads
+ 1538: 203.295: Starting 1 shadow threads
+ 1535: 203.296: Starting 1 shadow threads
+ 1537: 203.296: Starting 1 shadow threads
+ 1549: 203.297: Starting 1 shadow threads
+ 1545: 203.297: Starting 1 shadow threads
+ 1548: 203.298: Starting 1 shadow threads
+ 1547: 203.298: Starting 1 shadow threads
+ 1544: 203.298: Starting 1 shadow threads
+ 1551: 203.299: Starting 1 shadow threads
+ 1540: 203.299: Starting 1 shadow threads
+ 1546: 203.299: Starting 1 shadow threads
+ 1529: 203.299: Starting 1 shadow threads
+ 1543: 203.300: Starting 1 shadow threads
+ 1525: 203.300: Starting 1 shadow threads
+ 1566: 203.301: Starting 1 shadow threads
+ 1572: 203.301: Starting 1 shadow threads
+ 1559: 203.302: Starting 1 shadow threads
+ 1539: 203.302: Starting 1 shadow threads
+ 1570: 203.303: Starting 1 shadow threads
+ 1533: 203.303: Starting 1 shadow threads
+ 1577: 203.303: Starting 1 shadow threads
+ 1580: 203.305: Starting 1 shadow threads
+ 1571: 203.309: Starting 1 shadow threads
+ 1567: 203.309: Starting 1 shadow threads
+ 1574: 203.309: Starting 1 shadow threads
+ 1579: 203.310: Starting 1 shadow threads
+ 1576: 203.310: Starting 1 shadow threads
+ 1585: 203.310: Starting 1 shadow threads
+ 1592: 203.311: Starting 1 shadow threads
+ 1599: 203.312: Starting 1 shadow threads
+ 1590: 203.313: Starting 1 shadow threads
+ 1600: 203.313: Starting 1 shadow threads
+ 1608: 203.315: Starting 1 shadow threads
+ 1611: 203.316: Starting 1 shadow threads
+ 1575: 203.316: Starting 1 shadow threads
+ 1568: 203.318: Starting 1 shadow threads
+ 1615: 203.319: Starting 1 shadow threads
+ 1604: 203.319: Starting 1 shadow threads
+ 1603: 203.319: Starting 1 shadow threads
+ 1602: 203.319: Starting 1 shadow threads
+ 1618: 203.319: Starting 1 shadow threads
+ 1609: 203.321: Starting 1 shadow threads
+ 1624: 203.324: Starting 1 shadow threads
+ 1620: 203.324: Starting 1 shadow threads
+ 1597: 203.324: Starting 1 shadow threads
+ 1625: 203.324: Starting 1 shadow threads
+ 1614: 203.324: Starting 1 shadow threads
+ 1616: 203.325: Starting 1 shadow threads
+ 1617: 203.325: Starting 1 shadow threads
+ 1606: 203.325: Starting 1 shadow threads
+ 1605: 203.325: Starting 1 shadow threads
+ 1612: 203.325: Starting 1 shadow threads
+ 1595: 203.326: Starting 1 shadow threads
+ 1626: 203.327: Starting 1 shadow threads
+ 1627: 203.328: Starting 1 shadow threads
+ 1634: 203.329: Starting 1 shadow threads
+ 1652: 203.329: Starting 1 shadow threads
+ 1657: 203.330: Starting 1 shadow threads
+ 1660: 203.330: Starting 1 shadow threads
+ 1666: 203.331: Starting 1 shadow threads
+ 1663: 203.332: Starting 1 shadow threads
+ 1593: 203.332: Starting 1 shadow threads
+ 1601: 203.332: Starting 1 shadow threads
+ 1670: 203.332: Starting 1 shadow threads
+ 1656: 203.333: Starting 1 shadow threads
+ 1648: 203.333: Starting 1 shadow threads
+ 1672: 203.334: Starting 1 shadow threads
+ 1665: 203.334: Starting 1 shadow threads
+ 1673: 203.334: Starting 1 shadow threads
+ 1675: 203.334: Starting 1 shadow threads
+ 1661: 203.335: Starting 1 shadow threads
+ 1689: 203.336: Starting 1 shadow threads
+ 1683: 203.336: Starting 1 shadow threads
+ 1680: 203.337: Starting 1 shadow threads
+ 1695: 203.337: Starting 1 shadow threads
+ 1674: 203.338: Starting 1 shadow threads
+ 1668: 203.342: Starting 1 shadow threads
+ 1676: 203.342: Starting 1 shadow threads
+ 1654: 203.342: Starting 1 shadow threads
+ 1651: 203.342: Starting 1 shadow threads
+ 1658: 203.342: Starting 1 shadow threads
+ 1655: 203.343: Starting 1 shadow threads
+ 1694: 203.343: Starting 1 shadow threads
+ 1690: 203.343: Starting 1 shadow threads
+ 1664: 203.343: Starting 1 shadow threads
+ 1687: 203.344: Starting 1 shadow threads
+ 1671: 203.344: Starting 1 shadow threads
+ 1692: 203.347: Starting 1 shadow threads
+ 1697: 203.347: Starting 1 shadow threads
+ 1685: 203.347: Starting 1 shadow threads
+ 1693: 203.348: Starting 1 shadow threads
+ 1678: 203.348: Starting 1 shadow threads
+ 1662: 203.348: Starting 1 shadow threads
+ 1686: 203.349: Starting 1 shadow threads
+ 1706: 203.349: Starting 1 shadow threads
+ 1712: 203.349: Starting 1 shadow threads
+ 1650: 203.350: Starting 1 shadow threads
+ 1721: 203.350: Starting 1 shadow threads
+ 1718: 203.350: Starting 1 shadow threads
+ 1723: 203.353: Starting 1 shadow threads
+ 1722: 203.354: Starting 1 shadow threads
+ 1720: 203.355: Starting 1 shadow threads
+ 1732: 203.355: Starting 1 shadow threads
+ 1742: 203.357: Starting 1 shadow threads
+ 1745: 203.357: Starting 1 shadow threads
+ 1750: 203.359: Starting 1 shadow threads
+ 1752: 203.360: Starting 1 shadow threads
+ 1746: 203.361: Starting 1 shadow threads
+ 1758: 203.362: Starting 1 shadow threads
+ 1753: 203.363: Starting 1 shadow threads
+ 1755: 203.364: Starting 1 shadow threads
+ 1740: 203.366: Starting 1 shadow threads
+ 1749: 203.366: Starting 1 shadow threads
+ 1776: 203.367: Starting 1 shadow threads
+ 1764: 203.367: Starting 1 shadow threads
+ 1766: 203.368: Starting 1 shadow threads
+ 1762: 203.369: Starting 1 shadow threads
+ 1770: 203.369: Starting 1 shadow threads
+ 1769: 203.370: Starting 1 shadow threads
+ 1747: 203.370: Starting 1 shadow threads
+ 1777: 203.370: Starting 1 shadow threads
+ 1754: 203.370: Starting 1 shadow threads
+ 1774: 203.371: Starting 1 shadow threads
+ 1773: 203.371: Starting 1 shadow threads
+ 1775: 203.372: Starting 1 shadow threads
+ 1790: 203.376: Starting 1 shadow threads
+ 1788: 203.377: Starting 1 shadow threads
+ 1786: 203.378: Starting 1 shadow threads
+ 1760: 203.379: Starting 1 shadow threads
+ 1782: 203.379: Starting 1 shadow threads
+ 1761: 203.380: Starting 1 shadow threads
+ 1756: 203.380: Starting 1 shadow threads
+ 1783: 203.380: Starting 1 shadow threads
+ 1789: 203.380: Starting 1 shadow threads
+ 1781: 203.381: Starting 1 shadow threads
+ 1780: 203.381: Starting 1 shadow threads
+ 1792: 203.381: Starting 1 shadow threads
+ 1765: 203.381: Starting 1 shadow threads
+ 1741: 203.381: Starting 1 shadow threads
+ 1768: 203.382: Starting 1 shadow threads
+ 1794: 203.382: Starting 1 shadow threads
+ 1811: 203.383: Starting 1 shadow threads
+ 1819: 203.383: Starting 1 shadow threads
+ 1823: 203.385: Starting 1 shadow threads
+ 1824: 203.386: Starting 1 shadow threads
+ 1825: 203.387: Starting 1 shadow threads
+ 1445: 203.388: Starting 10 dbwr instances
+ 1833: 203.388: Starting 1 shadow threads
+ 1832: 203.388: Starting 1 shadow threads
+ 1826: 203.389: Starting 1 shadow threads
+ 1827: 203.390: Starting 1 shadow threads
+ 1822: 203.390: Starting 1 shadow threads
+ 1838: 203.390: Starting 1 dbwr threads
+ 1445: 203.391: Starting 1 lgwr instances
+ 1835: 203.391: Starting 1 shadow threads
+ 1852: 203.392: Starting 1 dbwr threads
+ 1847: 203.393: Starting 1 dbwr threads
+ 1834: 203.393: Starting 1 shadow threads
+ 1854: 203.393: Starting 1 lgwr threads
+ 1836: 203.393: Starting 1 shadow threads
+ 1845: 203.397: Starting 1 dbwr threads
+ 1851: 203.397: Starting 1 dbwr threads
+ 1840: 203.397: Starting 1 dbwr threads
+ 1837: 203.398: Starting 1 dbwr threads
+ 1829: 203.400: Starting 1 shadow threads
+ 1849: 203.400: Starting 1 dbwr threads
+ 1842: 203.401: Starting 1 dbwr threads
+ 1839: 203.402: Starting 1 dbwr threads
+ 1438: 212.404: Waiting for pid 1854 thread lgwr-1
+ 1438: 213.405: Waiting for pid 1854 thread lgwr-1
+ 1438: 222.407: Waiting for pid 1852 thread dbwr-1
+ 1438: 223.408: Waiting for pid 1852 thread dbwr-1
+ 1438: 232.410: Waiting for pid 1851 thread dbwr-1
+ 1438: 233.411: Waiting for pid 1851 thread dbwr-1
+ 1438: 242.414: Waiting for pid 1849 thread dbwr-1
+ 1438: 243.414: Waiting for pid 1849 thread dbwr-1
+ 1438: 252.416: Waiting for pid 1847 thread dbwr-1
+ 1438: 253.416: Waiting for pid 1847 thread dbwr-1
+ 1438: 262.418: Waiting for pid 1845 thread dbwr-1
+ 1438: 263.418: Waiting for pid 1845 thread dbwr-1
+ 1438: 272.419: Waiting for pid 1842 thread dbwr-1
+ 1438: 273.420: Waiting for pid 1842 thread dbwr-1
+ 1438: 282.422: Waiting for pid 1840 thread dbwr-1
+ 1438: 283.422: Waiting for pid 1840 thread dbwr-1
+ 1438: 292.423: Waiting for pid 1839 thread dbwr-1
+ 1438: 293.424: Waiting for pid 1839 thread dbwr-1
+ 1438: 302.425: Waiting for pid 1838 thread dbwr-1
+ 1438: 303.425: Waiting for pid 1838 thread dbwr-1
+ 1438: 312.427: Waiting for pid 1837 thread dbwr-1
+ 1438: 313.427: Waiting for pid 1837 thread dbwr-1
+ 1438: 322.429: Waiting for pid 1836 thread shadow-1
+ 1438: 323.429: Waiting for pid 1836 thread shadow-1
+ 1438: 332.431: Waiting for pid 1835 thread shadow-1
+ 1438: 333.431: Waiting for pid 1835 thread shadow-1
+ 1438: 342.433: Waiting for pid 1834 thread shadow-1
+ 1438: 343.434: Waiting for pid 1834 thread shadow-1
+ 1438: 352.435: Waiting for pid 1833 thread shadow-1
+ 1438: 353.435: Waiting for pid 1833 thread shadow-1
+ 1438: 362.437: Waiting for pid 1832 thread shadow-1
+ 1438: 363.438: Waiting for pid 1832 thread shadow-1
+ 1438: 372.440: Waiting for pid 1829 thread shadow-1
+ 1438: 373.440: Waiting for pid 1829 thread shadow-1
+ 1438: 382.442: Waiting for pid 1827 thread shadow-1
+ 1438: 383.442: Waiting for pid 1827 thread shadow-1
+ 1438: 392.444: Waiting for pid 1826 thread shadow-1
+ 1438: 393.444: Waiting for pid 1826 thread shadow-1
+ 1438: 402.446: Waiting for pid 1825 thread shadow-1
+ 1438: 403.446: Waiting for pid 1825 thread shadow-1
+ 1438: 412.448: Waiting for pid 1824 thread shadow-1
+ 1438: 413.449: Waiting for pid 1824 thread shadow-1
+ 1438: 422.450: Waiting for pid 1823 thread shadow-1
+ 1438: 423.451: Waiting for pid 1823 thread shadow-1
+ 1438: 432.452: Waiting for pid 1822 thread shadow-1
+ 1438: 433.453: Waiting for pid 1822 thread shadow-1
+ 1438: 442.455: Waiting for pid 1819 thread shadow-1
+ 1438: 443.455: Waiting for pid 1819 thread shadow-1
+ 1438: 452.457: Waiting for pid 1811 thread shadow-1
+ 1438: 453.458: Waiting for pid 1811 thread shadow-1
+ 1438: 462.460: Waiting for pid 1794 thread shadow-1
+ 1438: 463.460: Waiting for pid 1794 thread shadow-1
+ 1438: 472.462: Waiting for pid 1792 thread shadow-1
+ 1438: 473.462: Waiting for pid 1792 thread shadow-1
+ 1438: 482.465: Waiting for pid 1790 thread shadow-1
+ 1438: 483.465: Waiting for pid 1790 thread shadow-1
+ 1438: 492.467: Waiting for pid 1789 thread shadow-1
+ 1438: 493.467: Waiting for pid 1789 thread shadow-1
+ 1438: 502.470: Waiting for pid 1788 thread shadow-1
+ 1438: 503.470: Waiting for pid 1788 thread shadow-1
+ 1438: 512.472: Waiting for pid 1786 thread shadow-1
+ 1438: 513.472: Waiting for pid 1786 thread shadow-1
+ 1438: 522.474: Waiting for pid 1783 thread shadow-1
+ 1438: 523.475: Waiting for pid 1783 thread shadow-1
+ 1438: 532.477: Waiting for pid 1782 thread shadow-1
+ 1438: 533.477: Waiting for pid 1782 thread shadow-1
+ 1438: 542.479: Waiting for pid 1781 thread shadow-1
+ 1438: 543.480: Waiting for pid 1781 thread shadow-1
+ 1438: 552.482: Waiting for pid 1780 thread shadow-1
+ 1438: 553.482: Waiting for pid 1780 thread shadow-1
+ 1438: 562.484: Waiting for pid 1777 thread shadow-1
+ 1438: 563.485: Waiting for pid 1777 thread shadow-1
+ 1438: 572.487: Waiting for pid 1776 thread shadow-1
+ 1438: 573.487: Waiting for pid 1776 thread shadow-1
+ 1438: 582.489: Waiting for pid 1775 thread shadow-1
+ 1438: 583.490: Waiting for pid 1775 thread shadow-1
+ 1438: 592.492: Waiting for pid 1774 thread shadow-1
+ 1438: 593.492: Waiting for pid 1774 thread shadow-1
+ 1438: 602.494: Waiting for pid 1773 thread shadow-1
+ 1438: 603.495: Waiting for pid 1773 thread shadow-1
+ 1438: 612.497: Waiting for pid 1770 thread shadow-1
+ 1438: 613.497: Waiting for pid 1770 thread shadow-1
+ 1438: 622.499: Waiting for pid 1769 thread shadow-1
+ 1438: 623.499: Waiting for pid 1769 thread shadow-1
+ 1438: 632.501: Waiting for pid 1768 thread shadow-1
+ 1438: 633.502: Waiting for pid 1768 thread shadow-1
+ 1438: 642.504: Waiting for pid 1766 thread shadow-1
+ 1438: 643.504: Waiting for pid 1766 thread shadow-1
+ 1438: 652.506: Waiting for pid 1765 thread shadow-1
+ 1438: 653.507: Waiting for pid 1765 thread shadow-1
+ 1438: 662.509: Waiting for pid 1764 thread shadow-1
+ 1438: 663.509: Waiting for pid 1764 thread shadow-1
+ 1438: 672.511: Waiting for pid 1762 thread shadow-1
+ 1438: 673.512: Waiting for pid 1762 thread shadow-1
+ 1438: 682.514: Waiting for pid 1761 thread shadow-1
+ 1438: 683.514: Waiting for pid 1761 thread shadow-1
+ 1438: 692.516: Waiting for pid 1760 thread shadow-1
+ 1438: 693.517: Waiting for pid 1760 thread shadow-1
+ 1438: 702.519: Waiting for pid 1758 thread shadow-1
+ 1438: 703.519: Waiting for pid 1758 thread shadow-1
+ 1438: 712.521: Waiting for pid 1756 thread shadow-1
+ 1438: 713.522: Waiting for pid 1756 thread shadow-1
+ 1438: 722.524: Waiting for pid 1755 thread shadow-1
+ 1438: 723.525: Waiting for pid 1755 thread shadow-1
+ 1438: 732.527: Waiting for pid 1754 thread shadow-1
+ 1438: 733.527: Waiting for pid 1754 thread shadow-1
+ 1438: 742.529: Waiting for pid 1753 thread shadow-1
+ 1438: 743.530: Waiting for pid 1753 thread shadow-1
+ 1438: 752.532: Waiting for pid 1752 thread shadow-1
+ 1438: 753.532: Waiting for pid 1752 thread shadow-1
+ 1438: 762.534: Waiting for pid 1750 thread shadow-1
+ 1438: 763.534: Waiting for pid 1750 thread shadow-1
+ 1438: 772.536: Waiting for pid 1749 thread shadow-1
+ 1438: 773.536: Waiting for pid 1749 thread shadow-1
+ 1438: 782.538: Waiting for pid 1747 thread shadow-1
+ 1438: 783.539: Waiting for pid 1747 thread shadow-1
+ 1438: 792.541: Waiting for pid 1746 thread shadow-1
+ 1438: 793.541: Waiting for pid 1746 thread shadow-1
+ 1438: 802.543: Waiting for pid 1745 thread shadow-1
+ 1438: 803.543: Waiting for pid 1745 thread shadow-1
+ 1438: 812.545: Waiting for pid 1742 thread shadow-1
+ 1438: 813.545: Waiting for pid 1742 thread shadow-1
+ 1438: 822.547: Waiting for pid 1741 thread shadow-1
+ 1438: 823.548: Waiting for pid 1741 thread shadow-1
+ 1438: 832.549: Waiting for pid 1740 thread shadow-1
+ 1438: 833.550: Waiting for pid 1740 thread shadow-1
+ 1438: 842.552: Waiting for pid 1732 thread shadow-1
+ 1438: 843.552: Waiting for pid 1732 thread shadow-1
+ 1438: 852.554: Waiting for pid 1723 thread shadow-1
+ 1438: 853.554: Waiting for pid 1723 thread shadow-1
+ 1438: 862.556: Waiting for pid 1722 thread shadow-1
+ 1438: 863.556: Waiting for pid 1722 thread shadow-1
+ 1438: 872.558: Waiting for pid 1721 thread shadow-1
+ 1438: 873.559: Waiting for pid 1721 thread shadow-1
+ 1438: 882.561: Waiting for pid 1720 thread shadow-1
+ 1438: 883.561: Waiting for pid 1720 thread shadow-1
+ 1438: 892.563: Waiting for pid 1718 thread shadow-1
+ 1438: 893.563: Waiting for pid 1718 thread shadow-1
+ 1438: 902.565: Waiting for pid 1712 thread shadow-1
+ 1438: 903.565: Waiting for pid 1712 thread shadow-1
+ 1438: 912.567: Waiting for pid 1706 thread shadow-1
+ 1438: 913.568: Waiting for pid 1706 thread shadow-1
+ 1438: 922.570: Waiting for pid 1697 thread shadow-1
+ 1438: 923.570: Waiting for pid 1697 thread shadow-1
+ 1438: 932.572: Waiting for pid 1695 thread shadow-1
+ 1438: 933.572: Waiting for pid 1695 thread shadow-1
+ 1438: 942.574: Waiting for pid 1694 thread shadow-1
+ 1438: 943.574: Waiting for pid 1694 thread shadow-1
+ 1438: 952.576: Waiting for pid 1693 thread shadow-1
+ 1438: 953.577: Waiting for pid 1693 thread shadow-1
+ 1438: 962.579: Waiting for pid 1692 thread shadow-1
+ 1438: 963.579: Waiting for pid 1692 thread shadow-1
+ 1438: 972.581: Waiting for pid 1690 thread shadow-1
+ 1438: 973.581: Waiting for pid 1690 thread shadow-1
+ 1438: 982.583: Waiting for pid 1689 thread shadow-1
+ 1438: 983.583: Waiting for pid 1689 thread shadow-1
+ 1438: 992.585: Waiting for pid 1687 thread shadow-1
+ 1438: 993.586: Waiting for pid 1687 thread shadow-1
+ 1438: 1002.588: Waiting for pid 1686 thread shadow-1
+ 1438: 1003.588: Waiting for pid 1686 thread shadow-1
+ 1438: 1012.590: Waiting for pid 1685 thread shadow-1
+ 1438: 1013.590: Waiting for pid 1685 thread shadow-1
+ 1438: 1022.592: Waiting for pid 1683 thread shadow-1
+ 1438: 1023.592: Waiting for pid 1683 thread shadow-1
+ 1438: 1032.594: Waiting for pid 1680 thread shadow-1
+ 1438: 1033.594: Waiting for pid 1680 thread shadow-1
+ 1438: 1042.596: Waiting for pid 1678 thread shadow-1
+ 1438: 1043.597: Waiting for pid 1678 thread shadow-1
+ 1438: 1052.599: Waiting for pid 1676 thread shadow-1
+ 1438: 1053.599: Waiting for pid 1676 thread shadow-1
+ 1438: 1062.601: Waiting for pid 1675 thread shadow-1
+ 1438: 1063.601: Waiting for pid 1675 thread shadow-1
+ 1438: 1072.603: Waiting for pid 1674 thread shadow-1
+ 1438: 1073.603: Waiting for pid 1674 thread shadow-1
+ 1438: 1082.605: Waiting for pid 1673 thread shadow-1
+ 1438: 1083.605: Waiting for pid 1673 thread shadow-1
+ 1438: 1092.607: Waiting for pid 1672 thread shadow-1
+ 1438: 1093.608: Waiting for pid 1672 thread shadow-1
+ 1438: 1102.610: Waiting for pid 1671 thread shadow-1
+ 1438: 1103.610: Waiting for pid 1671 thread shadow-1
+ 1438: 1112.612: Waiting for pid 1670 thread shadow-1
+ 1438: 1113.612: Waiting for pid 1670 thread shadow-1
+ 1438: 1122.614: Waiting for pid 1668 thread shadow-1
+ 1438: 1123.614: Waiting for pid 1668 thread shadow-1
+ 1438: 1132.616: Waiting for pid 1666 thread shadow-1
+ 1438: 1133.617: Waiting for pid 1666 thread shadow-1
+ 1438: 1142.619: Waiting for pid 1665 thread shadow-1
+ 1438: 1143.619: Waiting for pid 1665 thread shadow-1
+ 1438: 1152.621: Waiting for pid 1664 thread shadow-1
+ 1438: 1153.621: Waiting for pid 1664 thread shadow-1
+ 1438: 1162.623: Waiting for pid 1663 thread shadow-1
+ 1438: 1163.623: Waiting for pid 1663 thread shadow-1
+ 1438: 1172.625: Waiting for pid 1662 thread shadow-1
+ 1438: 1173.626: Waiting for pid 1662 thread shadow-1
+ 1438: 1182.628: Waiting for pid 1661 thread shadow-1
+ 1438: 1183.628: Waiting for pid 1661 thread shadow-1
+ 1438: 1192.630: Waiting for pid 1660 thread shadow-1
+ 1438: 1193.630: Waiting for pid 1660 thread shadow-1
+ 1438: 1202.632: Waiting for pid 1658 thread shadow-1
+ 1438: 1203.632: Waiting for pid 1658 thread shadow-1
+ 1438: 1212.634: Waiting for pid 1657 thread shadow-1
+ 1438: 1213.635: Waiting for pid 1657 thread shadow-1
+ 1438: 1222.637: Waiting for pid 1656 thread shadow-1
+ 1438: 1223.637: Waiting for pid 1656 thread shadow-1
+ 1438: 1232.639: Waiting for pid 1655 thread shadow-1
+ 1438: 1233.639: Waiting for pid 1655 thread shadow-1
+ 1438: 1242.641: Waiting for pid 1654 thread shadow-1
+ 1438: 1243.641: Waiting for pid 1654 thread shadow-1
+ 1438: 1252.643: Waiting for pid 1652 thread shadow-1
+ 1438: 1253.644: Waiting for pid 1652 thread shadow-1
+ 1438: 1262.646: Waiting for pid 1651 thread shadow-1
+ 1438: 1263.646: Waiting for pid 1651 thread shadow-1
+ 1438: 1272.648: Waiting for pid 1650 thread shadow-1
+ 1438: 1273.648: Waiting for pid 1650 thread shadow-1
+ 1438: 1282.650: Waiting for pid 1648 thread shadow-1
+ 1438: 1283.650: Waiting for pid 1648 thread shadow-1
+ 1438: 1292.652: Waiting for pid 1634 thread shadow-1
+ 1438: 1293.653: Waiting for pid 1634 thread shadow-1
+ 1438: 1302.655: Waiting for pid 1627 thread shadow-1
+ 1438: 1303.655: Waiting for pid 1627 thread shadow-1
+ 1438: 1312.657: Waiting for pid 1626 thread shadow-1
+ 1438: 1313.657: Waiting for pid 1626 thread shadow-1
+ 1438: 1322.659: Waiting for pid 1625 thread shadow-1
+ 1438: 1323.659: Waiting for pid 1625 thread shadow-1
+ 1438: 1332.661: Waiting for pid 1624 thread shadow-1
+ 1438: 1333.661: Waiting for pid 1624 thread shadow-1
+ 1438: 1342.663: Waiting for pid 1620 thread shadow-1
+ 1438: 1343.664: Waiting for pid 1620 thread shadow-1
+ 1438: 1352.666: Waiting for pid 1618 thread shadow-1
+ 1438: 1353.666: Waiting for pid 1618 thread shadow-1
+ 1438: 1362.668: Waiting for pid 1617 thread shadow-1
+ 1438: 1363.668: Waiting for pid 1617 thread shadow-1
+ 1438: 1372.670: Waiting for pid 1616 thread shadow-1
+ 1438: 1373.670: Waiting for pid 1616 thread shadow-1
+ 1438: 1382.672: Waiting for pid 1615 thread shadow-1
+ 1438: 1383.673: Waiting for pid 1615 thread shadow-1
+ 1438: 1392.675: Waiting for pid 1614 thread shadow-1
+ 1438: 1393.675: Waiting for pid 1614 thread shadow-1
+ 1438: 1402.677: Waiting for pid 1612 thread shadow-1
+ 1438: 1403.677: Waiting for pid 1612 thread shadow-1
+ 1438: 1412.679: Waiting for pid 1611 thread shadow-1
+ 1438: 1413.679: Waiting for pid 1611 thread shadow-1
+ 1438: 1422.681: Waiting for pid 1609 thread shadow-1
+ 1438: 1423.681: Waiting for pid 1609 thread shadow-1
+ 1438: 1432.683: Waiting for pid 1608 thread shadow-1
+ 1438: 1433.684: Waiting for pid 1608 thread shadow-1
+ 1438: 1442.686: Waiting for pid 1606 thread shadow-1
+ 1438: 1443.686: Waiting for pid 1606 thread shadow-1
+ 1438: 1452.688: Waiting for pid 1605 thread shadow-1
+ 1438: 1453.688: Waiting for pid 1605 thread shadow-1
+ 1438: 1462.690: Waiting for pid 1604 thread shadow-1
+ 1438: 1463.690: Waiting for pid 1604 thread shadow-1
+ 1438: 1472.692: Waiting for pid 1603 thread shadow-1
+ 1438: 1473.692: Waiting for pid 1603 thread shadow-1
+ 1438: 1482.695: Waiting for pid 1602 thread shadow-1
+ 1438: 1483.695: Waiting for pid 1602 thread shadow-1
+ 1438: 1492.697: Waiting for pid 1601 thread shadow-1
+ 1438: 1493.697: Waiting for pid 1601 thread shadow-1
+ 1438: 1502.699: Waiting for pid 1600 thread shadow-1
+ 1438: 1503.699: Waiting for pid 1600 thread shadow-1
+ 1438: 1512.701: Waiting for pid 1599 thread shadow-1
+ 1438: 1513.701: Waiting for pid 1599 thread shadow-1
+ 1438: 1522.703: Waiting for pid 1597 thread shadow-1
+ 1438: 1523.704: Waiting for pid 1597 thread shadow-1
+ 1438: 1532.706: Waiting for pid 1595 thread shadow-1
+ 1438: 1533.706: Waiting for pid 1595 thread shadow-1
+ 1438: 1542.708: Waiting for pid 1593 thread shadow-1
+ 1438: 1543.708: Waiting for pid 1593 thread shadow-1
+ 1438: 1552.710: Waiting for pid 1592 thread shadow-1
+ 1438: 1553.710: Waiting for pid 1592 thread shadow-1
+ 1438: 1562.712: Waiting for pid 1590 thread shadow-1
+ 1438: 1563.713: Waiting for pid 1590 thread shadow-1
+ 1438: 1572.715: Waiting for pid 1585 thread shadow-1
+ 1438: 1573.715: Waiting for pid 1585 thread shadow-1
+ 1438: 1582.717: Waiting for pid 1580 thread shadow-1
+ 1438: 1583.717: Waiting for pid 1580 thread shadow-1
+ 1438: 1592.719: Waiting for pid 1579 thread shadow-1
+ 1438: 1593.719: Waiting for pid 1579 thread shadow-1
+ 1438: 1602.721: Waiting for pid 1577 thread shadow-1
+ 1438: 1603.722: Waiting for pid 1577 thread shadow-1
+ 1438: 1612.724: Waiting for pid 1576 thread shadow-1
+ 1438: 1613.724: Waiting for pid 1576 thread shadow-1
+ 1438: 1622.726: Waiting for pid 1575 thread shadow-1
+ 1438: 1623.726: Waiting for pid 1575 thread shadow-1
+ 1438: 1632.728: Waiting for pid 1574 thread shadow-1
+ 1438: 1633.728: Waiting for pid 1574 thread shadow-1
+ 1438: 1642.730: Waiting for pid 1572 thread shadow-1
+ 1438: 1643.731: Waiting for pid 1572 thread shadow-1
+ 1438: 1652.733: Waiting for pid 1571 thread shadow-1
+ 1438: 1653.733: Waiting for pid 1571 thread shadow-1
+ 1438: 1662.735: Waiting for pid 1570 thread shadow-1
+ 1438: 1663.735: Waiting for pid 1570 thread shadow-1
+ 1438: 1672.737: Waiting for pid 1568 thread shadow-1
+ 1438: 1673.738: Waiting for pid 1568 thread shadow-1
+ 1438: 1682.740: Waiting for pid 1567 thread shadow-1
+ 1438: 1683.740: Waiting for pid 1567 thread shadow-1
+ 1438: 1692.742: Waiting for pid 1566 thread shadow-1
+ 1438: 1693.742: Waiting for pid 1566 thread shadow-1
+ 1438: 1702.744: Waiting for pid 1559 thread shadow-1
+ 1438: 1703.744: Waiting for pid 1559 thread shadow-1
+ 1438: 1712.746: Waiting for pid 1551 thread shadow-1
+ 1438: 1713.747: Waiting for pid 1551 thread shadow-1
+ 1438: 1722.749: Waiting for pid 1549 thread shadow-1
+ 1438: 1723.749: Waiting for pid 1549 thread shadow-1
+ 1438: 1732.751: Waiting for pid 1548 thread shadow-1
+ 1438: 1733.751: Waiting for pid 1548 thread shadow-1
+ 1438: 1742.753: Waiting for pid 1547 thread shadow-1
+ 1438: 1743.753: Waiting for pid 1547 thread shadow-1
+ 1438: 1752.755: Waiting for pid 1546 thread shadow-1
+ 1438: 1753.756: Waiting for pid 1546 thread shadow-1
+ 1438: 1762.758: Waiting for pid 1545 thread shadow-1
+ 1438: 1763.758: Waiting for pid 1545 thread shadow-1
+ 1438: 1772.760: Waiting for pid 1544 thread shadow-1
+ 1438: 1773.760: Waiting for pid 1544 thread shadow-1
+ 1438: 1782.762: Waiting for pid 1543 thread shadow-1
+ 1438: 1783.762: Waiting for pid 1543 thread shadow-1
+ 1438: 1792.764: Waiting for pid 1542 thread shadow-1
+ 1438: 1793.765: Waiting for pid 1542 thread shadow-1
+ 1438: 1802.767: Waiting for pid 1540 thread shadow-1
+ 1438: 1803.767: Waiting for pid 1540 thread shadow-1
+ 1438: 1812.769: Waiting for pid 1539 thread shadow-1
+ 1438: 1813.769: Waiting for pid 1539 thread shadow-1
+ 1438: 1822.771: Waiting for pid 1538 thread shadow-1
+ 1438: 1823.771: Waiting for pid 1538 thread shadow-1
+ 1438: 1832.773: Waiting for pid 1537 thread shadow-1
+ 1438: 1833.774: Waiting for pid 1537 thread shadow-1
+ 1438: 1842.776: Waiting for pid 1535 thread shadow-1
+ 1438: 1843.776: Waiting for pid 1535 thread shadow-1
+ 1438: 1852.778: Waiting for pid 1534 thread shadow-1
+ 1438: 1853.778: Waiting for pid 1534 thread shadow-1
+ 1438: 1862.780: Waiting for pid 1533 thread shadow-1
+ 1438: 1863.780: Waiting for pid 1533 thread shadow-1
+ 1438: 1872.782: Waiting for pid 1530 thread shadow-1
+ 1438: 1873.782: Waiting for pid 1530 thread shadow-1
+ 1438: 1882.784: Waiting for pid 1529 thread shadow-1
+ 1438: 1883.785: Waiting for pid 1529 thread shadow-1
+ 1438: 1892.787: Waiting for pid 1526 thread shadow-1
+ 1438: 1893.787: Waiting for pid 1526 thread shadow-1
+ 1438: 1902.789: Waiting for pid 1525 thread shadow-1
+ 1438: 1903.789: Waiting for pid 1525 thread shadow-1
+ 1438: 1912.791: Waiting for pid 1524 thread shadow-1
+ 1438: 1913.791: Waiting for pid 1524 thread shadow-1
+ 1438: 1922.793: Waiting for pid 1493 thread shadow-1
+ 1438: 1923.794: Waiting for pid 1493 thread shadow-1
+ 1438: 1932.796: Waiting for pid 1484 thread shadow-1
+ 1438: 1933.796: Waiting for pid 1484 thread shadow-1
+ 1438: 1942.798: Waiting for pid 1483 thread shadow-1
+ 1438: 1943.798: Waiting for pid 1483 thread shadow-1
+ 1438: 1952.800: Waiting for pid 1482 thread shadow-1
+ 1438: 1953.800: Waiting for pid 1482 thread shadow-1
+ 1438: 1962.802: Waiting for pid 1481 thread shadow-1
+ 1438: 1963.802: Waiting for pid 1481 thread shadow-1
+ 1438: 1972.804: Waiting for pid 1480 thread shadow-1
+ 1438: 1973.805: Waiting for pid 1480 thread shadow-1
+ 1438: 1982.807: Waiting for pid 1479 thread shadow-1
+ 1438: 1983.807: Waiting for pid 1479 thread shadow-1
+ 1438: 1992.809: Waiting for pid 1478 thread shadow-1
+ 1438: 1993.809: Waiting for pid 1478 thread shadow-1
+ 1438: 2002.811: Waiting for pid 1477 thread shadow-1
+ 1438: 2003.811: Waiting for pid 1477 thread shadow-1
+ 1438: 2012.813: Waiting for pid 1476 thread shadow-1
+ 1438: 2013.814: Waiting for pid 1476 thread shadow-1
+ 1438: 2022.816: Waiting for pid 1475 thread shadow-1
+ 1438: 2023.816: Waiting for pid 1475 thread shadow-1
+ 1438: 2032.818: Waiting for pid 1474 thread shadow-1
+ 1438: 2033.818: Waiting for pid 1474 thread shadow-1
+ 1438: 2042.820: Waiting for pid 1473 thread shadow-1
+ 1438: 2043.820: Waiting for pid 1473 thread shadow-1
+ 1438: 2052.822: Waiting for pid 1472 thread shadow-1
+ 1438: 2053.822: Waiting for pid 1472 thread shadow-1
+ 1438: 2062.824: Waiting for pid 1471 thread shadow-1
+ 1438: 2063.824: Waiting for pid 1471 thread shadow-1
+ 1438: 2072.826: Waiting for pid 1470 thread shadow-1
+ 1438: 2073.827: Waiting for pid 1470 thread shadow-1
+ 1438: 2082.829: Waiting for pid 1469 thread shadow-1
+ 1438: 2083.829: Waiting for pid 1469 thread shadow-1
+ 1438: 2092.831: Waiting for pid 1468 thread shadow-1
+ 1438: 2093.831: Waiting for pid 1468 thread shadow-1
+ 1438: 2102.833: Waiting for pid 1467 thread shadow-1
+ 1438: 2103.833: Waiting for pid 1467 thread shadow-1
+ 1438: 2112.835: Waiting for pid 1466 thread shadow-1
+ 1438: 2113.836: Waiting for pid 1466 thread shadow-1
+ 1438: 2122.838: Waiting for pid 1465 thread shadow-1
+ 1438: 2123.838: Waiting for pid 1465 thread shadow-1
+ 1438: 2132.840: Waiting for pid 1464 thread shadow-1
+ 1438: 2133.840: Waiting for pid 1464 thread shadow-1
+ 1438: 2142.842: Waiting for pid 1463 thread shadow-1
+ 1438: 2143.842: Waiting for pid 1463 thread shadow-1
+ 1438: 2152.844: Waiting for pid 1462 thread shadow-1
+ 1438: 2153.845: Waiting for pid 1462 thread shadow-1
+ 1438: 2162.847: Waiting for pid 1461 thread shadow-1
+ 1438: 2163.847: Waiting for pid 1461 thread shadow-1
+ 1438: 2172.849: Waiting for pid 1460 thread shadow-1
+ 1438: 2173.849: Waiting for pid 1460 thread shadow-1
+ 1438: 2182.851: Waiting for pid 1459 thread shadow-1
+ 1438: 2183.851: Waiting for pid 1459 thread shadow-1
+ 1438: 2192.853: Waiting for pid 1458 thread shadow-1
+ 1438: 2193.854: Waiting for pid 1458 thread shadow-1
+ 1438: 2202.856: Waiting for pid 1457 thread shadow-1
+ 1438: 2203.856: Waiting for pid 1457 thread shadow-1
+ 1438: 2212.858: Waiting for pid 1456 thread shadow-1
+ 1438: 2213.858: Waiting for pid 1456 thread shadow-1
+ 1438: 2222.860: Waiting for pid 1455 thread shadow-1
+ 1438: 2223.860: Waiting for pid 1455 thread shadow-1
+ 1438: 2232.862: Waiting for pid 1454 thread shadow-1
+ 1438: 2233.862: Waiting for pid 1454 thread shadow-1
+ 1438: 2242.864: Waiting for pid 1453 thread shadow-1
+ 1438: 2243.865: Waiting for pid 1453 thread shadow-1
+ 1438: 2252.867: Waiting for pid 1452 thread shadow-1
+ 1438: 2253.867: Waiting for pid 1452 thread shadow-1
+ 1438: 2262.869: Waiting for pid 1451 thread shadow-1
+ 1438: 2263.869: Waiting for pid 1451 thread shadow-1
+ 1438: 2272.871: Waiting for pid 1450 thread shadow-1
+ 1438: 2273.871: Waiting for pid 1450 thread shadow-1
+ 1438: 2282.873: Waiting for pid 1449 thread shadow-1
+ 1438: 2283.874: Waiting for pid 1449 thread shadow-1
+ 1438: 2292.876: Waiting for pid 1448 thread shadow-1
+ 1438: 2293.876: Waiting for pid 1448 thread shadow-1
+ 1438: 2302.878: Waiting for pid 1447 thread shadow-1
+ 1438: 2303.878: Waiting for pid 1447 thread shadow-1
+ 1438: 2312.880: Waiting for pid 1446 thread shadow-1
+ 1438: 2313.880: Waiting for pid 1446 thread shadow-1
+ 1438: 2314.881: Creating 221249536 bytes of ISM Shared Memory...
+ 1438: 2314.881: Running...
+ 1438: 3515.141: Run took 1200 seconds...
+ 1438: 3515.157: Per-Operation Breakdown
+random-rate          0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+shadow-post-dbwr     0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+shadow-post-lg       0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+shadowhog            0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+shadowread           0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+dbwr-aiowait         0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+dbwr-block           0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+dbwr-hog             0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+dbwrite-a            0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+lg-block             0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+lg-aiowait           0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+lg-write             0ops        0ops/s   0.0mb/s      0.0ms/op        0us/op-cpu [0ms - 0ms]
+ 1438: 3515.157: IO Summary:     0 ops, 0.000 ops/s, (0/0 r/w),   0.0mb/s,      0us cpu/op,   0.0ms latency
+ 1438: 3515.157: Shutting down processes

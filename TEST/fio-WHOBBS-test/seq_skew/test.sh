@@ -49,10 +49,10 @@ function after() {
 test 2.5 3000 100 zipf-2.5
 test 2.25 4000 100 zipf-2.25
 test 2.0 6000 100 zipf-2.0
-test 1.75 8000 100 zipf-1.75
-test 1.5 10000 100 zipf-1.5
-test 1.25 12000 100 zipf-1.25
-test 0 20000 100 zipf-0
+test 1.75 7000 100 zipf-1.75
+test 1.5 8000 100 zipf-1.5
+test 1.25 8000 100 zipf-1.25
+test 0 80000 100 zipf-0
 
 
 

@@ -3,9 +3,9 @@
 
 echo "filebench test begin"
 
-pool=hdd
+pool=ssd
 
-for workload in fileserver varmail webserver
+for workload in fileserver varmail webserver mongo videoserver oltp
 do 
         #xfs
 	echo "test $pool xfs $workload"
@@ -18,7 +18,7 @@ do
 	sleep 30
 	ssh 192.168.122.53 "mkfs.xfs -f /dev/vdb"
 	ssh 192.168.122.53 "mount /dev/vdb /mnt"
-	ssh 192.168.122.53 "filebench -f /root/filebench_test/$workload.f" > ./filebench-"$pool-$workload"-xfs.log
+	ssh 192.168.122.53 "filebench -f /root/workloads/$workload.f" > ./filebench-"$pool-$workload"-xfs.log
 	sleep 30
         virsh destroy Ubuntu
 	sleep 30
@@ -36,7 +36,7 @@ do
 	sleep 30
 	ssh 192.168.122.53 "mkfs.ext4 /dev/vdb"
 	ssh 192.168.122.53 "mount /dev/vdb /mnt"
-	ssh 192.168.122.53 "filebench -f /root/filebench_test/$workload.f" > ./filebench-"$pool-$workload"-ext4.log
+	ssh 192.168.122.53 "filebench -f /root/workloads/$workload.f" > ./filebench-"$pool-$workload"-ext4.log
 	sleep 30
 	virsh destroy Ubuntu
 	sleep 30

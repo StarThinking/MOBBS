@@ -1,0 +1,355 @@
+2014-04-15 00:41:08.934+0000: starting up
+LC_ALL=C PATH=/usr/local/libvirt/bin:/usr/local/qemu/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games HOME=/root USER=root LOGNAME=root QEMU_AUDIO_DRV=none /usr/bin/kvm -name Ubuntu -S -machine pc-1.0,accel=kvm,usb=off -m 8192 -realtime mlock=off -smp 4,sockets=4,cores=1,threads=1 -uuid 787a7ab1-4f1e-9bb6-1a40-1f760cd2dbb7 -no-user-config -nodefaults -chardev socket,id=charmonitor,path=/usr/local/libvirt/var/lib/libvirt/qemu/Ubuntu.monitor,server,nowait -mon chardev=charmonitor,id=monitor,mode=control -rtc base=utc -no-shutdown -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 -device lsi,id=scsi0,bus=pci.0,addr=0x5 -drive file=/home/Ubuntu.img.bk,if=none,id=drive-virtio-disk0,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk0,id=virtio-disk0,bootindex=1 -drive file=rbd:hdd-pool/volume:auth_supported=none,if=none,id=drive-virtio-disk1,format=raw -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk1,id=virtio-disk1 -netdev tap,fd=19,id=hostnet0 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:55:1e:b7,bus=pci.0,addr=0x3 -chardev pty,id=charserial0 -device isa-serial,chardev=charserial0,id=serial0 -vnc 127.0.0.1:0 -device cirrus-vga,id=video0,bus=pci.0,addr=0x2 -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+Domain id=18 is tainted: high-privileges
+char device redirected to /dev/pts/2 (label charserial0)
+qemu_rbd_open
+initialize WHOBBS
+extent_map: map_size = 16384 ,extent_size = 4194304
+startAnalyzer
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 236, bandwidth = 122780436, seqness = 0.470576, avg latency = 51096479
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16382, tend to ssd: 2
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 728, bandwidth = 382106337, seqness = 0.453849, avg latency = 43497332
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 745, bandwidth = 390704660, seqness = 0.441406, avg latency = 42455168
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 743, bandwidth = 389635112, seqness = 0.447367, avg latency = 42607190
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 748, bandwidth = 392282767, seqness = 0.456016, avg latency = 42317934
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 750, bandwidth = 393640673, seqness = 0.440471, avg latency = 42151053
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 767, bandwidth = 402333368, seqness = 0.439242, avg latency = 41293512
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 745, bandwidth = 390662717, seqness = 0.459826, avg latency = 42507656
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 99 seconds
+
+handle
+---------------Report---------------
+read iops = 735, bandwidth = 385797324, seqness = 0.457104, avg latency = 42541190
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 742, bandwidth = 389430640, seqness = 0.446593, avg latency = 42676556
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 738, bandwidth = 387191930, seqness = 0.452343, avg latency = 42863458
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 753, bandwidth = 395009064, seqness = 0.44805, avg latency = 42016269
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 758, bandwidth = 397447004, seqness = 0.448534, avg latency = 41751834
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 758, bandwidth = 397478461, seqness = 0.445689, avg latency = 41802191
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 740, bandwidth = 388057006, seqness = 0.450213, avg latency = 42798475
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 759, bandwidth = 397945077, seqness = 0.447972, avg latency = 41688474
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 759, bandwidth = 398154792, seqness = 0.445314, avg latency = 41502504
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 767, bandwidth = 402401525, seqness = 0.450946, avg latency = 41332478
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 738, bandwidth = 387354460, seqness = 0.444493, avg latency = 42907874
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 769, bandwidth = 403675545, seqness = 0.441548, avg latency = 41124213
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 773, bandwidth = 405699297, seqness = 0.435856, avg latency = 40899793
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 759, bandwidth = 397945077, seqness = 0.437709, avg latency = 41719495
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 99 seconds
+
+handle
+---------------Report---------------
+read iops = 750, bandwidth = 393462415, seqness = 0.454675, avg latency = 41698635
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 741, bandwidth = 388811980, seqness = 0.444512, avg latency = 42699574
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 761, bandwidth = 399276769, seqness = 0.450037, avg latency = 41470492
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 767, bandwidth = 402501140, seqness = 0.441365, avg latency = 41321973
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 762, bandwidth = 399774842, seqness = 0.448256, avg latency = 41530803
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 743, bandwidth = 389933957, seqness = 0.435475, avg latency = 42585407
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 779, bandwidth = 408818810, seqness = 0.421348, avg latency = 40588107
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 772, bandwidth = 405133066, seqness = 0.45127, avg latency = 40919790
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+
+handle
+---------------Report---------------
+read iops = 470, bandwidth = 246431088, seqness = 0.440802, avg latency = 41802204
+write iops = 0, bandwidth = 0, seqness = -nan, avg latency = 0
+hdd extent num = 16384, ssd extent num = 0, ssd ratio = 0
+---------------Report---------------
+tend to hdd: 16384, tend to ssd: 0
+placement: 0 extent -> hdd pool, 0 extent -> ssd pool
+
+sleep 100 seconds
+qemu: terminating on signal 15 from pid 1770
+finalize WHOBBS
+cancel and join analyzer thread
+succesfully saved extent table
+2014-04-15 01:33:52.565+0000: shutting down

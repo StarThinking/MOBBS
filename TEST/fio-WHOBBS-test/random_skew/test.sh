@@ -46,11 +46,11 @@ function after() {
   sleep 60
 }
 
-test 2.5 5000 100 zipf-2.5
-test 2.25 6000 100 zipf-2.25
-test 2.0 8000 100 zipf-2.0
-test 1.75 10000 100 zipf-1.75
-test 1.5 12000 100 zipf-1.5
+#test 2.5 5000 100 zipf-2.5
+#test 2.25 6000 100 zipf-2.25
+#test 2.0 8000 100 zipf-2.0
+#test 1.75 10000 100 zipf-1.75
+#test 1.5 12000 100 zipf-1.5
 test 1.25 15000 100 zipf-1.25
 test 0 20000 100 zipf-0
 
