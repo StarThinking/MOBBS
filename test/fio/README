@@ -1,8 +1,9 @@
 
 This test aims to reveal the distinction of capability between SSDs and HDDs. Three kinds of test are in involved in this test: no-skew, skew and latency. The workloads of no-skew are the combinations of r/w, random/sequential, ssd/hdd with io size from 1KB to 16KB. Skew is the base test for comparision with WHOBBS under block I/Os and contains two types, namely, skew and iosize. The latency test is to show the relationship of running thread numbers and io latencies.
 
+Cleancache Interval: 5s
+
 Finished:
 All
 
-Cleancache Interval: 5s
 

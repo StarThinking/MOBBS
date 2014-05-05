@@ -24,7 +24,7 @@ function before() {
   echo "before"
   rm /usr/local/libvirt/var/log/libvirt/qemu/Ubuntu.log
   touch /usr/local/libvirt/var/log/libvirt/qemu/Ubuntu.log
-  /root/Qemu_RBD/6h+6s/create_pool.sh
+  /root/WHOBBS/6h+6s/create_pool.sh
   sleep 10
   rbd -p hdd-pool create volume --size 65536
   sleep 60
@@ -48,11 +48,11 @@ function after() {
 
 test 2.5 3000 100 zipf-2.5
 test 2.25 4000 100 zipf-2.25
-test 2.0 6000 100 zipf-2.0
-test 1.75 7000 100 zipf-1.75
-test 1.5 8000 100 zipf-1.5
-test 1.25 8000 100 zipf-1.25
-test 0 80000 100 zipf-0
+#test 2.0 5000 100 zipf-2.0
+#test 1.75 5000 100 zipf-1.75
+#test 1.5 5000 100 zipf-1.5
+#test 1.25 5000 100 zipf-1.25
+#test 0 5000 100 zipf-0
 
 
 

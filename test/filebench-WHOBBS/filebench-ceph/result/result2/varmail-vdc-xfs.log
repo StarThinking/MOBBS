@@ -1,0 +1,30 @@
+Filebench Version 1.4.9.1
+ 8241: 0.000: Allocated 1466MB of shared memory
+ 8241: 0.002: Varmail Version 3.0 personality successfully loaded
+ 8241: 0.002: Creating/pre-allocating files and filesets
+ 8241: 2.053: Fileset bigfileset: 2000000 files, 0 leafdirs, avg dir width = 1000000, avg dir depth = 1.1, 31282.494MB
+ 8241: 69.607: Removed any existing fileset bigfileset in 68 seconds
+ 8241: 69.610: making tree for filset /mnt/bigfileset
+ 8241: 69.611: Creating fileset bigfileset...
+ 8241: 731.083: Preallocated 1600516 of 2000000 of fileset bigfileset in 662 seconds
+ 8241: 731.083: waiting for fileset pre-allocation to finish
+ 8282: 731.084: Starting 1 filereader instances
+ 8283: 731.092: Starting 16 filereaderthread threads
+ 8241: 732.166: Running...
+ 8241: 1932.410: Run took 1200 seconds...
+ 8241: 1932.412: Per-Operation Breakdown
+closefile4           119286ops       99ops/s   0.0mb/s      0.0ms/op     1587us/op-cpu [0ms - 27ms]
+readfile4            119286ops       99ops/s   1.6mb/s      3.4ms/op     4057us/op-cpu [0ms - 418ms]
+openfile4            119286ops       99ops/s   0.0mb/s      4.2ms/op     2051us/op-cpu [0ms - 1671ms]
+closefile3           119286ops       99ops/s   0.0mb/s      1.0ms/op     1751us/op-cpu [0ms - 889ms]
+fsyncfile3           119286ops       99ops/s   0.0mb/s     49.5ms/op    14171us/op-cpu [4ms - 3158ms]
+appendfilerand3      119295ops       99ops/s   0.8mb/s      0.1ms/op     1649us/op-cpu [0ms - 34ms]
+readfile3            119295ops       99ops/s   1.6mb/s      3.5ms/op     4219us/op-cpu [0ms - 336ms]
+openfile3            119295ops       99ops/s   0.0mb/s      3.7ms/op     2294us/op-cpu [0ms - 1671ms]
+closefile2           119295ops       99ops/s   0.0mb/s      1.2ms/op     2086us/op-cpu [0ms - 521ms]
+fsyncfile2           119295ops       99ops/s   0.0mb/s     47.4ms/op    13122us/op-cpu [4ms - 3181ms]
+appendfilerand2      119302ops       99ops/s   0.8mb/s      0.1ms/op     1400us/op-cpu [0ms - 28ms]
+createfile2          119302ops       99ops/s   0.0mb/s      2.6ms/op     2544us/op-cpu [0ms - 1710ms]
+deletefile1          119302ops       99ops/s   0.0mb/s      8.0ms/op     3079us/op-cpu [0ms - 1629ms]
+ 8241: 1932.412: IO Summary: 1550811 ops, 1292.081 ops/s, (199/199 r/w),   4.7mb/s,   1554us cpu/op,  31.2ms latency
+ 8241: 1932.412: Shutting down processes

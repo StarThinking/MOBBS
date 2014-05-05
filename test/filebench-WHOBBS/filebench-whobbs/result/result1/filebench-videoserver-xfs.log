@@ -1,0 +1,32 @@
+Filebench Version 1.4.9.1
+ 1338: 0.000: Allocated 1466MB of shared memory
+ 1338: 0.010: Eventgen rate taken from variable
+ 1338: 0.010: Video Server Version 3.0 personality successfully loaded
+ 1338: 0.010: Creating/pre-allocating files and filesets
+ 1338: 0.010: Fileset passivevids: 40 files, 0 leafdirs, avg dir width = 20, avg dir depth = 1.2, 34082.462MB
+ 1338: 0.013: Removed any existing fileset passivevids in 1 seconds
+ 1338: 0.013: making tree for filset /mnt/passivevids
+ 1338: 0.050: Creating fileset passivevids...
+ 1338: 0.091: Preallocated 22 of 40 of fileset passivevids in 1 seconds
+ 1338: 0.091: Fileset activevids: 8 files, 0 leafdirs, avg dir width = 4, avg dir depth = 1.5, 9712.523MB
+ 1338: 0.158: Removed any existing fileset activevids in 1 seconds
+ 1338: 0.158: making tree for filset /mnt/activevids
+ 1338: 0.174: Creating fileset activevids...
+ 1338: 105.856: Preallocated 8 of 8 of fileset activevids in 106 seconds
+ 1338: 105.857: waiting for fileset pre-allocation to finish
+ 1376: 393.818: Starting 1 vidreaders instances
+ 1376: 393.821: Starting 1 vidwriter instances
+ 1378: 393.828: Starting 1 vidwriter threads
+ 1377: 393.832: Starting 48 vidreaders threads
+ 1338: 395.066: Running...
+ 1338: 1395.278: Run took 1000 seconds...
+ 1338: 1395.285: Per-Operation Breakdown
+serverlimit          367146ops      367ops/s   0.0mb/s    115.4ms/op    42169us/op-cpu [0ms - 8036ms]
+vidreader            367283ops      367ops/s  91.7mb/s     50.4ms/op     7047us/op-cpu [0ms - 8034ms]
+replaceinterval      69ops        0ops/s   0.0mb/s  10000.2ms/op        0us/op-cpu [10000ms - 10000ms]
+wrtclose             70ops        0ops/s   0.0mb/s      2.1ms/op      571us/op-cpu [0ms - 148ms]
+newvid               70ops        0ops/s  59.2mb/s   4416.5ms/op   748714us/op-cpu [22ms - 30939ms]
+wrtopen              70ops        0ops/s   0.0mb/s      0.1ms/op      143us/op-cpu [0ms - 0ms]
+vidremover           70ops        0ops/s   0.0mb/s      0.4ms/op      429us/op-cpu [0ms - 15ms]
+ 1338: 1395.285: IO Summary: 367563 ops, 367.483 ops/s, (367/0 r/w), 150.9mb/s,      0us cpu/op,  51.3ms latency
+ 1338: 1395.285: Shutting down processes

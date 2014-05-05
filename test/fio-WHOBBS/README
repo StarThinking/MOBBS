@@ -1,7 +1,13 @@
+Cleancache Interval: 5s
 
 Finished:
+write iosize
+read iosize (except 32KB)
+seq skew
+random skew
 
 Unfinished:
-All
+
+Testing:
 
 

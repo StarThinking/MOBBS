@@ -63,7 +63,7 @@ function skew-seq-test() {
 }
 
 #skew-seq-test write /dev/vdb hdd-skew-seq-write-4k
-#skew-seq-test write /dev/vdc ssd-skew-seq-write-4k
+skew-seq-test write /dev/vdc ssd-skew-seq-write-4k
 
 #iosize-test write /dev/vdb hdd-iosize-write-zipf1.5-ran
 #iosize-test write /dev/vdc ssd-iosize-write-zipf1.5-ran
@@ -71,8 +71,8 @@ function skew-seq-test() {
 #skew-ran-test write /dev/vdb hdd-skew-ran-write-4k
 #skew-ran-test write /dev/vdc ssd-skew-ran-write-4k
 
-iosize-test read /dev/vdb hdd-iosize-read-zipf1.5-ran
-iosize-test read /dev/vdc ssd-iosize-read-zipf1.5-ran
+#iosize-test read /dev/vdb hdd-iosize-read-zipf1.5-ran
+#iosize-test read /dev/vdc ssd-iosize-read-zipf1.5-ran
 
 
 
