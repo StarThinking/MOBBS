@@ -25,7 +25,7 @@ function before() {
 function after() {
   name=$1
   echo "after"
-  sleep 60
+  sleep 200
   scp -r 192.168.122.53:$filebench_dir/tmp-result/* ./result/$dirname
   sleep 30
   virsh destroy Ubuntu
@@ -51,7 +51,7 @@ sleep 30
 virsh destroy Ubuntu
 
 if true;then
-for workload in webserver fileserver varmail videoserver
+for workload in webserver
 do 
   for fs in xfs ext4
   do

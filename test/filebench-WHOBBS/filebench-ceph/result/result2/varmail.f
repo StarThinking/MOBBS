@@ -64,5 +64,5 @@ usage "       set \$meandirwidth=<size> defaults to $meandirwidth"
 usage "       run runtime (e.g. run 60)"
 
 set $dir=/mnt
-set $nfiles=1000000
-run 3600
+set $nfiles=2000000
+run 1200

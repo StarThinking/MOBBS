@@ -82,6 +82,6 @@ usage "       set \$iosize=<size>     defaults to $iosize"
 usage "       run runtime (e.g. run 60)"
 
 set $dir=/mnt
-set $nfiles=400000
+set $nfiles=550000
 set $meanfilesize=64k
-run 15000
+run 1200

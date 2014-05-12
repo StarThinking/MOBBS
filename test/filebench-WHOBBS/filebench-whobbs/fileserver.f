@@ -63,5 +63,5 @@ usage "       run runtime (e.g. run 60)"
 
 set $dir=/mnt
 set $nfiles=300000
-run 20000
+run 15000
 
