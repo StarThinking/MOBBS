@@ -18,11 +18,13 @@ namespace librbd {
   class Analyzer
   {
   public:
-    Analyzer(ExtentMap *extent_map_p, Migrater *migrater);
+    Analyzer(ExtentMap *extent_map_p, Migrater *migraterm);
     static void *startAnalyzer(void *arg);
     void add_op(AnalyzerOp op);
     void add_read_lat(utime_t elapsed);
     void add_write_lat(utime_t elapsed);
+    static void set_active_extent_num(uint64_t active_extent_num);
+    static uint64_t max_active_extent_num();
     static bool to_finilize;
 
   protected:
@@ -41,6 +43,8 @@ namespace librbd {
     std::queue<utime_t> write_latency_queue;
     std::list<uint64_t> last_byte_list;
     Migrater *migrater;
+    static uint64_t max_migration_num;
+    static std::list<uint64_t> active_extent_num_list;
   };
 
 //bool Analyzer::to_finilize = false;
@@ -50,7 +54,7 @@ namespace librbd {
   public:
     AnalyzerReport();
     ~AnalyzerReport();
-    AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat);
+    AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat, uint64_t active_extent_num);
     void print_report();
     std::list<uint64_t> tend_to(int pool);
 
@@ -66,18 +70,19 @@ namespace librbd {
     uint64_t write_bytes;
     uint64_t read_avg_lat;
     uint64_t write_avg_lat;
+    uint64_t active_extent_num;
   };
 
   class AnalyzerOp
   {
   public:
-    AnalyzerOp(bool type, time_t time, uint64_t off, uint64_t len);
-    bool get_type();
+    AnalyzerOp(int type, time_t time, uint64_t off, uint64_t len);
+    int get_type();
     uint64_t get_off();
     uint64_t get_len();
 
   private:
-    bool type;
+    int type;
     time_t time;
     uint64_t off;
     uint64_t len;

@@ -35,7 +35,7 @@ namespace librbd {
     extent_map.extent_size = EXTENT_SIZE;
     extent_map.map_size = size / EXTENT_SIZE;
     cout << "extent_map: map_size = " << extent_map.map_size << " ,extent_size = " << extent_map.extent_size << std::endl;
-
+    cout << "INTERVAL = " << INTERVAL << ", LAST_BYTE_LIST_SIZE = " << LAST_BYTE_LIST_SIZE << ", SEQ_DISTANCE = " << SEQ_DISTANCE << ", SMALL_READ_SIZE = " << SMALL_READ_SIZE << ", SMALL_WRITE_SIZE = " << SMALL_WRITE_SIZE << ", SLACKNESS = " << SLACKNESS  << std::endl;
     object_name = "extent-table";
 
     // initilize extent_map

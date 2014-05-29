@@ -60,6 +60,7 @@ namespace librbd {
 
     //time_t begin_time = std::time(NULL);
     struct timeval tv_begin, tv_end;
+    struct timeval tv_begin1, tv_end1;
     gettimeofday(&tv_begin, NULL);
     int obj_num = EXTENT_SIZE / OBJECT_SIZE;
     uint64_t start_off = (extent_id * EXTENT_SIZE);
@@ -88,8 +89,13 @@ namespace librbd {
     else
       extent_map_p->map[extent_id] = MIGRATING_TO_HDD;
     
+    gettimeofday(&tv_begin1, NULL);
     // flush the aios towards the original pool
     io_ctx_from.aio_flush();
+    gettimeofday(&tv_end1, NULL);
+    long time_used1 = 1000000 * (tv_end1.tv_sec - tv_begin1.tv_sec) + (tv_end1.tv_usec - tv_begin1.tv_usec); //us
+    time_used1 /= 1000; // ms
+    cout << "time used for flush = " << time_used1 << std::endl;
 
 
     // reading

@@ -113,11 +113,11 @@ namespace librbd {
     }
     //cout << "counter = " << counter << std::endl;
 
-    for(std::map<uint64_t, int>::iterator it = ictx->extent_map.map.begin(); it != ictx->extent_map.map.end(); it++) {
+    /*for(std::map<uint64_t, int>::iterator it = ictx->extent_map.map.begin(); it != ictx->extent_map.map.end(); it++) {
       uint64_t id = it->first;
       int value = it->second;
       //cout << "id = " << id << ", value = " << value << std::endl;
-    }
+    }*/
     return read_buf;
   }
 

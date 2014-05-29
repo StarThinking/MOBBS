@@ -2075,7 +2075,7 @@ reprotect_and_return_err:
   void close_image(ImageCtx *ictx)
   {
     ldout(ictx->cct, 20) << "close_image " << ictx << dendl;
-
+    cout << "close image" << std::endl;
     // finalize WHOBBS
     ictx->finilize_WHOBBS();
 

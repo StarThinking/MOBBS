@@ -16,6 +16,8 @@ namespace librbd {
   {}
 
   bool Analyzer::to_finilize = false;
+  std::list<uint64_t> Analyzer::active_extent_num_list;
+  uint64_t Analyzer::max_migration_num = MAX_MIGRATION;
 
   void *Analyzer::startAnalyzer(void *arg)
   {
@@ -30,11 +32,15 @@ namespace librbd {
         sleep_time = INTERVAL;
 
       if(sleep_time > 0) {
-        cout << "sleep " << sleep_time << " seconds" << std::endl;
+        if(sleep_time > 10)
+          max_migration_num ++;
+        cout << "sleep " << sleep_time << " seconds" << "max_migration_num = " << max_migration_num << std::endl;
 	sleep(sleep_time);
       }
-      else
-        cout << "no sleep time" << std::endl;
+      else {
+        max_migration_num --;
+        cout << "no sleep time" << ", max_migration_num = " << max_migration_num << std::endl;
+      }
 
       time_t start = std::time(NULL);
       analyzer->handle();
@@ -114,11 +120,14 @@ namespace librbd {
     uint64_t write_bytes = 0;
     uint64_t read_avg_lat = 0;
     uint64_t write_avg_lat = 0;
+    uint64_t active_extent_num = 0;
+    std::map<uint64_t, bool> active_map;
 
     uint64_t i;
     for(i=0; i < extent_map_p->map_size; i++) {
       read_score_map.insert(std::pair<uint64_t, uint64_t>(i, 0));
       write_score_map.insert(std::pair<uint64_t, uint64_t>(i, 0));
+      active_map.insert(std::pair<uint64_t, bool>(i, false));
     }
 
     uint64_t op_queue_size = op_queue->size();
@@ -127,17 +136,26 @@ namespace librbd {
       AnalyzerOp op = op_queue->front();
       op_queue->pop();
 
-      bool type = op.get_type();
+      int type = op.get_type();
       uint64_t off = op.get_off();
       uint64_t len = op.get_len();
 
       // calculate the score of the extent by a certain algorithm
       double score = calculate_score(&op);
       uint64_t extent_id = off / extent_map_p->extent_size;
-      if(type == READ_OP)
-        read_score_map.at(extent_id) += score;
+      //cout << "off = " << off << ", len = " << len << ", extent id = " << extent_id << std::endl;
+
+      // set active map
+      if(extent_id < extent_map_p->map_size) {
+        active_map.at(extent_id) = true;
+        if(type == READ_OP)
+          read_score_map.at(extent_id) += score;
+        else
+          write_score_map.at(extent_id) += score;
+      }
       else
-        write_score_map.at(extent_id) += score;
+        cout << "extent_id out of range, and its value = " << extent_id << std::endl;
+
 
       // update statistics
       if(type == READ_OP) {
@@ -177,14 +195,23 @@ namespace librbd {
     if(write_lat_queue_size != 0)
       write_avg_lat /= write_lat_queue_size;
 
-    AnalyzerReport *report = new AnalyzerReport(extent_map_p, read_score_map, write_score_map, ran_reads, ran_writes, seq_reads, seq_writes, read_bytes, write_bytes, read_avg_lat, write_avg_lat);   
+    cout << "statistic active extent number" << std::endl;
+    // statistic active extent number
+    for(uint64_t id = 0; id < extent_map_p->map_size; id ++) {
+      if(active_map.at(id))
+        active_extent_num ++;
+    }
+    cout << "active_extent_num = " << active_extent_num << std::endl;
+    Analyzer::set_active_extent_num(active_extent_num);
+
+    AnalyzerReport *report = new AnalyzerReport(extent_map_p, read_score_map, write_score_map, ran_reads, ran_writes, seq_reads, seq_writes, read_bytes, write_bytes, read_avg_lat, write_avg_lat, active_extent_num);   
     return report;
   }
 
   double Analyzer::calculate_score(AnalyzerOp *op)
   {
     double score = 0;
-    bool type = op->get_type();
+    int type = op->get_type();
     uint64_t off = op->get_off();
     uint64_t len = op->get_len();
     uint64_t x1 = 8;
@@ -240,6 +267,27 @@ namespace librbd {
       last_byte_list.pop_front();
       last_byte_list.push_back(byte);
      }
+  }
+ 
+  uint64_t Analyzer::max_active_extent_num()
+  {
+    uint64_t max = 0;
+    for(std::list<uint64_t>::iterator it = active_extent_num_list.begin(); it != active_extent_num_list.end(); it++) {
+      if(*it > max)
+        max = *it;
+    }
+    return max;
+  }
+
+  void Analyzer::set_active_extent_num(uint64_t active_extent_num)
+  {
+    int list_size = active_extent_num_list.size();
+    if(list_size < ACTIVE_EXTENT_NUM_LIST_SIZE)
+      active_extent_num_list.push_back(active_extent_num);
+    else {
+      active_extent_num_list.pop_front();
+      active_extent_num_list.push_back(active_extent_num);
+    }
   }
 
   std::map<int, std::list<uint64_t> > Analyzer::analyze_placement(AnalyzerReport *report)
@@ -304,7 +352,7 @@ namespace librbd {
 
     // give priority to migration -> SSD_POOL
     for(std::list<uint64_t>::iterator it = raw_placement[SSD_POOL].begin(); it != raw_placement[SSD_POOL].end(); it++) {
-      if(counter < MAX_MIGRATION) {
+      if(counter < max_migration_num) {
         ssd_placement.push_back(*it);
 	counter ++;
       } else {
@@ -313,7 +361,7 @@ namespace librbd {
     }
 
     for(std::list<uint64_t>::iterator it = raw_placement[HDD_POOL].begin(); it != raw_placement[HDD_POOL].end(); it++) {
-      if(counter < MAX_MIGRATION) {
+      if(counter < max_migration_num) {
         hdd_placement.push_back(*it);
 	counter ++;
       } else {
@@ -331,8 +379,8 @@ namespace librbd {
   AnalyzerReport::AnalyzerReport()
   {}
 
-  AnalyzerReport::AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat) :
-  	extent_map_p(extent_map_p), read_score_map(read_score_map), write_score_map(write_score_map), ran_reads(ran_reads), ran_writes(ran_writes), seq_reads(seq_reads), seq_writes(seq_writes), read_bytes(read_bytes), write_bytes(write_bytes), read_avg_lat(read_avg_lat), write_avg_lat(write_avg_lat)
+  AnalyzerReport::AnalyzerReport(ExtentMap *extent_map_p, std::map<uint64_t, uint64_t> read_score_map, std::map<uint64_t, uint64_t> write_score_map, uint64_t ran_reads, uint64_t ran_writes, uint64_t seq_reads, uint64_t seq_writes, uint64_t read_bytes, uint64_t write_bytes, uint64_t read_avg_lat, uint64_t write_avg_lat, uint64_t active_extent_num) :
+  	extent_map_p(extent_map_p), read_score_map(read_score_map), write_score_map(write_score_map), ran_reads(ran_reads), ran_writes(ran_writes), seq_reads(seq_reads), seq_writes(seq_writes), read_bytes(read_bytes), write_bytes(write_bytes), read_avg_lat(read_avg_lat), write_avg_lat(write_avg_lat), active_extent_num(active_extent_num)
   {}
 
   AnalyzerReport::~AnalyzerReport()
@@ -353,7 +401,8 @@ namespace librbd {
     	<< write_bytes / INTERVAL << ", seqness = " << write_seqness 
 	<< ", avg latency = " << write_avg_lat << std::endl;
     cout << "hdd extent num = " << hdd_extent_num << ", ssd extent num = " << ssd_extent_num
-    	<< ", ssd ratio = " << ssd_ratio << std::endl;
+    	<< ", ssd ratio = " << ssd_ratio << ", active extent = " << (double)active_extent_num / ((double)ssd_extent_num + (double)hdd_extent_num) << std::endl;
+    cout << "max active extent = " <<  (double)Analyzer::max_active_extent_num() / ((double)ssd_extent_num + (double)hdd_extent_num) << std::endl;
     cout << "---------------Report---------------" << std::endl;
   }
 
@@ -366,9 +415,10 @@ namespace librbd {
     for(int id = 0; id < map_size; id++) {
       uint64_t read_score = read_score_map[id];
       uint64_t write_score = write_score_map[id];
-      uint64_t extent_size = extent_map_p->extent_size / (1024 * 1024); // unit of MB
-      double read_cover = (read_score * HDD_CAPACITY) / (HDD_READ_IOPS * extent_size * INTERVAL * REPLICA);
-      double write_cover = (write_score * HDD_CAPACITY) / (HDD_WRITE_IOPS * extent_size * INTERVAL * REPLICA);
+      //uint64_t extent_size = extent_map_p->extent_size / (1024 * 1024); // unit of MB
+      uint64_t max_active_extent_num = Analyzer::max_active_extent_num();
+      double read_cover = (read_score * max_active_extent_num) / (HDD_READ_IOPS * INTERVAL * REPLICA);
+      double write_cover = (write_score * max_active_extent_num) / (HDD_WRITE_IOPS * INTERVAL * REPLICA);
       double total_cover = read_cover + write_cover;
 
       if(pool == SSD_POOL) {
@@ -384,11 +434,11 @@ namespace librbd {
   }
   
   //--- AnalyzerOp ---//
-  AnalyzerOp::AnalyzerOp(bool type, time_t time, uint64_t off, uint64_t len) :
-    time(time), off(off), len(len)
+  AnalyzerOp::AnalyzerOp(int type, time_t time, uint64_t off, uint64_t len) :
+    type(type), time(time), off(off), len(len)
   {}
 
-  bool AnalyzerOp::get_type()
+  int AnalyzerOp::get_type()
   {
     return type;
   }
