@@ -1,5 +1,0 @@
-ceph_ver.lo: ceph_ver.c acconfig.h ceph_ver.h
-
-acconfig.h:
-
-ceph_ver.h:
