@@ -11,6 +11,8 @@
 #include "librbd/WatchCtx.h"
 
 #include "librbd/ImageCtx.h"
+// my code
+#include "librbd/MOBBS.h"
 
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
@@ -52,6 +54,11 @@ namespace librbd {
       stripe_unit(0), stripe_count(0),
       object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
   {
+    //my code
+    char my_log[100];
+    sprintf(my_log, "ImageCtx Constructor(one pool): %s", image_name.c_str());
+    take_log(my_log);
+
     md_ctx.dup(p);
     data_ctx.dup(p);
 
@@ -68,6 +75,91 @@ namespace librbd {
     perf_start(pname);
 
     if (cct->_conf->rbd_cache) {
+      // my code
+      take_log("\tcache enable");
+
+      Mutex::Locker l(cache_lock);
+      ldout(cct, 20) << "enabling caching..." << dendl;
+      writeback_handler = new LibrbdWriteback(this, cache_lock);
+
+      uint64_t init_max_dirty = cct->_conf->rbd_cache_max_dirty;
+      if (cct->_conf->rbd_cache_writethrough_until_flush)
+	init_max_dirty = 0;
+      ldout(cct, 20) << "Initial cache settings:"
+		     << " size=" << cct->_conf->rbd_cache_size
+		     << " num_objects=" << 10
+		     << " max_dirty=" << init_max_dirty
+		     << " target_dirty=" << cct->_conf->rbd_cache_target_dirty
+		     << " max_dirty_age="
+		     << cct->_conf->rbd_cache_max_dirty_age << dendl;
+
+      object_cacher = new ObjectCacher(cct, pname, *writeback_handler, cache_lock,
+				       NULL, NULL,
+				       cct->_conf->rbd_cache_size,
+				       10,  /* reset this in init */
+				       init_max_dirty,
+				       cct->_conf->rbd_cache_target_dirty,
+				       cct->_conf->rbd_cache_max_dirty_age,
+				       cct->_conf->rbd_cache_block_writes_upfront);
+      object_set = new ObjectCacher::ObjectSet(NULL, data_ctx.get_id(), 0);
+      object_set->return_enoent = true;
+      object_cacher->start();
+    }
+  }
+
+  // my code: add IoCtx p1
+  ImageCtx::ImageCtx(const string &image_name, const string &image_id,
+		     const char *snap, IoCtx& p, IoCtx& p1, bool ro)
+    : cct((CephContext*)p.cct()),
+      perfcounter(NULL),
+      snap_id(CEPH_NOSNAP),
+      snap_exists(true),
+      read_only(ro),
+      flush_encountered(false),
+      exclusive_locked(false),
+      name(image_name),
+      wctx(NULL),
+      refresh_seq(0),
+      last_refresh(0),
+      md_lock("librbd::ImageCtx::md_lock"),
+      cache_lock("librbd::ImageCtx::cache_lock"),
+      snap_lock("librbd::ImageCtx::snap_lock"),
+      parent_lock("librbd::ImageCtx::parent_lock"),
+      refresh_lock("librbd::ImageCtx::refresh_lock"),
+      old_format(true),
+      order(0), size(0), features(0),
+      format_string(NULL),
+      id(image_id), parent(NULL),
+      stripe_unit(0), stripe_count(0),
+      object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
+  {
+    //my code
+    char my_log[100];
+    sprintf(my_log, "ImageCtx Constructor(two pool): %s", image_name.c_str());
+    take_log(my_log);
+
+    md_ctx.dup(p);
+    data_ctx.dup(p);
+    // my code
+    md_ctx1.dup(p1);
+    data_ctx1.dup(p1);
+
+    memset(&header, 0, sizeof(header));
+    memset(&layout, 0, sizeof(layout));
+
+    string pname = string("librbd-") + id + string("-") +
+      data_ctx.get_pool_name() + string("/") + name;
+    if (snap) {
+      snap_name = snap;
+      pname += "@";
+      pname += snap_name;
+    }
+    perf_start(pname);
+
+    if (cct->_conf->rbd_cache) {
+      // my code
+      take_log("\tcache enable");
+
       Mutex::Locker l(cache_lock);
       ldout(cct, 20) << "enabling caching..." << dendl;
       writeback_handler = new LibrbdWriteback(this, cache_lock);

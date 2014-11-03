@@ -34,6 +34,10 @@
 #include <string>
 #include <vector>
 
+// my code
+#include "librbd/MOBBS.h"
+
+
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
 #define dout_prefix *_dout << "librbd: "
@@ -692,6 +696,21 @@ extern "C" int rbd_open(rados_ioctx_t p, const char *name, rbd_image_t *image,
   librados::IoCtx io_ctx;
   librados::IoCtx::from_rados_ioctx_t(p, io_ctx);
   librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx,
+						false);
+  int r = librbd::open_image(ictx);
+  if (r >= 0)
+    *image = (rbd_image_t)ictx;
+  return r;
+}
+
+// my code
+extern "C" int rbd_open(rados_ioctx_t p0, rados_ioctx_t p1, const char *name, rbd_image_t *image,
+			const char *snap_name)
+{
+  librados::IoCtx io_ctx0, io_ctx1;
+  librados::IoCtx::from_rados_ioctx_t(p0, io_ctx0);
+  librados::IoCtx::from_rados_ioctx_t(p1, io_ctx1);
+  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx0, io_ctx1
 						false);
   int r = librbd::open_image(ictx);
   if (r >= 0)

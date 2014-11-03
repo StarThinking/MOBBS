@@ -186,9 +186,6 @@
 /* Defined if you do not have atomic_ops */
 #undef NO_ATOMIC_OPS
 
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-#undef NO_MINUS_C_MINUS_O
-
 /* Name of package */
 #undef PACKAGE
 
