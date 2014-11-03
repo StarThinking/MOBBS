@@ -690,19 +690,6 @@ extern "C" int rbd_rename(rados_ioctx_t src_p, const char *srcname,
   return librbd::rename(src_io_ctx, srcname, destname);
 }
 
-extern "C" int rbd_open(rados_ioctx_t p, const char *name, rbd_image_t *image,
-			const char *snap_name)
-{
-  librados::IoCtx io_ctx;
-  librados::IoCtx::from_rados_ioctx_t(p, io_ctx);
-  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx,
-						false);
-  int r = librbd::open_image(ictx);
-  if (r >= 0)
-    *image = (rbd_image_t)ictx;
-  return r;
-}
-
 // my code
 extern "C" int rbd_open(rados_ioctx_t p0, rados_ioctx_t p1, const char *name, rbd_image_t *image,
 			const char *snap_name)
@@ -710,7 +697,7 @@ extern "C" int rbd_open(rados_ioctx_t p0, rados_ioctx_t p1, const char *name, rb
   librados::IoCtx io_ctx0, io_ctx1;
   librados::IoCtx::from_rados_ioctx_t(p0, io_ctx0);
   librados::IoCtx::from_rados_ioctx_t(p1, io_ctx1);
-  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx0, io_ctx1
+  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx0, io_ctx1,
 						false);
   int r = librbd::open_image(ictx);
   if (r >= 0)
