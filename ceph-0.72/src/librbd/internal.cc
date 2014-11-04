@@ -24,6 +24,9 @@
 
 #include "librados/snap_set_diff.h"
 
+// my code
+#include "librbd/MOBBS.h"
+
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
 #define dout_prefix *_dout << "librbd: "

@@ -58,3 +58,6 @@ ceph-0.72/src/sample.fetch_config
 ceph-0.72/src/stamp-h1
 ceph-0.72/test-driver
 ceph-0.72/src/gtest/build-aux/config.h
+
+qemu-stable-1.5/roms/seabios/
+qemu-stable-1.5/roms/vgabios/

@@ -97,7 +97,7 @@ typedef struct RADOSCB {
 typedef struct BDRVRBDState {
     int fds[2];
     rados_t cluster;
-    rados_ioctx_t io_ctx;
+    rados_ioctx_t io_ctx, io_ctx1;
     rbd_image_t image;
     char name[RBD_MAX_IMAGE_NAME_SIZE];
     int qemu_aio_count;
@@ -455,10 +455,12 @@ static QemuOptsList runtime_opts = {
     },
 };
 
+// my code
 static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
 {
     BDRVRBDState *s = bs->opaque;
     char pool[RBD_MAX_POOL_NAME_SIZE];
+    char pool1[RBD_MAX_POOL_NAME_SIZE];
     char snap_buf[RBD_MAX_SNAP_NAME_SIZE];
     char conf[RBD_MAX_CONF_SIZE];
     char clientname_buf[RBD_MAX_CONF_SIZE];
@@ -531,13 +533,24 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
         goto failed_shutdown;
     }
 
+    // my code
+    strcpy(pool, "hdd-pool");
+    strcpy(pool1, "ssd-pool");
+
     r = rados_ioctx_create(s->cluster, pool, &s->io_ctx);
     if (r < 0) {
         error_report("error opening pool %s", pool);
         goto failed_shutdown;
     }
 
-    r = rbd_open(s->io_ctx, s->name, &s->image, s->snap);
+    // my code
+    r = rados_ioctx_create(s->cluster, pool1, &s->io_ctx1);
+    if (r < 0) {
+        error_report("error opening pool %s", pool);
+        goto failed_shutdown;
+    }
+
+    r = rbd_open(s->io_ctx, s->io_ctx1, s->name, &s->image, s->snap);
     if (r < 0) {
         error_report("error reading header from %s", s->name);
         goto failed_open;

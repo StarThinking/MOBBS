@@ -172,6 +172,22 @@ namespace librbd {
 
   class AioWrite : public AbstractWrite {
   public:
+    AioWrite(ImageCtx *ictx, const std::string &oid,
+	     uint64_t object_no, uint64_t object_off,
+	     vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
+	     const ceph::bufferlist &data, const ::SnapContext &snapc,
+	     librados::snap_t snap_id,
+	     Context *completion)
+      : AbstractWrite(ictx, oid,
+		      object_no, object_off, data.length(),
+		      objectx, object_overlap,
+		      snapc, snap_id,
+		      completion, false),
+	m_write_data(data) {
+      guard_write();
+      m_write.write(m_object_off, data);
+    }
+    // my code
     AioWrite(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
 	     uint64_t object_no, uint64_t object_off,
 	     vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
