@@ -694,6 +694,10 @@ extern "C" int rbd_rename(rados_ioctx_t src_p, const char *srcname,
 extern "C" int rbd_open(rados_ioctx_t p0, rados_ioctx_t p1, const char *name, rbd_image_t *image,
 			const char *snap_name)
 {
+  char my_log[100];
+  sprintf(my_log, "librbd.cc-rbd_open: %s", name);
+  take_log(my_log);
+
   librados::IoCtx io_ctx0, io_ctx1;
   librados::IoCtx::from_rados_ioctx_t(p0, io_ctx0);
   librados::IoCtx::from_rados_ioctx_t(p1, io_ctx1);

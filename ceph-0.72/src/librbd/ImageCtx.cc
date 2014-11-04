@@ -54,11 +54,6 @@ namespace librbd {
       stripe_unit(0), stripe_count(0),
       object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
   {
-    //my code
-    char my_log[100];
-    sprintf(my_log, "ImageCtx Constructor(one pool): %s", image_name.c_str());
-    take_log(my_log);
-
     md_ctx.dup(p);
     data_ctx.dup(p);
 
@@ -133,11 +128,6 @@ namespace librbd {
       stripe_unit(0), stripe_count(0),
       object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
   {
-    //my code
-    char my_log[100];
-    sprintf(my_log, "ImageCtx Constructor(two pool): %s", image_name.c_str());
-    take_log(my_log);
-
     md_ctx.dup(p);
     data_ctx.dup(p);
     // my code

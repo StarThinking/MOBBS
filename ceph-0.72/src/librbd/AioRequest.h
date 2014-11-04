@@ -30,6 +30,12 @@ namespace librbd {
 	       uint64_t objectno, uint64_t off, uint64_t len,
 	       librados::snap_t snap_id, Context *completion,
 	       bool hide_enoent);
+	// my code
+	AioRequest(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
+	       uint64_t objectno, uint64_t off, uint64_t len,
+	       librados::snap_t snap_id, Context *completion,
+	       bool hide_enoent);
+		   
     virtual ~AioRequest();
 
     void complete(int r)
@@ -71,6 +77,17 @@ namespace librbd {
 	m_buffer_extents(be),
 	m_tried_parent(false), m_sparse(sparse) {
     }
+	// my code
+	AioRead(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
+	    uint64_t objectno, uint64_t offset, uint64_t len,
+	    vector<pair<uint64_t,uint64_t> >& be,
+	    librados::snap_t snap_id, bool sparse,
+	    Context *completion)
+      : AioRequest(ictx, ioctx, oid, objectno, offset, len, snap_id, completion,
+		   false),
+	m_buffer_extents(be),
+	m_tried_parent(false), m_sparse(sparse) {
+    }
     virtual ~AioRead() {}
     virtual bool should_complete(int r);
     virtual int send();
@@ -92,6 +109,14 @@ namespace librbd {
   public:
     AbstractWrite();
     AbstractWrite(ImageCtx *ictx, const std::string &oid,
+		  uint64_t object_no, uint64_t object_off, uint64_t len,
+		  vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
+		  const ::SnapContext &snapc,
+		  librados::snap_t snap_id,
+		  Context *completion,
+		  bool hide_enoent);
+	// my code
+	AbstractWrite(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
 		  uint64_t object_no, uint64_t object_off, uint64_t len,
 		  vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 		  const ::SnapContext &snapc,
@@ -147,13 +172,13 @@ namespace librbd {
 
   class AioWrite : public AbstractWrite {
   public:
-    AioWrite(ImageCtx *ictx, const std::string &oid,
+    AioWrite(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
 	     uint64_t object_no, uint64_t object_off,
 	     vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 	     const ceph::bufferlist &data, const ::SnapContext &snapc,
 	     librados::snap_t snap_id,
 	     Context *completion)
-      : AbstractWrite(ictx, oid,
+      : AbstractWrite(ictx, ioctx, oid,
 		      object_no, object_off, data.length(),
 		      objectx, object_overlap,
 		      snapc, snap_id,

@@ -2846,6 +2846,11 @@ reprotect_and_return_err:
   int aio_write(ImageCtx *ictx, uint64_t off, size_t len, const char *buf,
 		AioCompletion *c)
   {
+    // my code
+    char my_log[100];
+    sprintf(my_log, "internal.cc-aio_write");
+    take_log(my_log);
+  
     CephContext *cct = ictx->cct;
     ldout(cct, 20) << "aio_write " << ictx << " off = " << off << " len = "
 		   << len << " buf = " << (void*)buf << dendl;
@@ -2906,7 +2911,10 @@ reprotect_and_return_err:
 			      objectx);
 	uint64_t object_overlap = ictx->prune_parent_extents(objectx, overlap);
 
-	AioWrite *req = new AioWrite(ictx, p->oid.name, p->objectno, p->offset,
+	// my code: choose a pool to store the object
+	librados::IoCtx *ioctx = &ictx->data_ctx1;
+	// my code
+	AioWrite *req = new AioWrite(ictx, ioctx, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
 				     bl, snapc, snap_id, req_comp);
 	c->add_request();
@@ -3031,6 +3039,10 @@ reprotect_and_return_err:
   int aio_read(ImageCtx *ictx, const vector<pair<uint64_t,uint64_t> >& image_extents,
 	       char *buf, bufferlist *pbl, AioCompletion *c)
   {
+    char my_log[100];
+    sprintf(my_log, "internal.cc-aio_read");
+    take_log(my_log);
+    
     ldout(ictx->cct, 20) << "aio_read " << ictx << " completion " << c << " " << image_extents << dendl;
 
     int r = ictx_check(ictx);
@@ -3072,7 +3084,11 @@ reprotect_and_return_err:
 			     << " from " << q->buffer_extents << dendl;
 
 	C_AioRead *req_comp = new C_AioRead(ictx->cct, c);
-	AioRead *req = new AioRead(ictx, q->oid.name, 
+	
+	// my code
+	librados::IoCtx *ioctx = &ictx->data_ctx1;
+	// my code
+	AioRead *req = new AioRead(ictx, ioctx, q->oid.name, 
 				   q->objectno, q->offset, q->length,
 				   q->buffer_extents,
 				   snap_id, true, req_comp);
