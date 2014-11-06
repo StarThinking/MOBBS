@@ -2904,9 +2904,15 @@ reprotect_and_return_err:
 
       C_AioWrite *req_comp = new C_AioWrite(cct, c);
       if (ictx->object_cacher) {
+	// my code
+	take_log("cache");
+
 	c->add_request();
 	ictx->write_to_cache(p->oid, bl, p->length, p->offset, req_comp);
       } else {
+	// my code
+	take_log("direct");
+
 	// reverse map this object extent onto the parent
 	vector<pair<uint64_t,uint64_t> > objectx;
 	Striper::extent_to_file(ictx->cct, &ictx->layout,
@@ -3099,11 +3105,17 @@ reprotect_and_return_err:
 	c->add_request();
 
 	if (ictx->object_cacher) {
+	  // my code
+	  take_log("cache");
+
 	  C_CacheRead *cache_comp = new C_CacheRead(req_comp, req);
 	  ictx->aio_read_from_cache(q->oid, &req->data(),
 				    q->length, q->offset,
 				    cache_comp);
 	} else {
+	  // my code
+	  take_log("direct");
+
 	  r = req->send();
 	  if (r < 0 && r == -ENOENT)
 	    r = 0;
