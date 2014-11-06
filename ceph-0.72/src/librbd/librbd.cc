@@ -1104,6 +1104,9 @@ extern "C" int rbd_aio_create_completion(void *cb_arg,
 extern "C" int rbd_aio_write(rbd_image_t image, uint64_t off, size_t len,
 			     const char *buf, rbd_completion_t c)
 {
+  // my code
+  take_log("rbd_aio_write");
+  
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_write(ictx, off, len, buf,
@@ -1113,6 +1116,9 @@ extern "C" int rbd_aio_write(rbd_image_t image, uint64_t off, size_t len,
 extern "C" int rbd_aio_discard(rbd_image_t image, uint64_t off, uint64_t len,
 			       rbd_completion_t c)
 {
+  // my code
+  take_log("rbd_aio_discard");
+  
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_discard(ictx, off, len, (librbd::AioCompletion *)comp->pc);
@@ -1121,6 +1127,9 @@ extern "C" int rbd_aio_discard(rbd_image_t image, uint64_t off, uint64_t len,
 extern "C" int rbd_aio_read(rbd_image_t image, uint64_t off, size_t len,
 			    char *buf, rbd_completion_t c)
 {
+  // my code
+  take_log("rbd_aio_read");
+  
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_read(ictx, off, len, buf, NULL,
@@ -1135,6 +1144,9 @@ extern "C" int rbd_flush(rbd_image_t image)
 
 extern "C" int rbd_aio_flush(rbd_image_t image, rbd_completion_t c)
 {
+  // my code
+  take_log("rbd_aio_flush");
+  
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_flush(ictx, (librbd::AioCompletion *)comp->pc);
