@@ -130,7 +130,7 @@ namespace librbd {
     if (id.length()) {
       old_format = false;
     } else {
-      r = detect_format(md_ctx, name, &old_format, NULL);
+      r = detect_format(md_ctx[DEFAULT_POOL], name, &old_format, NULL);
       if (r < 0) {
 	lderr(cct) << "error finding header: " << cpp_strerror(r) << dendl;
 	return r;
@@ -139,7 +139,7 @@ namespace librbd {
 
     if (!old_format) {
       if (!id.length()) {
-	r = cls_client::get_id(&md_ctx, id_obj_name(name), &id);
+	r = cls_client::get_id(&md_ctx[DEFAULT_POOL], id_obj_name(name), &id);
 	if (r < 0) {
 	  lderr(cct) << "error reading image id: " << cpp_strerror(r)
 		     << dendl;
@@ -148,7 +148,7 @@ namespace librbd {
       }
 
       header_oid = header_name(id);
-      r = cls_client::get_immutable_metadata(&md_ctx, header_oid,
+      r = cls_client::get_immutable_metadata(&md_ctx[DEFAULT_POOL], header_oid,
 					     &object_prefix, &order);
       if (r < 0) {
 	lderr(cct) << "error reading immutable metadata: "
@@ -156,7 +156,7 @@ namespace librbd {
 	return r;
       }
 
-      r = cls_client::get_stripe_unit_count(&md_ctx, header_oid,
+      r = cls_client::get_stripe_unit_count(&md_ctx[DEFAULT_POOL], header_oid,
 					    &stripe_unit, &stripe_count);
       if (r < 0 && r != -ENOEXEC && r != -EINVAL) {
 	lderr(cct) << "error reading striping metadata: "
@@ -611,13 +611,13 @@ namespace librbd {
   int ImageCtx::register_watch() {
     assert(!wctx);
     wctx = new WatchCtx(this);
-    return md_ctx.watch(header_oid, 0, &(wctx->cookie), wctx);
+    return md_ctx[DEFAULT_POOL].watch(header_oid, 0, &(wctx->cookie), wctx);
   }
 
   void ImageCtx::unregister_watch() {
     assert(wctx);
     wctx->invalidate();
-    md_ctx.unwatch(header_oid, wctx->cookie);
+    md_ctx[DEFAULT_POOL].unwatch(header_oid, wctx->cookie);
     delete wctx;
     wctx = NULL;
   }

@@ -12,28 +12,17 @@
 
 #include "librbd/AioRequest.h"
 
+// my code
+#include "librbd/MOBBS.h"
+
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
 #define dout_prefix *_dout << "librbd::AioRequest: "
 
 namespace librbd {
 
-  AioRequest::AioRequest() :
-    m_ictx(NULL), m_ioctx(NULL),
-    m_object_no(0), m_object_off(0), m_object_len(0),
-    m_snap_id(CEPH_NOSNAP), m_completion(NULL), m_parent_completion(NULL),
-    m_hide_enoent(false) {}
-  AioRequest::AioRequest(ImageCtx *ictx, const std::string &oid,
-			 uint64_t objectno, uint64_t off, uint64_t len,
-			 librados::snap_t snap_id,
-			 Context *completion,
-			 bool hide_enoent) :
-    m_ictx(ictx), m_ioctx(&ictx->data_ctx), m_oid(oid), m_object_no(objectno),
-    m_object_off(off), m_object_len(len), m_snap_id(snap_id),
-    m_completion(completion), m_parent_completion(NULL),
-    m_hide_enoent(hide_enoent) {}
   // my code
-  AioRequest::AioRequest(ImageCtx *ictx, int pool, librados::IoCtx *ioctx, const std::string &oid,
+  AioRequest::AioRequest(ImageCtx *ictx, int pool, const std::string &oid,
 			 uint64_t objectno, uint64_t off, uint64_t len,
 			 librados::snap_t snap_id,
 			 Context *completion,
@@ -250,7 +239,7 @@ namespace librbd {
 
     librados::AioCompletion *rados_completion =
       librados::Rados::aio_create_completion(this, NULL, rados_req_cb);
-    m_ictx->md_ctx.aio_operate(m_oid, rados_completion, &m_copyup,
+    m_ictx->md_ctx[DEFAULT_POOL].aio_operate(m_oid, rados_completion, &m_copyup,
 			       m_snap_seq, m_snaps);
     rados_completion->release();
   }

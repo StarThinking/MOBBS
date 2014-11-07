@@ -150,7 +150,7 @@ namespace librbd {
 
   void trim_image(ImageCtx *ictx, uint64_t newsize, ProgressContext& prog_ctx)
   {
-    CephContext *cct = (CephContext *)ictx->data_ctx.cct();
+    CephContext *cct = (CephContext *)ictx->data_ctx[DEFAULT_POOL].cct();
 
     uint64_t size = ictx->get_current_size();
     uint64_t period = ictx->get_stripe_period();
@@ -177,7 +177,7 @@ namespace librbd {
 	Context *req_comp = new C_SimpleThrottle(&throttle);
 	librados::AioCompletion *rados_completion =
 	  librados::Rados::aio_create_completion(req_comp, NULL, rados_ctx_cb);
-	ictx->data_ctx.aio_remove(oid, rados_completion);
+	ictx->data_ctx[DEFAULT_POOL].aio_remove(oid, rados_completion);
 	rados_completion->release();
 	prog_ctx.update_progress((i - delete_start) * object_size,
 				 (num_objects - delete_start) * object_size);
@@ -197,11 +197,11 @@ namespace librbd {
 	librados::AioCompletion *rados_completion =
 	  librados::Rados::aio_create_completion(req_comp, NULL, rados_ctx_cb);
 	if (p->offset == 0) {
-	  ictx->data_ctx.aio_remove(p->oid.name, rados_completion);
+	  ictx->data_ctx[DEFAULT_POOL].aio_remove(p->oid.name, rados_completion);
 	} else {
 	  librados::ObjectWriteOperation op;
 	  op.truncate(p->offset);
-	  ictx->data_ctx.aio_operate(p->oid.name, rados_completion, &op);
+	  ictx->data_ctx[DEFAULT_POOL].aio_operate(p->oid.name, rados_completion, &op);
 	}
 	rados_completion->release();
       }
@@ -340,7 +340,7 @@ namespace librbd {
 	librados::Rados::aio_create_completion(req_comp, NULL, rados_ctx_cb);
       librados::ObjectWriteOperation op;
       op.selfmanaged_snap_rollback(snap_id);
-      ictx->data_ctx.aio_operate(oid, rados_completion, &op);
+      ictx->data_ctx[DEFAULT_POOL].aio_operate(oid, rados_completion, &op);
       ldout(cct, 10) << "scheduling selfmanaged_snap_rollback on "
 		     << oid << " to " << snap_id << dendl;
       rados_completion->release();
@@ -411,11 +411,11 @@ namespace librbd {
     if ((ictx->features & RBD_FEATURE_LAYERING) == 0)
       return 0;
 
-    parent_spec parent_spec(ictx->md_ctx.get_id(), ictx->id, ictx->snap_id);
+    parent_spec parent_spec(ictx->md_ctx[DEFAULT_POOL].get_id(), ictx->id, ictx->snap_id);
     names.clear();
 
     // search all pools for children depending on this snapshot
-    Rados rados(ictx->md_ctx);
+    Rados rados(ictx->md_ctx[DEFAULT_POOL]);
     std::list<string> pools;
     rados.pool_list(pools);
 
@@ -468,7 +468,7 @@ namespace librbd {
     if (r < 0)
       return r;
 
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
 
     ictx->perfcounter->inc(l_librbd_snap_create);
     return 0;
@@ -524,7 +524,7 @@ namespace librbd {
 
       if (ictx->parent_md.spec != our_pspec &&
 	  (scan_for_parents(ictx, our_pspec, snap_id) == -ENOENT)) {
-	  r = cls_client::remove_child(&ictx->md_ctx, RBD_CHILDREN,
+	  r = cls_client::remove_child(&ictx->md_ctx[DEFAULT_POOL], RBD_CHILDREN,
 				       our_pspec, ictx->id);
 	  if (r < 0)
 	    return r;
@@ -535,12 +535,12 @@ namespace librbd {
     if (r < 0)
       return r;
 
-    r = ictx->data_ctx.selfmanaged_snap_remove(snap_id);
+    r = ictx->data_ctx[DEFAULT_POOL].selfmanaged_snap_remove(snap_id);
 
     if (r < 0)
       return r;
 
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
 
     ictx->perfcounter->inc(l_librbd_snap_remove);
     return 0;
@@ -579,13 +579,13 @@ namespace librbd {
     if (is_protected)
       return -EBUSY;
 
-    r = cls_client::set_protection_status(&ictx->md_ctx,
+    r = cls_client::set_protection_status(&ictx->md_ctx[DEFAULT_POOL],
 					  ictx->header_oid,
 					  snap_id,
 					  RBD_PROTECTION_STATUS_PROTECTED);
     if (r < 0)
       return r;
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     return 0;
   }
 
@@ -622,17 +622,17 @@ namespace librbd {
     if (is_unprotected)
       return -EINVAL;
 
-    r = cls_client::set_protection_status(&ictx->md_ctx,
+    r = cls_client::set_protection_status(&ictx->md_ctx[DEFAULT_POOL],
 					  ictx->header_oid,
 					  snap_id,
 					  RBD_PROTECTION_STATUS_UNPROTECTING);
     if (r < 0)
       return r;
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
 
-    parent_spec pspec(ictx->md_ctx.get_id(), ictx->id, snap_id);
+    parent_spec pspec(ictx->md_ctx[DEFAULT_POOL].get_id(), ictx->id, snap_id);
     // search all pools for children depending on this snapshot
-    Rados rados(ictx->md_ctx);
+    Rados rados(ictx->md_ctx[DEFAULT_POOL]);
     std::list<std::string> pools;
     rados.pool_list(pools);
     std::set<std::string> children;
@@ -660,22 +660,22 @@ namespace librbd {
       pool_ioctx.close();	// last one out will self-destruct
     }
     // didn't find any child in any pool, go ahead with unprotect
-    r = cls_client::set_protection_status(&ictx->md_ctx,
+    r = cls_client::set_protection_status(&ictx->md_ctx[DEFAULT_POOL],
 					  ictx->header_oid,
 					  snap_id,
 					  RBD_PROTECTION_STATUS_UNPROTECTED);
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     return 0;
 
 reprotect_and_return_err:
-    int proterr = cls_client::set_protection_status(&ictx->md_ctx,
+    int proterr = cls_client::set_protection_status(&ictx->md_ctx[DEFAULT_POOL],
 						    ictx->header_oid,
 						    snap_id,
 					      RBD_PROTECTION_STATUS_PROTECTED);
     if (proterr < 0) {
       lderr(ictx->cct) << "snap_unprotect: can't reprotect image" << dendl;
     }
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     return r;
   }
 
@@ -949,7 +949,8 @@ reprotect_and_return_err:
     librbd::NoOpProgressContext no_op;
     ImageCtx *c_imctx = NULL;
     // make sure parent snapshot exists
-    ImageCtx *p_imctx = new ImageCtx(p_name, "", p_snap_name, p_ioctx, true);
+    // my code
+    ImageCtx *p_imctx = new ImageCtx(p_name, "", p_snap_name, p_ioctx, p_ioctx, true);
     r = open_image(p_imctx);
     if (r < 0) {
       lderr(cct) << "error opening parent image: "
@@ -997,7 +998,7 @@ reprotect_and_return_err:
       goto err_close_parent;
     }
 
-    c_imctx = new ImageCtx(c_name, "", NULL, c_ioctx, false);
+    c_imctx = new ImageCtx(c_name, "", NULL, c_ioctx, c_ioctx, false);
     r = open_image(c_imctx);
     if (r < 0) {
       lderr(cct) << "Error opening new image: " << cpp_strerror(r) << dendl;
@@ -1222,7 +1223,7 @@ reprotect_and_return_err:
   int open_parent(ImageCtx *ictx)
   {
     string pool_name;
-    Rados rados(ictx->md_ctx);
+    Rados rados(ictx->md_ctx[DEFAULT_POOL]);
 
     int64_t pool_id = ictx->get_parent_pool_id(ictx->snap_id);
     string parent_image_id = ictx->get_parent_image_id(ictx->snap_id);
@@ -1248,7 +1249,7 @@ reprotect_and_return_err:
 
     // since we don't know the image and snapshot name, set their ids and
     // reset the snap_name and snap_exists fields after we read the header
-    ictx->parent = new ImageCtx("", parent_image_id, NULL, p_ioctx, true);
+    ictx->parent = new ImageCtx("", parent_image_id, NULL, p_ioctx, p_ioctx, true);
     r = open_image(ictx->parent);
     if (r < 0) {
       lderr(ictx->cct) << "error opening parent image: " << cpp_strerror(r)
@@ -1299,7 +1300,7 @@ reprotect_and_return_err:
 	return -ENOENT;
     }
     if (parent_pool_name) {
-      Rados rados(ictx->md_ctx);
+      Rados rados(ictx->md_ctx[DEFAULT_POOL]);
       r = rados.pool_reverse_lookup(parent_spec.pool_id,
 				    parent_pool_name);
       if (r < 0) {
@@ -1321,7 +1322,7 @@ reprotect_and_return_err:
     }
 
     if (parent_name) {
-      r = cls_client::dir_get_name(&ictx->parent->md_ctx, RBD_DIRECTORY,
+      r = cls_client::dir_get_name(&ictx->parent->md_ctx[DEFAULT_POOL], RBD_DIRECTORY,
 				   parent_spec.image_id, parent_name);
       if (r < 0) {
 	lderr(ictx->cct) << "error getting parent image name: "
@@ -1341,7 +1342,7 @@ reprotect_and_return_err:
     string id;
     bool old_format = false;
     bool unknown_format = true;
-    ImageCtx *ictx = new ImageCtx(imgname, "", NULL, io_ctx, false);
+    ImageCtx *ictx = new ImageCtx(imgname, "", NULL, io_ctx, io_ctx, false);
     int r = open_image(ictx);
     if (r < 0) {
       ldout(cct, 2) << "error opening image: " << cpp_strerror(-r) << dendl;
@@ -1364,7 +1365,7 @@ reprotect_and_return_err:
       parent_info parent_info = ictx->parent_md;
       ictx->parent_lock.put_read();
 
-      r = cls_client::remove_child(&ictx->md_ctx, RBD_CHILDREN,
+      r = cls_client::remove_child(&ictx->md_ctx[DEFAULT_POOL], RBD_CHILDREN,
 				   parent_info.spec, id);
       if (r < 0 && r != -ENOENT) {
 	lderr(cct) << "error removing child from children list" << dendl;
@@ -1444,9 +1445,9 @@ reprotect_and_return_err:
       bufferlist bl;
       ictx->header.image_size = size;
       bl.append((const char *)&(ictx->header), sizeof(ictx->header));
-      r = ictx->md_ctx.write(ictx->header_oid, bl, bl.length(), 0);
+      r = ictx->md_ctx[DEFAULT_POOL].write(ictx->header_oid, bl, bl.length(), 0);
     } else {
-      r = cls_client::set_size(&(ictx->md_ctx), ictx->header_oid, size);
+      r = cls_client::set_size(&(ictx->md_ctx[DEFAULT_POOL]), ictx->header_oid, size);
     }
 
     // TODO: remove this useless check
@@ -1457,7 +1458,7 @@ reprotect_and_return_err:
       lderr(cct) << "error writing header: " << cpp_strerror(-r) << dendl;
       return r;
     } else {
-      notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+      notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     }
 
     return 0;
@@ -1529,7 +1530,7 @@ reprotect_and_return_err:
   {
     uint64_t snap_id;
 
-    int r = ictx->md_ctx.selfmanaged_snap_create(&snap_id);
+    int r = ictx->md_ctx[DEFAULT_POOL].selfmanaged_snap_create(&snap_id);
     if (r < 0) {
       lderr(ictx->cct) << "failed to create snap id: " << cpp_strerror(-r)
 		       << dendl;
@@ -1537,10 +1538,10 @@ reprotect_and_return_err:
     }
 
     if (ictx->old_format) {
-      r = cls_client::old_snapshot_add(&ictx->md_ctx, ictx->header_oid,
+      r = cls_client::old_snapshot_add(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 				       snap_id, snap_name);
     } else {
-      r = cls_client::snapshot_add(&ictx->md_ctx, ictx->header_oid,
+      r = cls_client::snapshot_add(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 				   snap_id, snap_name);
     }
 
@@ -1557,11 +1558,11 @@ reprotect_and_return_err:
   {
     int r;
     if (ictx->old_format) {
-      r = cls_client::old_snapshot_remove(&ictx->md_ctx,
+      r = cls_client::old_snapshot_remove(&ictx->md_ctx[DEFAULT_POOL],
 					  ictx->header_oid, snap_name);
     } else {
       RWLock::RLocker l(ictx->snap_lock);
-      r = cls_client::snapshot_remove(&ictx->md_ctx,
+      r = cls_client::snapshot_remove(&ictx->md_ctx[DEFAULT_POOL],
 				      ictx->header_oid,
 				      ictx->get_snap_id(snap_name));
     }
@@ -1606,7 +1607,7 @@ reprotect_and_return_err:
       if (r < 0)
 	return r;
       if (!overlap ||
-	  ictx->parent->md_ctx.get_id() !=
+	  ictx->parent->md_ctx[DEFAULT_POOL].get_id() !=
 	  ictx->get_parent_pool_id(ictx->snap_id) ||
 	  ictx->parent->id != ictx->get_parent_image_id(ictx->snap_id) ||
 	  ictx->parent->snap_id != ictx->get_parent_snap_id(ictx->snap_id)) {
@@ -1653,12 +1654,12 @@ reprotect_and_return_err:
 	RWLock::WLocker l2(ictx->parent_lock);
 	ictx->lockers.clear();
 	if (ictx->old_format) {
-	  r = read_header(ictx->md_ctx, ictx->header_oid, &ictx->header, NULL);
+	  r = read_header(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, &ictx->header, NULL);
 	  if (r < 0) {
 	    lderr(cct) << "Error reading header: " << cpp_strerror(r) << dendl;
 	    return r;
 	  }
-	  r = cls_client::old_snapshot_list(&ictx->md_ctx, ictx->header_oid,
+	  r = cls_client::old_snapshot_list(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 					    &snap_names, &snap_sizes, &new_snapc);
 	  if (r < 0) {
 	    lderr(cct) << "Error listing snapshots: " << cpp_strerror(r)
@@ -1666,7 +1667,7 @@ reprotect_and_return_err:
 	    return r;
 	  }
 	  ClsLockType lock_type = LOCK_NONE;
-	  r = rados::cls::lock::get_lock_info(&ictx->md_ctx, ictx->header_oid,
+	  r = rados::cls::lock::get_lock_info(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 					      RBD_LOCK_NAME, &ictx->lockers,
 					      &lock_type, &ictx->lock_tag);
 
@@ -1690,7 +1691,7 @@ reprotect_and_return_err:
 	} else {
 	  do {
 	    uint64_t incompatible_features;
-	    r = cls_client::get_mutable_metadata(&ictx->md_ctx, ictx->header_oid,
+	    r = cls_client::get_mutable_metadata(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 						 &ictx->size, &ictx->features,
 						 &incompatible_features,
 						 &ictx->lockers,
@@ -1711,7 +1712,7 @@ reprotect_and_return_err:
 	      return -ENOSYS;
 	    }
 
-	    r = cls_client::snapshot_list(&(ictx->md_ctx), ictx->header_oid,
+	    r = cls_client::snapshot_list(&(ictx->md_ctx[DEFAULT_POOL]), ictx->header_oid,
 					  new_snapc.snaps, &snap_names,
 					  &snap_sizes, &snap_features,
 					  &snap_parents,
@@ -1775,7 +1776,8 @@ reprotect_and_return_err:
 	ictx->snap_exists = false;
       }
 
-      ictx->data_ctx.selfmanaged_snap_set_write_ctx(ictx->snapc.seq, ictx->snaps);
+      ictx->data_ctx[HDD_POOL].selfmanaged_snap_set_write_ctx(ictx->snapc.seq, ictx->snaps);
+      ictx->data_ctx[SSD_POOL].selfmanaged_snap_set_write_ctx(ictx->snapc.seq, ictx->snaps);
     } // release snap_lock
 
     if (new_snap) {
@@ -1840,7 +1842,7 @@ reprotect_and_return_err:
       return r;
     }
 
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
 
     ictx->perfcounter->inc(l_librbd_snap_rollback);
     return r;
@@ -1890,7 +1892,7 @@ reprotect_and_return_err:
     }
 
     ImageCtx *dest = new librbd::ImageCtx(destname, "", NULL,
-					  dest_md_ctx, false);
+					  dest_md_ctx, dest_md_ctx, false);
     r = open_image(dest);
     if (r < 0) {
       lderr(cct) << "failed to read newly created header" << dendl;
@@ -2159,7 +2161,7 @@ reprotect_and_return_err:
       bufferlist bl;
       string oid = ictx->get_object_name(ono);
       Context *comp = new C_SimpleThrottle(&throttle);
-      AioWrite *req = new AioWrite(ictx, oid, ono, 0, objectx, object_overlap,
+      AioWrite *req = new AioWrite(ictx, DEFAULT_POOL, oid, ono, 0, objectx, object_overlap,
 				   bl, snapc, CEPH_NOSNAP, comp);
       r = req->send();
       if (r < 0) {
@@ -2178,7 +2180,7 @@ reprotect_and_return_err:
     }
 
     // remove parent from this (base) image
-    r = cls_client::remove_parent(&ictx->md_ctx, ictx->header_oid);
+    r = cls_client::remove_parent(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid);
     if (r < 0) {
       lderr(cct) << "error removing parent" << dendl;
       return r;
@@ -2190,7 +2192,7 @@ reprotect_and_return_err:
     ictx->snap_lock.get_read();
     if (ictx->snaps.empty()) {
       ldout(cct, 2) << "removing child from children list..." << dendl;
-      int r = cls_client::remove_child(&ictx->md_ctx, RBD_CHILDREN,
+      int r = cls_client::remove_child(&ictx->md_ctx[DEFAULT_POOL], RBD_CHILDREN,
 				       ictx->parent_md.spec, ictx->id);
       if (r < 0) {
 	lderr(cct) << "error removing child from children list" << dendl;
@@ -2199,7 +2201,7 @@ reprotect_and_return_err:
       }
     }
     ictx->snap_lock.put_read();
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
 
     ldout(cct, 20) << "finished flattening" << dendl;
 
@@ -2259,12 +2261,12 @@ reprotect_and_return_err:
      * duplicate that code.
      */
     RWLock::RLocker locker(ictx->md_lock);
-    r = rados::cls::lock::lock(&ictx->md_ctx, ictx->header_oid, RBD_LOCK_NAME,
+    r = rados::cls::lock::lock(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, RBD_LOCK_NAME,
 			       exclusive ? LOCK_EXCLUSIVE : LOCK_SHARED,
 			       cookie, tag, "", utime_t(), 0);
     if (r < 0)
       return r;
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     return 0;
   }
 
@@ -2279,11 +2281,11 @@ reprotect_and_return_err:
       return r;
 
     RWLock::RLocker locker(ictx->md_lock);
-    r = rados::cls::lock::unlock(&ictx->md_ctx, ictx->header_oid,
+    r = rados::cls::lock::unlock(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 				 RBD_LOCK_NAME, cookie);
     if (r < 0)
       return r;
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     return 0;
   }
 
@@ -2304,11 +2306,11 @@ reprotect_and_return_err:
       return -EINVAL;
     }
     RWLock::RLocker locker(ictx->md_lock);
-    r = rados::cls::lock::break_lock(&ictx->md_ctx, ictx->header_oid,
+    r = rados::cls::lock::break_lock(&ictx->md_ctx[DEFAULT_POOL], ictx->header_oid,
 				     RBD_LOCK_NAME, cookie, lock_client);
     if (r < 0)
       return r;
-    notify_change(ictx->md_ctx, ictx->header_oid, NULL, ictx);
+    notify_change(ictx->md_ctx[DEFAULT_POOL], ictx->header_oid, NULL, ictx);
     return 0;
   }
 
@@ -2424,7 +2426,7 @@ reprotect_and_return_err:
 
     ictx->md_lock.get_read();
     ictx->snap_lock.get_read();
-    head_ctx.dup(ictx->data_ctx);
+    head_ctx.dup(ictx->data_ctx[DEFAULT_POOL]);
     snap_t from_snap_id = 0;
     uint64_t from_size = 0;
     if (fromsnapname) {
@@ -2804,7 +2806,8 @@ reprotect_and_return_err:
     } else {
       librados::AioCompletion *rados_completion =
 	librados::Rados::aio_create_completion(req_comp, NULL, rados_ctx_cb);
-      ictx->data_ctx.aio_flush_async(rados_completion);
+      ictx->data_ctx[HDD_POOL].aio_flush_async(rados_completion);
+      ictx->data_ctx[SSD_POOL].aio_flush_async(rados_completion);
       rados_completion->release();
     }
     c->finish_adding_requests(cct);
@@ -2837,7 +2840,8 @@ reprotect_and_return_err:
     if (ictx->object_cacher) {
       r = ictx->flush_cache();
     } else {
-      r = ictx->data_ctx.aio_flush();
+      r = ictx->data_ctx[HDD_POOL].aio_flush();
+      r = ictx->data_ctx[SSD_POOL].aio_flush();
     }
 
     if (r)
@@ -2849,13 +2853,6 @@ reprotect_and_return_err:
   int aio_write(ImageCtx *ictx, uint64_t off, size_t len, const char *buf,
 		AioCompletion *c)
   {
-    // my code
-#ifdef TAKE_LOG
-    char my_log[100];
-    sprintf(my_log, "internal.cc-aio_write");
-    take_log(my_log);
-#endif
-  
     CephContext *cct = ictx->cct;
     ldout(cct, 20) << "aio_write " << ictx << " off = " << off << " len = "
 		   << len << " buf = " << (void*)buf << dendl;
@@ -2906,15 +2903,9 @@ reprotect_and_return_err:
 
       C_AioWrite *req_comp = new C_AioWrite(cct, c);
       if (ictx->object_cacher) {
-	// my code
-	take_log("cache");
-
 	c->add_request();
 	ictx->write_to_cache(p->oid, bl, p->length, p->offset, req_comp);
       } else {
-	// my code
-	take_log("direct");
-
 	// reverse map this object extent onto the parent
 	vector<pair<uint64_t,uint64_t> > objectx;
 	Striper::extent_to_file(ictx->cct, &ictx->layout,
@@ -2923,9 +2914,9 @@ reprotect_and_return_err:
 	uint64_t object_overlap = ictx->prune_parent_extents(objectx, overlap);
 
 	// my code: choose a pool to store the object
-	librados::IoCtx *ioctx = &ictx->data_ctx1;
+	int pool = DEFAULT_POOL;
 	// my code
-	AioWrite *req = new AioWrite(ictx, ioctx, p->oid.name, p->objectno, p->offset,
+	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
 				     bl, snapc, snap_id, req_comp);
 	c->add_request();
@@ -2999,13 +2990,13 @@ reprotect_and_return_err:
       }
 
       if (p->offset == 0 && p->length == ictx->layout.fl_object_size) {
-	req = new AioRemove(ictx, p->oid.name, p->objectno, objectx, object_overlap,
+	req = new AioRemove(ictx, DEFAULT_POOL, p->oid.name, p->objectno, objectx, object_overlap,
 			    snapc, snap_id, req_comp);
       } else if (p->offset + p->length == ictx->layout.fl_object_size) {
-	req = new AioTruncate(ictx, p->oid.name, p->objectno, p->offset, objectx, object_overlap,
+	req = new AioTruncate(ictx, DEFAULT_POOL, p->oid.name, p->objectno, p->offset, objectx, object_overlap,
 			      snapc, snap_id, req_comp);
       } else {
-	req = new AioZero(ictx, p->oid.name, p->objectno, p->offset, p->length,
+	req = new AioZero(ictx, DEFAULT_POOL, p->oid.name, p->objectno, p->offset, p->length,
 			  objectx, object_overlap,
 			  snapc, snap_id, req_comp);
       }
@@ -3050,10 +3041,6 @@ reprotect_and_return_err:
   int aio_read(ImageCtx *ictx, const vector<pair<uint64_t,uint64_t> >& image_extents,
 	       char *buf, bufferlist *pbl, AioCompletion *c)
   {
-    char my_log[100];
-    sprintf(my_log, "internal.cc-aio_read");
-    take_log(my_log);
-    
     ldout(ictx->cct, 20) << "aio_read " << ictx << " completion " << c << " " << image_extents << dendl;
 
     int r = ictx_check(ictx);
@@ -3097,9 +3084,9 @@ reprotect_and_return_err:
 	C_AioRead *req_comp = new C_AioRead(ictx->cct, c);
 	
 	// my code
-	librados::IoCtx *ioctx = &ictx->data_ctx1;
+	int pool = DEFAULT_POOL;
 	// my code
-	AioRead *req = new AioRead(ictx, ioctx, q->oid.name, 
+	AioRead *req = new AioRead(ictx, pool, q->oid.name, 
 				   q->objectno, q->offset, q->length,
 				   q->buffer_extents,
 				   snap_id, true, req_comp);
@@ -3107,17 +3094,11 @@ reprotect_and_return_err:
 	c->add_request();
 
 	if (ictx->object_cacher) {
-	  // my code
-	  take_log("cache");
-
 	  C_CacheRead *cache_comp = new C_CacheRead(req_comp, req);
 	  ictx->aio_read_from_cache(q->oid, &req->data(),
 				    q->length, q->offset,
 				    cache_comp);
 	} else {
-	  // my code
-	  take_log("direct");
-
 	  r = req->send();
 	  if (r < 0 && r == -ENOENT)
 	    r = 0;

@@ -94,7 +94,7 @@ namespace librbd {
   int RBD::open(IoCtx& io_ctx, Image& image, const char *name,
 		const char *snap_name)
   {
-    ImageCtx *ictx = new ImageCtx(name, "", snap_name, io_ctx, false);
+    ImageCtx *ictx = new ImageCtx(name, "", snap_name, io_ctx, io_ctx, false);
 
     int r = librbd::open_image(ictx);
     if (r < 0)
@@ -107,7 +107,7 @@ namespace librbd {
   int RBD::open_read_only(IoCtx& io_ctx, Image& image, const char *name,
 			  const char *snap_name)
   {
-    ImageCtx *ictx = new ImageCtx(name, "", snap_name, io_ctx, true);
+    ImageCtx *ictx = new ImageCtx(name, "", snap_name, io_ctx, io_ctx, true);
 
     int r = librbd::open_image(ictx);
     if (r < 0)
@@ -694,15 +694,16 @@ extern "C" int rbd_rename(rados_ioctx_t src_p, const char *srcname,
 extern "C" int rbd_open(rados_ioctx_t p0, rados_ioctx_t p1, const char *name, rbd_image_t *image,
 			const char *snap_name)
 {
+#ifdef TAKE_LOG
   char my_log[100];
   sprintf(my_log, "librbd.cc-rbd_open: %s", name);
   take_log(my_log);
+#endif
 
   librados::IoCtx io_ctx0, io_ctx1;
   librados::IoCtx::from_rados_ioctx_t(p0, io_ctx0);
   librados::IoCtx::from_rados_ioctx_t(p1, io_ctx1);
-  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx0, io_ctx1,
-						false);
+  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx0, io_ctx1, false);
   int r = librbd::open_image(ictx);
   if (r >= 0)
     *image = (rbd_image_t)ictx;
@@ -714,7 +715,7 @@ extern "C" int rbd_open_read_only(rados_ioctx_t p, const char *name,
 {
   librados::IoCtx io_ctx;
   librados::IoCtx::from_rados_ioctx_t(p, io_ctx);
-  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx,
+  librbd::ImageCtx *ictx = new librbd::ImageCtx(name, "", snap_name, io_ctx, io_ctx, 
 						true);
   int r = librbd::open_image(ictx);
   if (r >= 0)
@@ -1104,8 +1105,10 @@ extern "C" int rbd_aio_create_completion(void *cb_arg,
 extern "C" int rbd_aio_write(rbd_image_t image, uint64_t off, size_t len,
 			     const char *buf, rbd_completion_t c)
 {
+#ifdef TAKE_LOG
   // my code
   take_log("rbd_aio_write");
+#endif
   
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
@@ -1116,8 +1119,10 @@ extern "C" int rbd_aio_write(rbd_image_t image, uint64_t off, size_t len,
 extern "C" int rbd_aio_discard(rbd_image_t image, uint64_t off, uint64_t len,
 			       rbd_completion_t c)
 {
+#ifdef TAKE_LOG
   // my code
   take_log("rbd_aio_discard");
+#endif
   
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
@@ -1127,8 +1132,10 @@ extern "C" int rbd_aio_discard(rbd_image_t image, uint64_t off, uint64_t len,
 extern "C" int rbd_aio_read(rbd_image_t image, uint64_t off, size_t len,
 			    char *buf, rbd_completion_t c)
 {
+#ifdef TAKE_LOG
   // my code
   take_log("rbd_aio_read");
+#endif
   
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
@@ -1144,8 +1151,10 @@ extern "C" int rbd_flush(rbd_image_t image)
 
 extern "C" int rbd_aio_flush(rbd_image_t image, rbd_completion_t c)
 {
+#ifdef TAKE_LOG
   // my code
   take_log("rbd_aio_flush");
+#endif
   
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
