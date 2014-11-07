@@ -52,8 +52,7 @@ namespace librbd {
 
     std::string name;
     std::string snap_name;
-    IoCtx data_ctx, md_ctx;
-    IoCtx data_ctx1, md_ctx1;  //my code: the second IoCtx for another pool
+    IoCtx data_ctx[2], md_ctx[2];  //my code
     WatchCtx *wctx;
     int refresh_seq;    ///< sequence for refresh requests
     int last_refresh;   ///< last completed refresh
@@ -94,11 +93,9 @@ namespace librbd {
      * and init() will look it up.
      * 
      */
-    ImageCtx(const std::string &image_name, const std::string &image_id,
-	     const char *snap, IoCtx& p, bool read_only);
     //my code: add another IoCtx p1
     ImageCtx(const std::string &image_name, const std::string &image_id,
-	     const char *snap, IoCtx& p, IoCtx& p1, bool read_only);
+	     const char *snap, IoCtx& p0, IoCtx& p1, bool read_only);
 
     ~ImageCtx();
     int init();

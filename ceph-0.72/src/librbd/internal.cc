@@ -2850,9 +2850,11 @@ reprotect_and_return_err:
 		AioCompletion *c)
   {
     // my code
+#ifdef TAKE_LOG
     char my_log[100];
     sprintf(my_log, "internal.cc-aio_write");
     take_log(my_log);
+#endif
   
     CephContext *cct = ictx->cct;
     ldout(cct, 20) << "aio_write " << ictx << " off = " << off << " len = "

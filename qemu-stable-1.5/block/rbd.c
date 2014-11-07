@@ -97,7 +97,7 @@ typedef struct RADOSCB {
 typedef struct BDRVRBDState {
     int fds[2];
     rados_t cluster;
-    rados_ioctx_t io_ctx, io_ctx1;
+    rados_ioctx_t io_ctx0, io_ctx1;
     rbd_image_t image;
     char name[RBD_MAX_IMAGE_NAME_SIZE];
     int qemu_aio_count;
@@ -459,7 +459,7 @@ static QemuOptsList runtime_opts = {
 static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
 {
     BDRVRBDState *s = bs->opaque;
-    char pool[RBD_MAX_POOL_NAME_SIZE];
+    char pool0[RBD_MAX_POOL_NAME_SIZE];
     char pool1[RBD_MAX_POOL_NAME_SIZE];
     char snap_buf[RBD_MAX_SNAP_NAME_SIZE];
     char conf[RBD_MAX_CONF_SIZE];
@@ -534,10 +534,10 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
     }
 
     // my code
-    strcpy(pool, "hdd-pool");
+    strcpy(pool0, "hdd-pool");
     strcpy(pool1, "ssd-pool");
 
-    r = rados_ioctx_create(s->cluster, pool, &s->io_ctx);
+    r = rados_ioctx_create(s->cluster, pool, &s->io_ctx0);
     if (r < 0) {
         error_report("error opening pool %s", pool);
         goto failed_shutdown;
@@ -550,7 +550,7 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
         goto failed_shutdown;
     }
 
-    r = rbd_open(s->io_ctx, s->io_ctx1, s->name, &s->image, s->snap);
+    r = rbd_open(s->io_ctx0, s->io_ctx1, s->name, &s->image, s->snap);
     if (r < 0) {
         error_report("error reading header from %s", s->name);
         goto failed_open;
@@ -576,7 +576,8 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
 failed:
     rbd_close(s->image);
 failed_open:
-    rados_ioctx_destroy(s->io_ctx);
+    rados_ioctx_destroy(s->io_ctx0);
+	rados_ioctx_destroy(s->io_ctx1);
 failed_shutdown:
     rados_shutdown(s->cluster);
     g_free(s->snap);
@@ -594,7 +595,8 @@ static void qemu_rbd_close(BlockDriverState *bs)
     qemu_aio_set_fd_handler(s->fds[RBD_FD_READ], NULL, NULL, NULL, NULL);
 
     rbd_close(s->image);
-    rados_ioctx_destroy(s->io_ctx);
+    rados_ioctx_destroy(s->io_ctx0);
+	rados_ioctx_destroy(s->io_ctx1);
     g_free(s->snap);
     rados_shutdown(s->cluster);
 }

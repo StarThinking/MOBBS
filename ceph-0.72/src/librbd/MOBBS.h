@@ -3,6 +3,12 @@
 
 #include <stdio.h>
 
+#define DEFAULT_POOL HDD_POOL
+#define HDD_POOL 0
+#define SSD_POOL 1
+
+#define TAKE_LOG
+
 // methods
 #ifdef __cplusplus
 extern "C" {

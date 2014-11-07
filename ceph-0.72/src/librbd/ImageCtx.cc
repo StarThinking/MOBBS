@@ -29,83 +29,10 @@ using librados::snap_t;
 using librados::IoCtx;
 
 namespace librbd {
-  ImageCtx::ImageCtx(const string &image_name, const string &image_id,
-		     const char *snap, IoCtx& p, bool ro)
-    : cct((CephContext*)p.cct()),
-      perfcounter(NULL),
-      snap_id(CEPH_NOSNAP),
-      snap_exists(true),
-      read_only(ro),
-      flush_encountered(false),
-      exclusive_locked(false),
-      name(image_name),
-      wctx(NULL),
-      refresh_seq(0),
-      last_refresh(0),
-      md_lock("librbd::ImageCtx::md_lock"),
-      cache_lock("librbd::ImageCtx::cache_lock"),
-      snap_lock("librbd::ImageCtx::snap_lock"),
-      parent_lock("librbd::ImageCtx::parent_lock"),
-      refresh_lock("librbd::ImageCtx::refresh_lock"),
-      old_format(true),
-      order(0), size(0), features(0),
-      format_string(NULL),
-      id(image_id), parent(NULL),
-      stripe_unit(0), stripe_count(0),
-      object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
-  {
-    md_ctx.dup(p);
-    data_ctx.dup(p);
-
-    memset(&header, 0, sizeof(header));
-    memset(&layout, 0, sizeof(layout));
-
-    string pname = string("librbd-") + id + string("-") +
-      data_ctx.get_pool_name() + string("/") + name;
-    if (snap) {
-      snap_name = snap;
-      pname += "@";
-      pname += snap_name;
-    }
-    perf_start(pname);
-
-    if (cct->_conf->rbd_cache) {
-      // my code
-      take_log("\tcache enable");
-
-      Mutex::Locker l(cache_lock);
-      ldout(cct, 20) << "enabling caching..." << dendl;
-      writeback_handler = new LibrbdWriteback(this, cache_lock);
-
-      uint64_t init_max_dirty = cct->_conf->rbd_cache_max_dirty;
-      if (cct->_conf->rbd_cache_writethrough_until_flush)
-	init_max_dirty = 0;
-      ldout(cct, 20) << "Initial cache settings:"
-		     << " size=" << cct->_conf->rbd_cache_size
-		     << " num_objects=" << 10
-		     << " max_dirty=" << init_max_dirty
-		     << " target_dirty=" << cct->_conf->rbd_cache_target_dirty
-		     << " max_dirty_age="
-		     << cct->_conf->rbd_cache_max_dirty_age << dendl;
-
-      object_cacher = new ObjectCacher(cct, pname, *writeback_handler, cache_lock,
-				       NULL, NULL,
-				       cct->_conf->rbd_cache_size,
-				       10,  /* reset this in init */
-				       init_max_dirty,
-				       cct->_conf->rbd_cache_target_dirty,
-				       cct->_conf->rbd_cache_max_dirty_age,
-				       cct->_conf->rbd_cache_block_writes_upfront);
-      object_set = new ObjectCacher::ObjectSet(NULL, data_ctx.get_id(), 0);
-      object_set->return_enoent = true;
-      object_cacher->start();
-    }
-  }
-
   // my code: add IoCtx p1
   ImageCtx::ImageCtx(const string &image_name, const string &image_id,
-		     const char *snap, IoCtx& p, IoCtx& p1, bool ro)
-    : cct((CephContext*)p.cct()),
+		     const char *snap, IoCtx& p0, IoCtx& p1, bool ro)
+    : cct((CephContext*)p0.cct()),
       perfcounter(NULL),
       snap_id(CEPH_NOSNAP),
       snap_exists(true),
@@ -128,17 +55,18 @@ namespace librbd {
       stripe_unit(0), stripe_count(0),
       object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
   {
-    md_ctx.dup(p);
-    data_ctx.dup(p);
     // my code
-    md_ctx1.dup(p1);
-    data_ctx1.dup(p1);
+    md_ctx[0].dup(p0);
+    data_ctx[0].dup(p0);
+    md_ctx[1].dup(p1);
+    data_ctx[1].dup(p1);
 
     memset(&header, 0, sizeof(header));
     memset(&layout, 0, sizeof(layout));
 
+	// my code
     string pname = string("librbd-") + id + string("-") +
-      data_ctx.get_pool_name() + string("/") + name;
+      data_ctx[DEFAULT_POOL].get_pool_name() + string("/") + name;
     if (snap) {
       snap_name = snap;
       pname += "@";
@@ -173,7 +101,8 @@ namespace librbd {
 				       cct->_conf->rbd_cache_target_dirty,
 				       cct->_conf->rbd_cache_max_dirty_age,
 				       cct->_conf->rbd_cache_block_writes_upfront);
-      object_set = new ObjectCacher::ObjectSet(NULL, data_ctx.get_id(), 0);
+	  // my code
+      object_set = new ObjectCacher::ObjectSet(NULL, data_ctx[DEFAULT_POOL].get_id(), 0);
       object_set->return_enoent = true;
       object_cacher->start();
     }
@@ -253,7 +182,8 @@ namespace librbd {
     layout.fl_stripe_unit = stripe_unit;
     layout.fl_stripe_count = stripe_count;
     layout.fl_object_size = 1ull << order;
-    layout.fl_pg_pool = data_ctx.get_id();  // FIXME: pool id overflow?
+	//my code
+    layout.fl_pg_pool = data_ctx[DEFAULT_POOL].get_id();  // FIXME: pool id overflow?
 
     delete[] format_string;
     size_t len = object_prefix.length() + 16;
@@ -339,7 +269,8 @@ namespace librbd {
       snap_name = in_snap_name;
       snap_id = it->second.id;
       snap_exists = true;
-      data_ctx.snap_set_read(snap_id);
+	  // my code
+      data_ctx[DEFAULT_POOL].snap_set_read(snap_id);
       return 0;
     }
     return -ENOENT;
@@ -350,7 +281,8 @@ namespace librbd {
     snap_id = CEPH_NOSNAP;
     snap_name = "";
     snap_exists = true;
-    data_ctx.snap_set_read(snap_id);
+	// my code
+    data_ctx[DEFAULT_POOL].snap_set_read(snap_id);
   }
 
   snap_t ImageCtx::get_snap_id(string in_snap_name) const
@@ -558,7 +490,8 @@ namespace librbd {
     ObjectCacher::OSDRead *rd = object_cacher->prepare_read(snap_id, bl, 0);
     snap_lock.put_read();
     ObjectExtent extent(o, 0 /* a lie */, off, len, 0);
-    extent.oloc.pool = data_ctx.get_id();
+	// my code
+    extent.oloc.pool = data_ctx[DEFAULT_POOL].get_id();
     extent.buffer_extents.push_back(make_pair(0, len));
     rd->extents.push_back(extent);
     cache_lock.Lock();
@@ -575,9 +508,10 @@ namespace librbd {
 							      utime_t(), 0);
     snap_lock.put_read();
     ObjectExtent extent(o, 0, off, len, 0);
-    extent.oloc.pool = data_ctx.get_id();
+	// my code
+    extent.oloc.pool = data_ctx[DEFAULT_POOL].get_id();
     // XXX: nspace is always default, io_ctx_impl field private
-    //extent.oloc.nspace = data_ctx.io_ctx_impl->oloc.nspace;
+    //extent.oloc.nspace = data_ctx[DEFAULT_POOL].io_ctx_impl->oloc.nspace;
     extent.buffer_extents.push_back(make_pair(0, len));
     wr->extents.push_back(extent);
     {

@@ -26,12 +26,8 @@ namespace librbd {
   {
   public:
     AioRequest();
-    AioRequest(ImageCtx *ictx, const std::string &oid,
-	       uint64_t objectno, uint64_t off, uint64_t len,
-	       librados::snap_t snap_id, Context *completion,
-	       bool hide_enoent);
 	// my code
-	AioRequest(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
+	AioRequest(ImageCtx *ictx, int pool, const std::string &oid,
 	       uint64_t objectno, uint64_t off, uint64_t len,
 	       librados::snap_t snap_id, Context *completion,
 	       bool hide_enoent);
@@ -67,23 +63,13 @@ namespace librbd {
 
   class AioRead : public AioRequest {
   public:
-    AioRead(ImageCtx *ictx, const std::string &oid,
-	    uint64_t objectno, uint64_t offset, uint64_t len,
-	    vector<pair<uint64_t,uint64_t> >& be,
-	    librados::snap_t snap_id, bool sparse,
-	    Context *completion)
-      : AioRequest(ictx, oid, objectno, offset, len, snap_id, completion,
-		   false),
-	m_buffer_extents(be),
-	m_tried_parent(false), m_sparse(sparse) {
-    }
 	// my code
-	AioRead(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
+	AioRead(ImageCtx *ictx, int pool, const std::string &oid,
 	    uint64_t objectno, uint64_t offset, uint64_t len,
 	    vector<pair<uint64_t,uint64_t> >& be,
 	    librados::snap_t snap_id, bool sparse,
 	    Context *completion)
-      : AioRequest(ictx, ioctx, oid, objectno, offset, len, snap_id, completion,
+      : AioRequest(ictx, pool, oid, objectno, offset, len, snap_id, completion,
 		   false),
 	m_buffer_extents(be),
 	m_tried_parent(false), m_sparse(sparse) {
@@ -108,15 +94,8 @@ namespace librbd {
   class AbstractWrite : public AioRequest {
   public:
     AbstractWrite();
-    AbstractWrite(ImageCtx *ictx, const std::string &oid,
-		  uint64_t object_no, uint64_t object_off, uint64_t len,
-		  vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
-		  const ::SnapContext &snapc,
-		  librados::snap_t snap_id,
-		  Context *completion,
-		  bool hide_enoent);
 	// my code
-	AbstractWrite(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
+	AbstractWrite(ImageCtx *ictx, int pool, const std::string &oid,
 		  uint64_t object_no, uint64_t object_off, uint64_t len,
 		  vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 		  const ::SnapContext &snapc,
@@ -172,29 +151,14 @@ namespace librbd {
 
   class AioWrite : public AbstractWrite {
   public:
-    AioWrite(ImageCtx *ictx, const std::string &oid,
-	     uint64_t object_no, uint64_t object_off,
-	     vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
-	     const ceph::bufferlist &data, const ::SnapContext &snapc,
-	     librados::snap_t snap_id,
-	     Context *completion)
-      : AbstractWrite(ictx, oid,
-		      object_no, object_off, data.length(),
-		      objectx, object_overlap,
-		      snapc, snap_id,
-		      completion, false),
-	m_write_data(data) {
-      guard_write();
-      m_write.write(m_object_off, data);
-    }
     // my code
-    AioWrite(ImageCtx *ictx, librados::IoCtx *ioctx, const std::string &oid,
+    AioWrite(ImageCtx *ictx, int pool, const std::string &oid,
 	     uint64_t object_no, uint64_t object_off,
 	     vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 	     const ceph::bufferlist &data, const ::SnapContext &snapc,
 	     librados::snap_t snap_id,
 	     Context *completion)
-      : AbstractWrite(ictx, ioctx, oid,
+      : AbstractWrite(ictx, pool, oid,
 		      object_no, object_off, data.length(),
 		      objectx, object_overlap,
 		      snapc, snap_id,
@@ -216,12 +180,12 @@ namespace librbd {
 
   class AioRemove : public AbstractWrite {
   public:
-    AioRemove(ImageCtx *ictx, const std::string &oid,
+    AioRemove(ImageCtx *ictx, int pool, const std::string &oid,
 	      uint64_t object_no,
 	      vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 	      const ::SnapContext &snapc, librados::snap_t snap_id,
 	      Context *completion)
-      : AbstractWrite(ictx, oid,
+      : AbstractWrite(ictx, pool, oid,
 		      object_no, 0, 0,
 		      objectx, object_overlap,
 		      snapc, snap_id, completion,
@@ -242,12 +206,12 @@ namespace librbd {
 
   class AioTruncate : public AbstractWrite {
   public:
-    AioTruncate(ImageCtx *ictx, const std::string &oid,
+    AioTruncate(ImageCtx *ictx, int pool, const std::string &oid,
 		uint64_t object_no, uint64_t object_off,
 		vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 		const ::SnapContext &snapc, librados::snap_t snap_id,
 		Context *completion)
-      : AbstractWrite(ictx, oid,
+      : AbstractWrite(ictx, pool, oid,
 		      object_no, object_off, 0,
 		      objectx, object_overlap,
 		      snapc, snap_id, completion,
@@ -265,12 +229,12 @@ namespace librbd {
 
   class AioZero : public AbstractWrite {
   public:
-    AioZero(ImageCtx *ictx, const std::string &oid,
+    AioZero(ImageCtx *ictx, int pool, const std::string &oid,
 	    uint64_t object_no, uint64_t object_off, uint64_t object_len,
 	    vector<pair<uint64_t,uint64_t> >& objectx, uint64_t object_overlap,
 	    const ::SnapContext &snapc, librados::snap_t snap_id,
 	    Context *completion)
-      : AbstractWrite(ictx, oid,
+      : AbstractWrite(ictx, pool, oid,
 		      object_no, object_off, object_len,
 		      objectx, object_overlap,
 		      snapc, snap_id, completion,
