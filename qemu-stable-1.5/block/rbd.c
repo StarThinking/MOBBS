@@ -481,7 +481,7 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
 
     filename = qemu_opt_get(opts, "filename");
 
-    if (qemu_rbd_parsename(filename, pool, sizeof(pool),
+    if (qemu_rbd_parsename(filename, pool0, sizeof(pool0),
                            snap_buf, sizeof(snap_buf),
                            s->name, sizeof(s->name),
                            conf, sizeof(conf)) < 0) {
@@ -537,16 +537,16 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
     strcpy(pool0, "hdd-pool");
     strcpy(pool1, "ssd-pool");
 
-    r = rados_ioctx_create(s->cluster, pool, &s->io_ctx0);
+    r = rados_ioctx_create(s->cluster, pool0, &s->io_ctx0);
     if (r < 0) {
-        error_report("error opening pool %s", pool);
+        error_report("error opening pool %s", pool0);
         goto failed_shutdown;
     }
 
     // my code
     r = rados_ioctx_create(s->cluster, pool1, &s->io_ctx1);
     if (r < 0) {
-        error_report("error opening pool %s", pool);
+        error_report("error opening pool %s", pool1);
         goto failed_shutdown;
     }
 
