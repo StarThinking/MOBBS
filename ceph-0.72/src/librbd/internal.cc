@@ -2914,6 +2914,15 @@ reprotect_and_return_err:
 	uint64_t object_overlap = ictx->prune_parent_extents(objectx, overlap);
 
 	// MOBBS: choose a pool to store the object
+	std::map<std::string, pthread_mutex_t>::iterator lock_it = ictx->extent_lock_map.find(p->oid.name);
+	if(lock_it == ictx->extent_lock_map.end())
+	{
+		pthread_mutex_t lock;
+		pthread_mutex_init(&lock, NULL);
+		ictx->extent_lock_map.insert(std::pair<std::string, pthread_mutex_t>(p->oid.name, lock));
+	}
+	pthread_mutex_lock(&ictx->extent_lock_map[p->oid.name]);
+
 	int pool = DEFAULT_POOL;
 	std::map<std::string, int>::iterator iter = ictx->extent_map.find(p->oid.name);
 	if(iter != ictx->extent_map.end())
@@ -2930,12 +2939,17 @@ reprotect_and_return_err:
 	sprintf(my_log, "aio_write: oid-%s pool-%d", p->oid.name.c_str(), pool);
 	take_log(my_log);
 	#endif
+	pool = SSD_POOL;
 	// MOBBS
 	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
 				     bl, snapc, snap_id, req_comp);
 	c->add_request();
 	r = req->send();
+
+	// unlock extent
+	pthread_mutex_unlock(&ictx->extent_lock_map[p->oid.name]);
+
 	if (r < 0)
 	  goto done;
       }
@@ -3116,6 +3130,15 @@ reprotect_and_return_err:
 	take_log(my_log);
 	#endif
 	// MOBBS
+	std::map<std::string, pthread_mutex_t>::iterator lock_it = ictx->extent_lock_map.find(q->oid.name);
+	if(lock_it == ictx->extent_lock_map.end())
+	{
+		pthread_mutex_t lock;
+		pthread_mutex_init(&lock, NULL);
+		ictx->extent_lock_map.insert(std::pair<std::string, pthread_mutex_t>(q->oid.name, lock));
+	}
+	pthread_mutex_lock(&ictx->extent_lock_map[q->oid.name]);
+	pool = SSD_POOL;
 	AioRead *req = new AioRead(ictx, pool, q->oid.name, 
 				   q->objectno, q->offset, q->length,
 				   q->buffer_extents,
@@ -3128,8 +3151,12 @@ reprotect_and_return_err:
 	  ictx->aio_read_from_cache(q->oid, &req->data(),
 				    q->length, q->offset,
 				    cache_comp);
+	  // unlock extent
+	  pthread_mutex_unlock(&ictx->extent_lock_map[q->oid.name]);
 	} else {
 	  r = req->send();
+	  // unlock extent
+	  pthread_mutex_unlock(&ictx->extent_lock_map[q->oid.name]);
 	  if (r < 0 && r == -ENOENT)
 	    r = 0;
 	  if (r < 0) {

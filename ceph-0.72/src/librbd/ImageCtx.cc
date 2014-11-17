@@ -67,8 +67,18 @@ namespace librbd {
 		take_log(my_log);
 		#endif
 		extent_map.insert(std::pair<std::string, int>(key,v));
+		// init extent lock
+		pthread_mutex_t lock;
+		pthread_mutex_init(&lock, NULL);
+		extent_lock_map.insert(std::pair<std::string, pthread_mutex_t>(key, lock));
+
 		s_bl = s_bl.substr(index1 + 3);
 	}
+
+	// start analyzer
+	m_migrater = new Migrater(this);
+	m_analyzer = new Analyzer(this, m_migrater);
+	m_analyzer->start_analyse();
   }
   
   void ImageCtx::finalize_MOBBS() 
@@ -88,6 +98,9 @@ namespace librbd {
 		bl.append("/#/");
 		bl.append(vs);
 		bl.append("/!/");
+
+		// destroy lock
+		pthread_mutex_destroy(&extent_lock_map[key]);
 	}
 	std::string object_name = name + "-extent_map";
 	int r = ioctx.write_full(object_name, bl);
@@ -100,6 +113,11 @@ namespace librbd {
 		#endif
 		exit(r);
 	}
+
+	// finalize analyzer
+	pthread_join(m_analyzer->m_pid, NULL);
+	delete(m_analyzer);
+	delete(m_migrater);
   }
 
   // MOBBS

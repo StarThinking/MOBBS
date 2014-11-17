@@ -26,6 +26,9 @@
 
 // MOBBS
 #include "librbd/MOBBS/MOBBS.h"
+#include "librbd/MOBBS/Migrater.h"
+#include "librbd/MOBBS/Analyzer.h"
+#include "pthread.h"
 
 class CephContext;
 class PerfCounters;
@@ -34,9 +37,14 @@ namespace librbd {
 
   class WatchCtx;
 
+  class Analyzer;
+
   struct ImageCtx {
     // MOBBS
     std::map<std::string, int> extent_map;
+    std::map<std::string, pthread_mutex_t> extent_lock_map;
+    Analyzer* m_analyzer;
+    Migrater* m_migrater;
 
     void initialize_MOBBS();
     void finalize_MOBBS();

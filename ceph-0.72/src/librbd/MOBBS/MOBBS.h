@@ -4,12 +4,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define OBJECT_SIZE 4194304
 #define DEFAULT_POOL HDD_POOL
 #define HDD_POOL 0
 #define SSD_POOL 1
 
 #define TAKE_LOG_LIBRBD
-#define TAKE_LOG_IMAGECTX
+//#define TAKE_LOG_IMAGECTX
+#define TAKE_LOG_ANALYZER
+#define TAKE_LOG_MIGRATER
 
 
 // methods

@@ -6,7 +6,9 @@ librbd_la_SOURCES = \
 	librbd/internal.cc \
 	librbd/LibrbdWriteback.cc \
 	librbd/WatchCtx.cc \
-	librbd/MOBBS/MOBBS.c 
+	librbd/MOBBS/MOBBS.c \
+	librbd/MOBBS/Migrater.cc \
+	librbd/MOBBS/Analyzer.cc
 librbd_la_LIBADD = \
 	$(LIBRADOS) $(LIBOSDC) \
 	libcls_rbd_client.la libcls_lock_client.la \
@@ -23,4 +25,6 @@ noinst_HEADERS += \
 	librbd/parent_types.h \
 	librbd/SnapInfo.h \
 	librbd/WatchCtx.h \
-	librbd/MOBBS/MOBBS.h
+	librbd/MOBBS/MOBBS.h \
+	librbd/MOBBS/Migrater.h \
+	librbd/MOBBS/Analyzer.h
