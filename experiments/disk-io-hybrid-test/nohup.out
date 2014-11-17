@@ -1,0 +1,500 @@
+ran-write-hdd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+ran-write-hdd finish
+seq-write-hdd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+seq-write-hdd finish
+ran-read-hdd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+ran-read-hdd finish
+seq-read-hdd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+seq-read-hdd finish
+mkdir: cannot create directory `ran-write-ssd': File exists
+ran-write-ssd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+ran-write-ssd finish
+mkdir: cannot create directory `seq-write-ssd': File exists
+seq-write-ssd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+seq-write-ssd finish
+mkdir: cannot create directory `ran-read-ssd': File exists
+ran-read-ssd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+ran-read-ssd finish
+mkdir: cannot create directory `seq-read-ssd': File exists
+seq-read-ssd start
+testing size 1k
+counter 1
+counter 2
+counter 3
+testing size 2k
+counter 1
+counter 2
+counter 3
+testing size 4k
+counter 1
+counter 2
+counter 3
+testing size 8k
+counter 1
+counter 2
+counter 3
+testing size 16k
+counter 1
+counter 2
+counter 3
+testing size 32k
+counter 1
+counter 2
+counter 3
+testing size 64k
+counter 1
+counter 2
+counter 3
+testing size 128k
+counter 1
+counter 2
+counter 3
+testing size 256k
+counter 1
+counter 2
+counter 3
+testing size 512k
+counter 1
+counter 2
+counter 3
+testing size 1M
+counter 1
+counter 2
+counter 3
+testing size 2M
+counter 1
+counter 2
+counter 3
+testing size 4M
+counter 1
+counter 2
+counter 3
+testing size 8M
+counter 1
+counter 2
+counter 3
+testing size 16M
+counter 1
+counter 2
+counter 3
+seq-read-ssd finish

@@ -4,26 +4,26 @@ test: (g=0): rw=randread, bs=8M-8M/8M-8M/8M-8M, ioengine=sync, iodepth=1
 fio-2.1.3
 Starting 32 processes
 
-test: (groupid=0, jobs=32): err= 0: pid=2651: Wed Nov  5 20:51:23 2014
-  read : io=1968.0MB, bw=50612KB/s, iops=6, runt=122689msec
-    clat (msec): min=281, max=38963, avg=5134.36, stdev=4234.72
-     lat (msec): min=281, max=38963, avg=5134.36, stdev=4234.72
+test: (groupid=0, jobs=32): err= 0: pid=6364: Mon Nov 17 01:12:31 2014
+  read : io=442368KB, bw=37425KB/s, iops=4, runt=123893msec
+    clat (msec): min=268, max=37602, avg=6922.43, stdev=5368.50
+     lat (msec): min=268, max=37602, avg=6922.44, stdev=5368.50
     clat percentiles (msec):
-     |  1.00th=[  693],  5.00th=[ 1319], 10.00th=[ 1631], 20.00th=[ 2180],
-     | 30.00th=[ 2638], 40.00th=[ 3261], 50.00th=[ 3884], 60.00th=[ 4752],
-     | 70.00th=[ 5669], 80.00th=[ 7439], 90.00th=[10290], 95.00th=[13042],
+     |  1.00th=[ 1270],  5.00th=[ 1811], 10.00th=[ 2311], 20.00th=[ 3032],
+     | 30.00th=[ 3654], 40.00th=[ 4359], 50.00th=[ 5211], 60.00th=[ 6128],
+     | 70.00th=[ 7635], 80.00th=[10028], 90.00th=[14353], 95.00th=[16712],
      | 99.00th=[16712], 99.50th=[16712], 99.90th=[16712], 99.95th=[16712],
      | 99.99th=[16712]
-    bw (KB  /s): min=  210, max=15814, per=5.14%, avg=2601.34, stdev=1941.84
-    lat (msec) : 500=0.26%, 750=0.79%, 1000=0.66%, 2000=14.91%, >=2000=83.38%
-  cpu          : usr=0.00%, sys=0.06%, ctx=351209, majf=0, minf=15339
+    bw (KB  /s): min=  217, max= 9893, per=5.03%, avg=1882.77, stdev=1315.30
+    lat (msec) : 500=0.35%, 1000=0.53%, 2000=6.36%, >=2000=92.76%
+  cpu          : usr=0.00%, sys=0.05%, ctx=260322, majf=0, minf=17412
   IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
      submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
      complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=758/w=0/d=0, short=r=0/w=0/d=0
+     issued    : total=r=566/w=0/d=0, short=r=0/w=0/d=0
 
 Run status group 0 (all jobs):
-   READ: io=6064.0MB, aggrb=50612KB/s, minb=50612KB/s, maxb=50612KB/s, mint=122689msec, maxt=122689msec
+   READ: io=4528.0MB, aggrb=37424KB/s, minb=37424KB/s, maxb=37424KB/s, mint=123893msec, maxt=123893msec
 
 Disk stats (read/write):
-  vda: ios=12865/0, merge=0/0, ticks=7862524/0, in_queue=7826600, util=100.00%
+  vda: ios=9614/0, merge=0/0, ticks=7951336/0, in_queue=7904492, util=100.00%
