@@ -24,6 +24,9 @@
 #include "librbd/SnapInfo.h"
 #include "librbd/parent_types.h"
 
+// MOBBS
+#include "librbd/MOBBS/MOBBS.h"
+
 class CephContext;
 class PerfCounters;
 
@@ -32,6 +35,13 @@ namespace librbd {
   class WatchCtx;
 
   struct ImageCtx {
+    // MOBBS
+    std::map<std::string, int> extent_map;
+
+    void initialize_MOBBS();
+    void finalize_MOBBS();
+    // MOBBS
+
     CephContext *cct;
     PerfCounters *perfcounter;
     struct rbd_obj_header_ondisk header;

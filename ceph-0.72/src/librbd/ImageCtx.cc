@@ -11,8 +11,8 @@
 #include "librbd/WatchCtx.h"
 
 #include "librbd/ImageCtx.h"
-// my code
-#include "librbd/MOBBS.h"
+// MOBBS
+#include "librbd/MOBBS/MOBBS.h"
 
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
@@ -29,7 +29,82 @@ using librados::snap_t;
 using librados::IoCtx;
 
 namespace librbd {
-  // my code: add IoCtx p1
+  // MOBBS
+  void ImageCtx::initialize_MOBBS() {
+	// init extent_map
+	librados::bufferlist bl;
+	librados::IoCtx ioctx = data_ctx[DEFAULT_POOL];
+	std::string object_name = name + "-extent_map";
+	int read_len = 4194304;
+	int r = ioctx.read(object_name, bl, read_len, 0);
+	std::string s_bl;
+	if(r < 0)
+	{
+		#ifdef TAKE_LOG_IMAGECTX
+		char my_log[100];
+		sprintf(my_log, "image: %s failed to load extent map", name.c_str());
+		take_log(my_log);
+		#endif
+		s_bl = "";
+		//exit(r);
+	}
+	else
+	{
+		s_bl = bl.c_str();
+	}
+	while(1)
+	{
+		int index1 = s_bl.find("/!/");
+		if(index1 < 0) break;
+		std::string key_value = s_bl.substr(0, index1);
+		int index2 = key_value.find("/#/");
+		std::string key = key_value.substr(0, index2);
+		std::string value = key_value.substr(index2 + 3);
+		int v = atoi(value.c_str());
+		#ifdef TAKE_LOG_IMAGECTX
+		char my_log[100];
+		sprintf(my_log, "image: %s load extent_map %s:%d", name.c_str(), key.c_str(), v);
+		take_log(my_log);
+		#endif
+		extent_map.insert(std::pair<std::string, int>(key,v));
+		s_bl = s_bl.substr(index1 + 3);
+	}
+  }
+  
+  void ImageCtx::finalize_MOBBS() 
+  {
+	// save extent_map
+	librados::bufferlist bl;
+	librados::IoCtx ioctx = data_ctx[DEFAULT_POOL];
+	for(std::map<std::string, int>::iterator it = extent_map.begin(); it != extent_map.end(); it ++)
+	{
+		std::string key = it->first;
+		int value = it->second;
+		std::stringstream ss;
+		std::string vs;
+		ss << value;
+		ss >> vs;
+		bl.append(key);
+		bl.append("/#/");
+		bl.append(vs);
+		bl.append("/!/");
+	}
+	std::string object_name = name + "-extent_map";
+	int r = ioctx.write_full(object_name, bl);
+	if(r < 0)
+	{
+		#ifdef TAKE_LOG_IMAGECTX
+		char my_log[100];
+		sprintf(my_log, "image: %s failed to save extent map", name.c_str());
+		take_log(my_log);
+		#endif
+		exit(r);
+	}
+  }
+
+  // MOBBS
+
+  // MOBBS: add IoCtx p1
   ImageCtx::ImageCtx(const string &image_name, const string &image_id,
 		     const char *snap, IoCtx& p0, IoCtx& p1, bool ro)
     : cct((CephContext*)p0.cct()),
@@ -55,11 +130,14 @@ namespace librbd {
       stripe_unit(0), stripe_count(0),
       object_cacher(NULL), writeback_handler(NULL), object_set(NULL)
   {
-    // my code
+    // MOBBS
     md_ctx[0].dup(p0);
     data_ctx[0].dup(p0);
     md_ctx[1].dup(p1);
     data_ctx[1].dup(p1);
+    // MOBBS: init
+    this->initialize_MOBBS();
+
 
     memset(&header, 0, sizeof(header));
     memset(&layout, 0, sizeof(layout));
@@ -109,6 +187,9 @@ namespace librbd {
   }
 
   ImageCtx::~ImageCtx() {
+    // MOBBS: finalize
+    this->finalize_MOBBS();
+
     perf_stop();
     if (object_cacher) {
       delete object_cacher;

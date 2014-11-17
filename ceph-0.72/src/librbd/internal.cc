@@ -24,8 +24,8 @@
 
 #include "librados/snap_set_diff.h"
 
-// my code
-#include "librbd/MOBBS.h"
+// MOBBS
+#include "librbd/MOBBS/MOBBS.h"
 
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
@@ -949,7 +949,7 @@ reprotect_and_return_err:
     librbd::NoOpProgressContext no_op;
     ImageCtx *c_imctx = NULL;
     // make sure parent snapshot exists
-    // my code
+    // MOBBS
     ImageCtx *p_imctx = new ImageCtx(p_name, "", p_snap_name, p_ioctx, p_ioctx, true);
     r = open_image(p_imctx);
     if (r < 0) {
@@ -2913,9 +2913,24 @@ reprotect_and_return_err:
 			      objectx);
 	uint64_t object_overlap = ictx->prune_parent_extents(objectx, overlap);
 
-	// my code: choose a pool to store the object
+	// MOBBS: choose a pool to store the object
 	int pool = DEFAULT_POOL;
-	// my code
+	std::map<std::string, int>::iterator iter = ictx->extent_map.find(p->oid.name);
+	if(iter != ictx->extent_map.end())
+	{
+		pool = iter->second;
+	}
+	else
+	{
+		pool = DEFAULT_POOL;
+		ictx->extent_map.insert(std::pair<std::string, int>(p->oid.name, DEFAULT_POOL));
+	}
+	#ifdef TAKE_LOG_INTERNAL
+	char my_log[100];
+	sprintf(my_log, "aio_write: oid-%s pool-%d", p->oid.name.c_str(), pool);
+	take_log(my_log);
+	#endif
+	// MOBBS
 	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
 				     bl, snapc, snap_id, req_comp);
@@ -3083,9 +3098,24 @@ reprotect_and_return_err:
 
 	C_AioRead *req_comp = new C_AioRead(ictx->cct, c);
 	
-	// my code
+	// MOBBS
 	int pool = DEFAULT_POOL;
-	// my code
+	std::map<std::string, int>::iterator iter = ictx->extent_map.find(q->oid.name);
+	if(iter != ictx->extent_map.end())
+	{
+		pool = iter->second;
+	}
+	else
+	{
+		pool = DEFAULT_POOL;
+		ictx->extent_map.insert(std::pair<std::string, int>(q->oid.name, DEFAULT_POOL));
+	}
+	#ifdef TAKE_LOG_INTERNAL
+	char my_log[100];
+	sprintf(my_log, "aio_read: oid-%s pool-%d", q->oid.name.c_str(), pool);
+	take_log(my_log);
+	#endif
+	// MOBBS
 	AioRead *req = new AioRead(ictx, pool, q->oid.name, 
 				   q->objectno, q->offset, q->length,
 				   q->buffer_extents,

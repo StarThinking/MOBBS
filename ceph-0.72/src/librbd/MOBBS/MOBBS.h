@@ -2,12 +2,15 @@
 #define MOBBS_H
 
 #include <stdio.h>
+#include <unistd.h>
 
-#define DEFAULT_POOL SSD_POOL
+#define DEFAULT_POOL HDD_POOL
 #define HDD_POOL 0
 #define SSD_POOL 1
 
-//#define TAKE_LOG
+#define TAKE_LOG_LIBRBD
+#define TAKE_LOG_IMAGECTX
+
 
 // methods
 #ifdef __cplusplus

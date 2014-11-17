@@ -12,8 +12,6 @@
 
 #include "librbd/AioRequest.h"
 
-// my code
-#include "librbd/MOBBS.h"
 
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
