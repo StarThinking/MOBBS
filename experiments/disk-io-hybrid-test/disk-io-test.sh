@@ -1,7 +1,7 @@
 #! /bin/bash
 
 counter=3
-disk_size=64G
+disk_size=30G
 numjobs=32
 runtime=120
 
@@ -43,22 +43,22 @@ function seq-test() {
 	echo "$dirname finish"
 }
 
-#ran-test write /dev/vdb ran-write-ssd
-#cp analyze.sh ran-write-ssd/analyze.sh
-#ran-test write /dev/vdc ran-write-hdd
+ran-test write /dev/vda ran-write-ssd
+cp analyze.sh ran-write-ssd/analyze.sh
+#ran-test write /dev/vda ran-write-hdd
 #cp analyze.sh ran-write-hdd/analyze.sh
 
-#seq-test write /dev/vdb seq-write-ssd
-#cp analyze.sh seq-write-ssd/analyze.sh
-#seq-test write /dev/vdc seq-write-hdd
+seq-test write /dev/vda seq-write-ssd
+cp analyze.sh seq-write-ssd/analyze.sh
+#seq-test write /dev/vda seq-write-hdd
 #cp analyze.sh seq-write-hdd/analyze.sh
 
-#ran-test read /dev/vda ran-read-ssd
-#cp analyze.sh ran-read-ssd/analyze.sh
-ran-test read /dev/vda ran-read-hdd
-cp analyze.sh ran-read-hdd/analyze.sh
+ran-test read /dev/vda ran-read-ssd
+cp analyze.sh ran-read-ssd/analyze.sh
+#ran-test read /dev/vda ran-read-hdd
+#cp analyze.sh ran-read-hdd/analyze.sh
 
-#seq-test read /dev/vdb seq-read-ssd
-#cp analyze.sh seq-read-ssd/analyze.sh
-#seq-test read /dev/vdc seq-read-hdd
+seq-test read /dev/vda seq-read-ssd
+cp analyze.sh seq-read-ssd/analyze.sh
+#seq-test read /dev/vda seq-read-hdd
 #cp analyze.sh seq-read-hdd/analyze.sh
