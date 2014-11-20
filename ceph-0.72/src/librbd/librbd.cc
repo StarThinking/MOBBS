@@ -694,11 +694,9 @@ extern "C" int rbd_rename(rados_ioctx_t src_p, const char *srcname,
 extern "C" int rbd_open(rados_ioctx_t p0, rados_ioctx_t p1, const char *name, rbd_image_t *image,
 			const char *snap_name)
 {
-#ifdef TAKE_LOG_LIBRBD
   char my_log[100];
   sprintf(my_log, "librbd.cc-rbd_open: %s", name);
   take_log(my_log);
-#endif
 
   librados::IoCtx io_ctx0, io_ctx1;
   librados::IoCtx::from_rados_ioctx_t(p0, io_ctx0);
@@ -1114,11 +1112,6 @@ extern "C" int rbd_aio_write(rbd_image_t image, uint64_t off, size_t len,
 extern "C" int rbd_aio_discard(rbd_image_t image, uint64_t off, uint64_t len,
 			       rbd_completion_t c)
 {
-#ifdef TAKE_LOG_LIBRBD
-  // my code
-  take_log("rbd_aio_discard");
-#endif
-  
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_discard(ictx, off, len, (librbd::AioCompletion *)comp->pc);
@@ -1141,11 +1134,6 @@ extern "C" int rbd_flush(rbd_image_t image)
 
 extern "C" int rbd_aio_flush(rbd_image_t image, rbd_completion_t c)
 {
-#ifdef TAKE_LOG_LIBRBD
-  // my code
-  take_log("rbd_aio_flush");
-#endif
-  
   librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
   return librbd::aio_flush(ictx, (librbd::AioCompletion *)comp->pc);

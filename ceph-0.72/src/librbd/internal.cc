@@ -2939,7 +2939,6 @@ reprotect_and_return_err:
 	sprintf(my_log, "aio_write: oid-%s pool-%d", p->oid.name.c_str(), pool);
 	take_log(my_log);
 	#endif
-	pool = SSD_POOL;
 	// MOBBS
 	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
@@ -3138,7 +3137,6 @@ reprotect_and_return_err:
 		ictx->extent_lock_map.insert(std::pair<std::string, pthread_mutex_t>(q->oid.name, lock));
 	}
 	pthread_mutex_lock(&ictx->extent_lock_map[q->oid.name]);
-	pool = SSD_POOL;
 	AioRead *req = new AioRead(ictx, pool, q->oid.name, 
 				   q->objectno, q->offset, q->length,
 				   q->buffer_extents,

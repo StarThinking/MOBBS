@@ -5,20 +5,25 @@
 #include <unistd.h>
 
 #define OBJECT_SIZE 4194304
-#define DEFAULT_POOL HDD_POOL
+//#define DEFAULT_POOL HDD_POOL
 #define HDD_POOL 0
 #define SSD_POOL 1
+#define CONF_PATH "/etc/ceph/mobbs.conf"
 
-#define TAKE_LOG_LIBRBD
-//#define TAKE_LOG_IMAGECTX
-#define TAKE_LOG_ANALYZER
-#define TAKE_LOG_MIGRATER
 
+// config variable
+extern int DEFAULT_POOL;
+extern int TAKE_LOG_LIBRBD;
+extern int TAKE_LOG_ANALYZER;
+extern int TAKE_LOG_MIGRATER;
+extern int EXTENT_MAP_REBUILD;
+extern int DO_MIGRATION;
 
 // methods
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 // take logs into /etc/ceph/mobbs.log
 void take_log(const char* log);

@@ -13,6 +13,7 @@
 #include "librbd/ImageCtx.h"
 // MOBBS
 #include "librbd/MOBBS/MOBBS.h"
+#include "librbd/MOBBS/ConfigParser.h"
 
 #define dout_subsys ceph_subsys_rbd
 #undef dout_prefix
@@ -31,6 +32,11 @@ using librados::IoCtx;
 namespace librbd {
   // MOBBS
   void ImageCtx::initialize_MOBBS() {
+	// load config
+	string conf_path(CONF_PATH);
+	ConfigParser cp(conf_path);
+	cp.parse();
+
 	// init extent_map
 	librados::bufferlist bl;
 	librados::IoCtx ioctx = data_ctx[DEFAULT_POOL];
@@ -67,6 +73,7 @@ namespace librbd {
 		take_log(my_log);
 		#endif
 		extent_map.insert(std::pair<std::string, int>(key,v));
+
 		// init extent lock
 		pthread_mutex_t lock;
 		pthread_mutex_init(&lock, NULL);
@@ -74,15 +81,31 @@ namespace librbd {
 
 		s_bl = s_bl.substr(index1 + 3);
 	}
+	if(EXTENT_MAP_REBUILD)
+	{
+		extent_map.clear();
+		extent_lock_map.clear();
+	}
+	char my_log[100];
+	sprintf(my_log, "extent map size: %ld", extent_map.size());
+	take_log(my_log);
 
 	// start analyzer
-	m_migrater = new Migrater(this);
-	m_analyzer = new Analyzer(this, m_migrater);
-	m_analyzer->start_analyse();
+	if(DO_MIGRATION)
+	{
+		m_migrater = new Migrater(this);
+		m_analyzer = new Analyzer(this, m_migrater);
+		m_analyzer->start_analyse();
+	}
   }
   
   void ImageCtx::finalize_MOBBS() 
   {
+	// finalize analyzer
+	m_analyzer->stop_analyse();
+	delete(m_analyzer);
+	delete(m_migrater);
+
 	// save extent_map
 	librados::bufferlist bl;
 	librados::IoCtx ioctx = data_ctx[DEFAULT_POOL];
@@ -114,10 +137,6 @@ namespace librbd {
 		exit(r);
 	}
 
-	// finalize analyzer
-	pthread_join(m_analyzer->m_pid, NULL);
-	delete(m_analyzer);
-	delete(m_migrater);
   }
 
   // MOBBS

@@ -8,7 +8,8 @@ librbd_la_SOURCES = \
 	librbd/WatchCtx.cc \
 	librbd/MOBBS/MOBBS.c \
 	librbd/MOBBS/Migrater.cc \
-	librbd/MOBBS/Analyzer.cc
+	librbd/MOBBS/Analyzer.cc \
+	librbd/MOBBS/ConfigParser.cc
 librbd_la_LIBADD = \
 	$(LIBRADOS) $(LIBOSDC) \
 	libcls_rbd_client.la libcls_lock_client.la \
@@ -27,4 +28,5 @@ noinst_HEADERS += \
 	librbd/WatchCtx.h \
 	librbd/MOBBS/MOBBS.h \
 	librbd/MOBBS/Migrater.h \
-	librbd/MOBBS/Analyzer.h
+	librbd/MOBBS/Analyzer.h \
+	librbd/MOBBS/ConfigParser.h

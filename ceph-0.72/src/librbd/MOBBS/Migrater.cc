@@ -24,11 +24,16 @@ namespace librbd {
 
   void Migrater::do_concurrent_migrate(std::string extent_id, int from_pool, int to_pool)
   {
-    #ifdef TAKE_LOG_MIGRATER
-    char my_log[100];
-    sprintf(my_log, "migrating: %s from:%d to:%d", extent_id.c_str(), from_pool, to_pool);
-    take_log(my_log);
-    #endif
+    if(TAKE_LOG_MIGRATER)
+    {
+    	char my_log[100];
+    	sprintf(my_log, "migrating: %s from:%d to:%d", extent_id.c_str(), from_pool, to_pool);
+    	take_log(my_log);
+    }
+    struct timeval tv_begin, tv_end;
+    //struct timeval tv_begin1, tv_end1;
+    long time_used;
+    gettimeofday(&tv_begin, NULL);
     int ret = 0;
    
     librados::IoCtx io_ctx_from = ictx->data_ctx[from_pool];
@@ -68,6 +73,17 @@ namespace librbd {
     	std::cout << "fail to remove" << std::endl;
 	exit(ret);
     }
+
+    gettimeofday(&tv_end, NULL);
+    time_used = 1000000 * (tv_end.tv_sec - tv_begin.tv_sec) + (tv_end.tv_usec - tv_begin.tv_usec); //us
+    time_used /= 1000;
+    if(TAKE_LOG_MIGRATER)
+    {
+    	char my_log4[100];
+    	sprintf(my_log4, "total time used: %ld", time_used);
+    	take_log(my_log4);
+    }
+
 
   }
 
