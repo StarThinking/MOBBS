@@ -1,6 +1,6 @@
 #! /bin/bash
 
-counter=40
+counter=20
 bs=1
 power=2
 size=4k

@@ -1,4 +1,4 @@
-ran-write start
+seq-read start
 testing size 4k
 counter 1
 counter 2
@@ -20,4 +20,4 @@ counter 17
 counter 18
 counter 19
 counter 20
-ran-write finish
+seq-read finish
