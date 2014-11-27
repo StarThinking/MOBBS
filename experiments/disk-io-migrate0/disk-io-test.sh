@@ -38,8 +38,8 @@ function seq-test() {
 	echo "$dirname finish"
 }
 
-ran-test write /dev/vda ran-write
-cp analyze.sh ran-write/analyze.sh
+#ran-test write /dev/vda ran-write
+#cp analyze.sh ran-write/analyze.sh
 #ran-test write /dev/vdc ran-write-hdd
 #cp analyze.sh ran-write-hdd/analyze.sh
 
@@ -53,7 +53,7 @@ cp analyze.sh ran-write/analyze.sh
 #ran-test read /dev/vdc ran-read-hdd
 #cp analyze.sh ran-read-hdd/analyze.sh
 
-#seq-test read /dev/vda seq-read
-#cp analyze.sh seq-read/analyze.sh
+seq-test read /dev/vda seq-read
+cp analyze.sh seq-read/analyze.sh
 #seq-test read /dev/vdc seq-read-hdd
 #cp analyze.sh seq-read-hdd/analyze.sh
