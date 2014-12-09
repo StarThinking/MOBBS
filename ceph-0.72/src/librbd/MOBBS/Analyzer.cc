@@ -31,7 +31,7 @@ namespace librbd
 		Analyzer* analyzer = (Analyzer*)argv;
 		while(analyzer->m_analysing)
 		{
-			for(std::map<std::string, int>::iterator it = analyzer->m_ictx->extent_map.begin(); it != analyzer->m_ictx->extent_map.end(); it ++)
+			for(std::map<std::string, int>::iterator it = analyzer->m_ictx->m_mapper->m_extent_map.begin(); it != analyzer->m_ictx->m_mapper->m_extent_map.end(); it ++)
 			{
 				if(!analyzer->m_analysing) return NULL;
 				std::string extent_id = it->first;

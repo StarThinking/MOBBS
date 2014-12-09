@@ -6,6 +6,7 @@ int TAKE_LOG_ANALYZER = 0;
 int TAKE_LOG_MIGRATER = 0;
 int EXTENT_MAP_REBUILD = 0;
 int DO_MIGRATION = 0;
+int THRIFT_PORT = 9090;
 
 void take_log(const char* log)
 {

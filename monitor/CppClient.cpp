@@ -24,6 +24,7 @@
 #include <thrift/transport/TTransportUtils.h>
 
 #include "thrift/gen-cpp/MonitorServer.h"
+#include "client/ClientService.h"
 
 using namespace std;
 using namespace apache::thrift;
@@ -31,18 +32,26 @@ using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 
 using namespace monitor;
+using namespace librbd;
+
 
 int main(int argc, char** argv) {
   boost::shared_ptr<TTransport> socket(new TSocket("localhost", 9090));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  MonitorServerClient client(protocol);
+  //MonitorServerClient client(protocol);
+  ClientServiceClient client(protocol);
 
   try {
     transport->open();
+    client.begin_migration("a", 0, 1);
+    //client.finish_migration("a");
+    transport->close();
+    /*
     cout << "get: " << argv[1] << endl;
     cout << client.lock_and_get_pool(argv[1]) << endl;
     client.release_lock(argv[1]);
+    */
 
   } catch (TException& tx) {
     cout << "ERROR: " << tx.what() << endl;

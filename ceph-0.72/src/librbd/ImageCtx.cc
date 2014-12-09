@@ -37,105 +37,53 @@ namespace librbd {
 	ConfigParser cp(conf_path);
 	cp.parse();
 
-	// init extent_map
-	librados::bufferlist bl;
-	librados::IoCtx ioctx = data_ctx[DEFAULT_POOL];
-	std::string object_name = name + "-extent_map";
-	int read_len = 4194304;
-	int r = ioctx.read(object_name, bl, read_len, 0);
-	std::string s_bl;
-	if(r < 0)
-	{
-		#ifdef TAKE_LOG_IMAGECTX
-		char my_log[100];
-		sprintf(my_log, "image: %s failed to load extent map", name.c_str());
-		take_log(my_log);
-		#endif
-		s_bl = "";
-		//exit(r);
-	}
-	else
-	{
-		s_bl = bl.c_str();
-	}
-	while(1)
-	{
-		int index1 = s_bl.find("/!/");
-		if(index1 < 0) break;
-		std::string key_value = s_bl.substr(0, index1);
-		int index2 = key_value.find("/#/");
-		std::string key = key_value.substr(0, index2);
-		std::string value = key_value.substr(index2 + 3);
-		int v = atoi(value.c_str());
-		#ifdef TAKE_LOG_IMAGECTX
-		char my_log[100];
-		sprintf(my_log, "image: %s load extent_map %s:%d", name.c_str(), key.c_str(), v);
-		take_log(my_log);
-		#endif
-		extent_map.insert(std::pair<std::string, int>(key,v));
+	char my_log1[100];
+	sprintf(my_log1, "DEFAULT POOL is: %d", DEFAULT_POOL);
+	take_log(my_log1);
 
-		// init extent lock
-		pthread_mutex_t lock;
-		pthread_mutex_init(&lock, NULL);
-		extent_lock_map.insert(std::pair<std::string, pthread_mutex_t>(key, lock));
-
-		s_bl = s_bl.substr(index1 + 3);
-	}
-	if(EXTENT_MAP_REBUILD)
-	{
-		extent_map.clear();
-		extent_lock_map.clear();
-	}
-	char my_log[100];
-	sprintf(my_log, "extent map size: %ld", extent_map.size());
-	take_log(my_log);
+	// init mapper
+	m_mapper = new Mapper(name + "--extent_map");
+	char my_log2[100];
+	sprintf(my_log2, "extent_map size: %ld", m_mapper->m_extent_map.size());
+	take_log(my_log2);
 
 	// start analyzer
 	if(DO_MIGRATION)
 	{
+		take_log("begin migration");
+
 		m_migrater = new Migrater(this);
+		if(EXTENT_MAP_REBUILD)
+		{
+			m_migrater->migrate_to_default_pool();
+		}
 		m_analyzer = new Analyzer(this, m_migrater);
 		m_analyzer->start_analyse();
+	}
+
+	// start client server
+	if(!DO_MIGRATION)
+	{
+		m_client_server = new ClientServer(this);
+		m_client_server->start();
 	}
   }
   
   void ImageCtx::finalize_MOBBS() 
   {
 	// finalize analyzer
-	m_analyzer->stop_analyse();
-	delete(m_analyzer);
-	delete(m_migrater);
-
-	// save extent_map
-	librados::bufferlist bl;
-	librados::IoCtx ioctx = data_ctx[DEFAULT_POOL];
-	for(std::map<std::string, int>::iterator it = extent_map.begin(); it != extent_map.end(); it ++)
+	if(DO_MIGRATION)
 	{
-		std::string key = it->first;
-		int value = it->second;
-		std::stringstream ss;
-		std::string vs;
-		ss << value;
-		ss >> vs;
-		bl.append(key);
-		bl.append("/#/");
-		bl.append(vs);
-		bl.append("/!/");
-
-		// destroy lock
-		pthread_mutex_destroy(&extent_lock_map[key]);
+		m_analyzer->stop_analyse();
+		delete(m_analyzer);
+		delete(m_migrater);
 	}
-	std::string object_name = name + "-extent_map";
-	int r = ioctx.write_full(object_name, bl);
-	if(r < 0)
+	if(!DO_MIGRATION)
 	{
-		#ifdef TAKE_LOG_IMAGECTX
-		char my_log[100];
-		sprintf(my_log, "image: %s failed to save extent map", name.c_str());
-		take_log(my_log);
-		#endif
-		exit(r);
+		m_client_server->stop();
+		delete(m_client_server);
 	}
+	delete(m_mapper);
 
   }
 

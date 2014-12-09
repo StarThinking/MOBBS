@@ -13,6 +13,7 @@ namespace librbd {
   public:
     Migrater(ImageCtx *ictx);
     void do_concurrent_migrate(std::string extent_id, int from_pool, int to_pool);
+    void migrate_to_default_pool();
     bool get_migrating();
     void set_migrating(bool migrating);
     bool to_finilize;

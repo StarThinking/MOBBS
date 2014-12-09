@@ -112,7 +112,7 @@ namespace librbd
 
 	void ConfigParser::set_variable(string key, string value)
 	{
-		if(key.compare("DEAULT_POOL") == 0)
+		if(key.compare("DEFAULT_POOL") == 0)
 		{
 			if(value.compare("SSD_POOL") == 0)
 				DEFAULT_POOL = SSD_POOL;

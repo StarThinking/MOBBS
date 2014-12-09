@@ -18,6 +18,7 @@ extern int TAKE_LOG_ANALYZER;
 extern int TAKE_LOG_MIGRATER;
 extern int EXTENT_MAP_REBUILD;
 extern int DO_MIGRATION;
+extern int THRIFT_PORT;
 
 // methods
 #ifdef __cplusplus

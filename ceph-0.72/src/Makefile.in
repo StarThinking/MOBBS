@@ -697,7 +697,9 @@ am_librbd_la_OBJECTS = librbd/librbd.lo librbd/AioCompletion.lo \
 	librbd/AioRequest.lo librbd/ImageCtx.lo librbd/internal.lo \
 	librbd/LibrbdWriteback.lo librbd/WatchCtx.lo \
 	librbd/MOBBS/MOBBS.lo librbd/MOBBS/Migrater.lo \
-	librbd/MOBBS/Analyzer.lo librbd/MOBBS/ConfigParser.lo
+	librbd/MOBBS/Analyzer.lo librbd/MOBBS/ConfigParser.lo \
+	librbd/MOBBS/Mapper.lo librbd/MOBBS/thrift/ClientServer.lo \
+	librbd/MOBBS/thrift/gen-cpp/ClientService.lo
 librbd_la_OBJECTS = $(am_librbd_la_OBJECTS)
 librbd_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -2785,9 +2787,11 @@ am__noinst_HEADERS_DIST = arch/intel.h arch/neon.h arch/probe.h \
 	librbd/parent_types.h librbd/SnapInfo.h librbd/WatchCtx.h \
 	librbd/MOBBS/MOBBS.h librbd/MOBBS/Migrater.h \
 	librbd/MOBBS/Analyzer.h librbd/MOBBS/ConfigParser.h \
-	rgw/logrotate.conf rgw/rgw_acl.h rgw/rgw_acl_s3.h \
-	rgw/rgw_acl_swift.h rgw/rgw_client_io.h rgw/rgw_fcgi.h \
-	rgw/rgw_xml.h rgw/rgw_cache.h rgw/rgw_common.h rgw/rgw_cors.h \
+	librbd/MOBBS/Mapper.h librbd/MOBBS/thrift/ClientServer.h \
+	librbd/MOBBS/thrift/gen-cpp/ClientService.h rgw/logrotate.conf \
+	rgw/rgw_acl.h rgw/rgw_acl_s3.h rgw/rgw_acl_swift.h \
+	rgw/rgw_client_io.h rgw/rgw_fcgi.h rgw/rgw_xml.h \
+	rgw/rgw_cache.h rgw/rgw_common.h rgw/rgw_cors.h \
 	rgw/rgw_cors_s3.h rgw/rgw_cors_swift.h rgw/rgw_string.h \
 	rgw/rgw_formats.h rgw/rgw_http_errors.h rgw/rgw_log.h \
 	rgw/rgw_multi.h rgw/rgw_policy_s3.h rgw/rgw_gc.h \
@@ -3486,9 +3490,11 @@ noinst_HEADERS = arch/intel.h arch/neon.h arch/probe.h \
 	librbd/parent_types.h librbd/SnapInfo.h librbd/WatchCtx.h \
 	librbd/MOBBS/MOBBS.h librbd/MOBBS/Migrater.h \
 	librbd/MOBBS/Analyzer.h librbd/MOBBS/ConfigParser.h \
-	rgw/logrotate.conf rgw/rgw_acl.h rgw/rgw_acl_s3.h \
-	rgw/rgw_acl_swift.h rgw/rgw_client_io.h rgw/rgw_fcgi.h \
-	rgw/rgw_xml.h rgw/rgw_cache.h rgw/rgw_common.h rgw/rgw_cors.h \
+	librbd/MOBBS/Mapper.h librbd/MOBBS/thrift/ClientServer.h \
+	librbd/MOBBS/thrift/gen-cpp/ClientService.h rgw/logrotate.conf \
+	rgw/rgw_acl.h rgw/rgw_acl_s3.h rgw/rgw_acl_swift.h \
+	rgw/rgw_client_io.h rgw/rgw_fcgi.h rgw/rgw_xml.h \
+	rgw/rgw_cache.h rgw/rgw_common.h rgw/rgw_cors.h \
 	rgw/rgw_cors_s3.h rgw/rgw_cors_swift.h rgw/rgw_string.h \
 	rgw/rgw_formats.h rgw/rgw_http_errors.h rgw/rgw_log.h \
 	rgw/rgw_multi.h rgw/rgw_policy_s3.h rgw/rgw_gc.h \
@@ -3958,11 +3964,15 @@ librbd_la_SOURCES = \
 	librbd/MOBBS/MOBBS.c \
 	librbd/MOBBS/Migrater.cc \
 	librbd/MOBBS/Analyzer.cc \
-	librbd/MOBBS/ConfigParser.cc
+	librbd/MOBBS/ConfigParser.cc \
+	librbd/MOBBS/Mapper.cc \
+	librbd/MOBBS/thrift/ClientServer.cc \
+	librbd/MOBBS/thrift/gen-cpp/ClientService.cpp
 
 librbd_la_LIBADD = \
 	$(LIBRADOS) $(LIBOSDC) \
 	libcls_rbd_client.la libcls_lock_client.la \
+	-lthrift \
 	$(PTHREAD_LIBS) $(EXTRALIBS)
 
 librbd_la_LDFLAGS = ${AM_LDFLAGS} -version-info 1:0:0 -export-symbols-regex '^rbd_.*'
@@ -5852,6 +5862,26 @@ librbd/MOBBS/Analyzer.lo: librbd/MOBBS/$(am__dirstamp) \
 	librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
 librbd/MOBBS/ConfigParser.lo: librbd/MOBBS/$(am__dirstamp) \
 	librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
+librbd/MOBBS/Mapper.lo: librbd/MOBBS/$(am__dirstamp) \
+	librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
+librbd/MOBBS/thrift/$(am__dirstamp):
+	@$(MKDIR_P) librbd/MOBBS/thrift
+	@: > librbd/MOBBS/thrift/$(am__dirstamp)
+librbd/MOBBS/thrift/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) librbd/MOBBS/thrift/$(DEPDIR)
+	@: > librbd/MOBBS/thrift/$(DEPDIR)/$(am__dirstamp)
+librbd/MOBBS/thrift/ClientServer.lo:  \
+	librbd/MOBBS/thrift/$(am__dirstamp) \
+	librbd/MOBBS/thrift/$(DEPDIR)/$(am__dirstamp)
+librbd/MOBBS/thrift/gen-cpp/$(am__dirstamp):
+	@$(MKDIR_P) librbd/MOBBS/thrift/gen-cpp
+	@: > librbd/MOBBS/thrift/gen-cpp/$(am__dirstamp)
+librbd/MOBBS/thrift/gen-cpp/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) librbd/MOBBS/thrift/gen-cpp/$(DEPDIR)
+	@: > librbd/MOBBS/thrift/gen-cpp/$(DEPDIR)/$(am__dirstamp)
+librbd/MOBBS/thrift/gen-cpp/ClientService.lo:  \
+	librbd/MOBBS/thrift/gen-cpp/$(am__dirstamp) \
+	librbd/MOBBS/thrift/gen-cpp/$(DEPDIR)/$(am__dirstamp)
 
 librbd.la: $(librbd_la_OBJECTS) $(librbd_la_DEPENDENCIES) $(EXTRA_librbd_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(librbd_la_LINK) -rpath $(libdir) $(librbd_la_OBJECTS) $(librbd_la_LIBADD) $(LIBS)
@@ -7918,6 +7948,10 @@ mostlyclean-compile:
 	-rm -f librbd/*.lo
 	-rm -f librbd/MOBBS/*.$(OBJEXT)
 	-rm -f librbd/MOBBS/*.lo
+	-rm -f librbd/MOBBS/thrift/*.$(OBJEXT)
+	-rm -f librbd/MOBBS/thrift/*.lo
+	-rm -f librbd/MOBBS/thrift/gen-cpp/*.$(OBJEXT)
+	-rm -f librbd/MOBBS/thrift/gen-cpp/*.lo
 	-rm -f log/*.$(OBJEXT)
 	-rm -f log/*.lo
 	-rm -f mds/*.$(OBJEXT)
@@ -8219,7 +8253,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Analyzer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/ConfigParser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/MOBBS.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Mapper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Migrater.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/thrift/$(DEPDIR)/ClientServer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/thrift/gen-cpp/$(DEPDIR)/ClientService.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@log/$(DEPDIR)/Log.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@log/$(DEPDIR)/SubsystemMap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@log/$(DEPDIR)/unittest_log-test.Po@am__quote@
@@ -12595,6 +12632,8 @@ clean-libtool:
 	-rm -rf librados/.libs librados/_libs
 	-rm -rf librbd/.libs librbd/_libs
 	-rm -rf librbd/MOBBS/.libs librbd/MOBBS/_libs
+	-rm -rf librbd/MOBBS/thrift/.libs librbd/MOBBS/thrift/_libs
+	-rm -rf librbd/MOBBS/thrift/gen-cpp/.libs librbd/MOBBS/thrift/gen-cpp/_libs
 	-rm -rf log/.libs log/_libs
 	-rm -rf mds/.libs mds/_libs
 	-rm -rf mon/.libs mon/_libs
@@ -13539,6 +13578,10 @@ distclean-generic:
 	-rm -f librbd/$(am__dirstamp)
 	-rm -f librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
 	-rm -f librbd/MOBBS/$(am__dirstamp)
+	-rm -f librbd/MOBBS/thrift/$(DEPDIR)/$(am__dirstamp)
+	-rm -f librbd/MOBBS/thrift/$(am__dirstamp)
+	-rm -f librbd/MOBBS/thrift/gen-cpp/$(DEPDIR)/$(am__dirstamp)
+	-rm -f librbd/MOBBS/thrift/gen-cpp/$(am__dirstamp)
 	-rm -f log/$(DEPDIR)/$(am__dirstamp)
 	-rm -f log/$(am__dirstamp)
 	-rm -f mds/$(DEPDIR)/$(am__dirstamp)
@@ -13630,7 +13673,7 @@ clean-am: clean-binPROGRAMS clean-checkPROGRAMS \
 	clean-sbinPROGRAMS clean-su_sbinPROGRAMS mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf ./$(DEPDIR) arch/$(DEPDIR) auth/$(DEPDIR) auth/cephx/$(DEPDIR) auth/none/$(DEPDIR) auth/unknown/$(DEPDIR) client/$(DEPDIR) cls/hello/$(DEPDIR) cls/lock/$(DEPDIR) cls/log/$(DEPDIR) cls/rbd/$(DEPDIR) cls/refcount/$(DEPDIR) cls/replica_log/$(DEPDIR) cls/rgw/$(DEPDIR) cls/statelog/$(DEPDIR) cls/version/$(DEPDIR) common/$(DEPDIR) crush/$(DEPDIR) global/$(DEPDIR) java/native/$(DEPDIR) json_spirit/$(DEPDIR) key_value_store/$(DEPDIR) librados/$(DEPDIR) librbd/$(DEPDIR) librbd/MOBBS/$(DEPDIR) log/$(DEPDIR) mds/$(DEPDIR) mon/$(DEPDIR) mount/$(DEPDIR) msg/$(DEPDIR) objclass/$(DEPDIR) os/$(DEPDIR) osd/$(DEPDIR) osd/ErasureCodePluginJerasure/$(DEPDIR) osdc/$(DEPDIR) perfglue/$(DEPDIR) rbd_fuse/$(DEPDIR) rgw/$(DEPDIR) test/$(DEPDIR) test/ObjectMap/$(DEPDIR) test/bench/$(DEPDIR) test/cls_hello/$(DEPDIR) test/cls_lock/$(DEPDIR) test/cls_log/$(DEPDIR) test/cls_rbd/$(DEPDIR) test/cls_refcount/$(DEPDIR) test/cls_replica_log/$(DEPDIR) test/cls_rgw/$(DEPDIR) test/cls_statelog/$(DEPDIR) test/cls_version/$(DEPDIR) test/common/$(DEPDIR) test/encoding/$(DEPDIR) test/filestore/$(DEPDIR) test/libcephfs/$(DEPDIR) test/librados/$(DEPDIR) test/librbd/$(DEPDIR) test/mon/$(DEPDIR) test/os/$(DEPDIR) test/osd/$(DEPDIR) test/osdc/$(DEPDIR) test/system/$(DEPDIR) tools/$(DEPDIR) tools/rados/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) arch/$(DEPDIR) auth/$(DEPDIR) auth/cephx/$(DEPDIR) auth/none/$(DEPDIR) auth/unknown/$(DEPDIR) client/$(DEPDIR) cls/hello/$(DEPDIR) cls/lock/$(DEPDIR) cls/log/$(DEPDIR) cls/rbd/$(DEPDIR) cls/refcount/$(DEPDIR) cls/replica_log/$(DEPDIR) cls/rgw/$(DEPDIR) cls/statelog/$(DEPDIR) cls/version/$(DEPDIR) common/$(DEPDIR) crush/$(DEPDIR) global/$(DEPDIR) java/native/$(DEPDIR) json_spirit/$(DEPDIR) key_value_store/$(DEPDIR) librados/$(DEPDIR) librbd/$(DEPDIR) librbd/MOBBS/$(DEPDIR) librbd/MOBBS/thrift/$(DEPDIR) librbd/MOBBS/thrift/gen-cpp/$(DEPDIR) log/$(DEPDIR) mds/$(DEPDIR) mon/$(DEPDIR) mount/$(DEPDIR) msg/$(DEPDIR) objclass/$(DEPDIR) os/$(DEPDIR) osd/$(DEPDIR) osd/ErasureCodePluginJerasure/$(DEPDIR) osdc/$(DEPDIR) perfglue/$(DEPDIR) rbd_fuse/$(DEPDIR) rgw/$(DEPDIR) test/$(DEPDIR) test/ObjectMap/$(DEPDIR) test/bench/$(DEPDIR) test/cls_hello/$(DEPDIR) test/cls_lock/$(DEPDIR) test/cls_log/$(DEPDIR) test/cls_rbd/$(DEPDIR) test/cls_refcount/$(DEPDIR) test/cls_replica_log/$(DEPDIR) test/cls_rgw/$(DEPDIR) test/cls_statelog/$(DEPDIR) test/cls_version/$(DEPDIR) test/common/$(DEPDIR) test/encoding/$(DEPDIR) test/filestore/$(DEPDIR) test/libcephfs/$(DEPDIR) test/librados/$(DEPDIR) test/librbd/$(DEPDIR) test/mon/$(DEPDIR) test/os/$(DEPDIR) test/osd/$(DEPDIR) test/osdc/$(DEPDIR) test/system/$(DEPDIR) tools/$(DEPDIR) tools/rados/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -13684,7 +13727,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf ./$(DEPDIR) arch/$(DEPDIR) auth/$(DEPDIR) auth/cephx/$(DEPDIR) auth/none/$(DEPDIR) auth/unknown/$(DEPDIR) client/$(DEPDIR) cls/hello/$(DEPDIR) cls/lock/$(DEPDIR) cls/log/$(DEPDIR) cls/rbd/$(DEPDIR) cls/refcount/$(DEPDIR) cls/replica_log/$(DEPDIR) cls/rgw/$(DEPDIR) cls/statelog/$(DEPDIR) cls/version/$(DEPDIR) common/$(DEPDIR) crush/$(DEPDIR) global/$(DEPDIR) java/native/$(DEPDIR) json_spirit/$(DEPDIR) key_value_store/$(DEPDIR) librados/$(DEPDIR) librbd/$(DEPDIR) librbd/MOBBS/$(DEPDIR) log/$(DEPDIR) mds/$(DEPDIR) mon/$(DEPDIR) mount/$(DEPDIR) msg/$(DEPDIR) objclass/$(DEPDIR) os/$(DEPDIR) osd/$(DEPDIR) osd/ErasureCodePluginJerasure/$(DEPDIR) osdc/$(DEPDIR) perfglue/$(DEPDIR) rbd_fuse/$(DEPDIR) rgw/$(DEPDIR) test/$(DEPDIR) test/ObjectMap/$(DEPDIR) test/bench/$(DEPDIR) test/cls_hello/$(DEPDIR) test/cls_lock/$(DEPDIR) test/cls_log/$(DEPDIR) test/cls_rbd/$(DEPDIR) test/cls_refcount/$(DEPDIR) test/cls_replica_log/$(DEPDIR) test/cls_rgw/$(DEPDIR) test/cls_statelog/$(DEPDIR) test/cls_version/$(DEPDIR) test/common/$(DEPDIR) test/encoding/$(DEPDIR) test/filestore/$(DEPDIR) test/libcephfs/$(DEPDIR) test/librados/$(DEPDIR) test/librbd/$(DEPDIR) test/mon/$(DEPDIR) test/os/$(DEPDIR) test/osd/$(DEPDIR) test/osdc/$(DEPDIR) test/system/$(DEPDIR) tools/$(DEPDIR) tools/rados/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) arch/$(DEPDIR) auth/$(DEPDIR) auth/cephx/$(DEPDIR) auth/none/$(DEPDIR) auth/unknown/$(DEPDIR) client/$(DEPDIR) cls/hello/$(DEPDIR) cls/lock/$(DEPDIR) cls/log/$(DEPDIR) cls/rbd/$(DEPDIR) cls/refcount/$(DEPDIR) cls/replica_log/$(DEPDIR) cls/rgw/$(DEPDIR) cls/statelog/$(DEPDIR) cls/version/$(DEPDIR) common/$(DEPDIR) crush/$(DEPDIR) global/$(DEPDIR) java/native/$(DEPDIR) json_spirit/$(DEPDIR) key_value_store/$(DEPDIR) librados/$(DEPDIR) librbd/$(DEPDIR) librbd/MOBBS/$(DEPDIR) librbd/MOBBS/thrift/$(DEPDIR) librbd/MOBBS/thrift/gen-cpp/$(DEPDIR) log/$(DEPDIR) mds/$(DEPDIR) mon/$(DEPDIR) mount/$(DEPDIR) msg/$(DEPDIR) objclass/$(DEPDIR) os/$(DEPDIR) osd/$(DEPDIR) osd/ErasureCodePluginJerasure/$(DEPDIR) osdc/$(DEPDIR) perfglue/$(DEPDIR) rbd_fuse/$(DEPDIR) rgw/$(DEPDIR) test/$(DEPDIR) test/ObjectMap/$(DEPDIR) test/bench/$(DEPDIR) test/cls_hello/$(DEPDIR) test/cls_lock/$(DEPDIR) test/cls_log/$(DEPDIR) test/cls_rbd/$(DEPDIR) test/cls_refcount/$(DEPDIR) test/cls_replica_log/$(DEPDIR) test/cls_rgw/$(DEPDIR) test/cls_statelog/$(DEPDIR) test/cls_version/$(DEPDIR) test/common/$(DEPDIR) test/encoding/$(DEPDIR) test/filestore/$(DEPDIR) test/libcephfs/$(DEPDIR) test/librados/$(DEPDIR) test/librbd/$(DEPDIR) test/mon/$(DEPDIR) test/os/$(DEPDIR) test/osd/$(DEPDIR) test/osdc/$(DEPDIR) test/system/$(DEPDIR) tools/$(DEPDIR) tools/rados/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

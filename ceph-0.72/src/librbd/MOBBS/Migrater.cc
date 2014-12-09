@@ -22,6 +22,39 @@ namespace librbd {
     ictx(ictx)
   {}
 
+  void Migrater::migrate_to_default_pool()
+  {
+    	if(TAKE_LOG_MIGRATER)
+    	{
+    		take_log("migrate all extents back to DEFAULT POOL");
+    	}
+  	int count = 0;
+	int next = 0;
+  	for(std::map<std::string, int>::iterator it = ictx->m_mapper->m_extent_map.begin(); it != ictx->m_mapper->m_extent_map.end(); it ++) 
+	{
+		std::string eid = it->first;
+		int pool = it->second;
+		if(pool != DEFAULT_POOL)
+		{
+			do_concurrent_migrate(eid, pool, DEFAULT_POOL);
+		}
+		count ++;
+		int ratio = count * 100 / ictx->m_mapper->m_extent_map.size();
+		if(ratio == next)
+		{
+    			if(TAKE_LOG_MIGRATER)
+    			{	
+    				char my_log[100];
+    				sprintf(my_log, "migrating process: %d", ratio);
+    				take_log(my_log);
+    			}
+			next += 10;
+			
+		}
+
+	}
+  }
+
   void Migrater::do_concurrent_migrate(std::string extent_id, int from_pool, int to_pool)
   {
     if(TAKE_LOG_MIGRATER)
@@ -40,8 +73,7 @@ namespace librbd {
     librados::IoCtx io_ctx_to = ictx->data_ctx[to_pool];
 
     // lock extent map
-    pthread_mutex_lock(&ictx->extent_lock_map[extent_id]);
-    
+    ictx->m_mapper->lock_extent(extent_id);
 
     // reading
     librados::bufferlist read_buf;
@@ -61,11 +93,11 @@ namespace librbd {
     }
 
     // update extent map
-    ictx->extent_map[extent_id] = to_pool;
+    ictx->m_mapper->set_pool(extent_id, to_pool);
 
     // unlock
-    pthread_mutex_unlock(&ictx->extent_lock_map[extent_id]);
-    
+    ictx->m_mapper->release_extent(extent_id);
+
     // remove
     io_ctx_from.remove(extent_id);
     if( ret < 0 ) 
