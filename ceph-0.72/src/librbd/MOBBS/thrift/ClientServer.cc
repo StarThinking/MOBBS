@@ -48,21 +48,17 @@ class ClientServiceHandler : virtual public ClientServiceIf {
     pthread_create(&pid, NULL, lock_process, lpp);
   }
 
-  void finish_migration(const std::string& eid) {
+  void finish_migration(const std::string& eid, const int32_t from, const int32_t to) {
     // Your implementation goes here
-    pthread_mutex_lock(&m_cond_lock);
-    map<string, pthread_cond_t>::iterator it = m_cond_map.find(eid);
-    if(it != m_cond_map.end())
-    {
-    	pthread_cond_signal(&it->second);
-	m_cond_map.erase(it);
-    }
-    pthread_mutex_unlock(&m_cond_lock);
+ 	m_ictx->m_mapper->set_pool(eid, to);
+	m_ictx->m_mapper->release_extent(eid);
+
+	char my_log2[100];
+	sprintf(my_log2, "finish migration: eid %s from %d to %d", eid.c_str(), from, to);
+	take_log(my_log2);
   }
 
   ImageCtx* m_ictx;
-  pthread_mutex_t m_cond_lock = PTHREAD_MUTEX_INITIALIZER;
-  map<string, pthread_cond_t> m_cond_map;
 
 };
 
@@ -80,19 +76,10 @@ void* lock_process(void* argv)
 	take_log(my_log1);
 
 	ictx->m_mapper->lock_extent(eid);
-	pthread_mutex_lock(&csh->m_cond_lock);
-	pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-	csh->m_cond_map[eid] = cond;
-	pthread_cond_wait(&csh->m_cond_map[eid], &csh->m_cond_lock);
-
-	ictx->m_mapper->set_pool(eid, to);
-	ictx->m_mapper->release_extent(eid);
-	pthread_mutex_unlock(&csh->m_cond_lock);
 
 	char my_log2[100];
-	sprintf(my_log2, "finish migration: eid %s", eid.c_str());
+	sprintf(my_log2, "extent locked: eid %s", eid.c_str());
 	take_log(my_log2);
-	
 	return NULL;
 }
 

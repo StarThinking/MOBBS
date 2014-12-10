@@ -27,7 +27,7 @@ class ClientServiceHandler : virtual public ClientServiceIf {
     printf("begin_migration\n");
   }
 
-  void finish_migration(const std::string& eid) {
+  void finish_migration(const std::string& eid, const int32_t from, const int32_t to) {
     // Your implementation goes here
     printf("finish_migration\n");
   }

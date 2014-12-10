@@ -16,7 +16,7 @@ class ClientServiceIf {
  public:
   virtual ~ClientServiceIf() {}
   virtual void begin_migration(const std::string& eid, const int32_t from, const int32_t to) = 0;
-  virtual void finish_migration(const std::string& eid) = 0;
+  virtual void finish_migration(const std::string& eid, const int32_t from, const int32_t to) = 0;
 };
 
 class ClientServiceIfFactory {
@@ -49,7 +49,7 @@ class ClientServiceNull : virtual public ClientServiceIf {
   void begin_migration(const std::string& /* eid */, const int32_t /* from */, const int32_t /* to */) {
     return;
   }
-  void finish_migration(const std::string& /* eid */) {
+  void finish_migration(const std::string& /* eid */, const int32_t /* from */, const int32_t /* to */) {
     return;
   }
 };
@@ -171,31 +171,43 @@ class ClientService_begin_migration_presult {
 };
 
 typedef struct _ClientService_finish_migration_args__isset {
-  _ClientService_finish_migration_args__isset() : eid(false) {}
+  _ClientService_finish_migration_args__isset() : eid(false), from(false), to(false) {}
   bool eid :1;
+  bool from :1;
+  bool to :1;
 } _ClientService_finish_migration_args__isset;
 
 class ClientService_finish_migration_args {
  public:
 
-  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
-  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+  static const char* ascii_fingerprint; // = "28C2ECC89260BADB9C70330FBF47BFA8";
+  static const uint8_t binary_fingerprint[16]; // = {0x28,0xC2,0xEC,0xC8,0x92,0x60,0xBA,0xDB,0x9C,0x70,0x33,0x0F,0xBF,0x47,0xBF,0xA8};
 
   ClientService_finish_migration_args(const ClientService_finish_migration_args&);
   ClientService_finish_migration_args& operator=(const ClientService_finish_migration_args&);
-  ClientService_finish_migration_args() : eid() {
+  ClientService_finish_migration_args() : eid(), from(0), to(0) {
   }
 
   virtual ~ClientService_finish_migration_args() throw();
   std::string eid;
+  int32_t from;
+  int32_t to;
 
   _ClientService_finish_migration_args__isset __isset;
 
   void __set_eid(const std::string& val);
 
+  void __set_from(const int32_t val);
+
+  void __set_to(const int32_t val);
+
   bool operator == (const ClientService_finish_migration_args & rhs) const
   {
     if (!(eid == rhs.eid))
+      return false;
+    if (!(from == rhs.from))
+      return false;
+    if (!(to == rhs.to))
       return false;
     return true;
   }
@@ -215,12 +227,14 @@ class ClientService_finish_migration_args {
 class ClientService_finish_migration_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
-  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+  static const char* ascii_fingerprint; // = "28C2ECC89260BADB9C70330FBF47BFA8";
+  static const uint8_t binary_fingerprint[16]; // = {0x28,0xC2,0xEC,0xC8,0x92,0x60,0xBA,0xDB,0x9C,0x70,0x33,0x0F,0xBF,0x47,0xBF,0xA8};
 
 
   virtual ~ClientService_finish_migration_pargs() throw();
   const std::string* eid;
+  const int32_t* from;
+  const int32_t* to;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -300,8 +314,8 @@ class ClientServiceClient : virtual public ClientServiceIf {
   void begin_migration(const std::string& eid, const int32_t from, const int32_t to);
   void send_begin_migration(const std::string& eid, const int32_t from, const int32_t to);
   void recv_begin_migration();
-  void finish_migration(const std::string& eid);
-  void send_finish_migration(const std::string& eid);
+  void finish_migration(const std::string& eid, const int32_t from, const int32_t to);
+  void send_finish_migration(const std::string& eid, const int32_t from, const int32_t to);
   void recv_finish_migration();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -362,13 +376,13 @@ class ClientServiceMultiface : virtual public ClientServiceIf {
     ifaces_[i]->begin_migration(eid, from, to);
   }
 
-  void finish_migration(const std::string& eid) {
+  void finish_migration(const std::string& eid, const int32_t from, const int32_t to) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->finish_migration(eid);
+      ifaces_[i]->finish_migration(eid, from, to);
     }
-    ifaces_[i]->finish_migration(eid);
+    ifaces_[i]->finish_migration(eid, from, to);
   }
 
 };

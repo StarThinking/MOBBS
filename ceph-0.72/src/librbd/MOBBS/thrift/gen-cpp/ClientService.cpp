@@ -228,6 +228,22 @@ uint32_t ClientService_finish_migration_args::read(::apache::thrift::protocol::T
           xfer += iprot->skip(ftype);
         }
         break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->from);
+          this->__isset.from = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->to);
+          this->__isset.to = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -249,6 +265,14 @@ uint32_t ClientService_finish_migration_args::write(::apache::thrift::protocol::
   xfer += oprot->writeString(this->eid);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("from", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->from);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("to", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->to);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   oprot->decrementRecursionDepth();
@@ -267,6 +291,14 @@ uint32_t ClientService_finish_migration_pargs::write(::apache::thrift::protocol:
 
   xfer += oprot->writeFieldBegin("eid", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString((*(this->eid)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("from", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->from)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("to", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->to)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -405,19 +437,21 @@ void ClientServiceClient::recv_begin_migration()
   return;
 }
 
-void ClientServiceClient::finish_migration(const std::string& eid)
+void ClientServiceClient::finish_migration(const std::string& eid, const int32_t from, const int32_t to)
 {
-  send_finish_migration(eid);
+  send_finish_migration(eid, from, to);
   recv_finish_migration();
 }
 
-void ClientServiceClient::send_finish_migration(const std::string& eid)
+void ClientServiceClient::send_finish_migration(const std::string& eid, const int32_t from, const int32_t to)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("finish_migration", ::apache::thrift::protocol::T_CALL, cseqid);
 
   ClientService_finish_migration_pargs args;
   args.eid = &eid;
+  args.from = &from;
+  args.to = &to;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -553,7 +587,7 @@ void ClientServiceProcessor::process_finish_migration(int32_t seqid, ::apache::t
 
   ClientService_finish_migration_result result;
   try {
-    iface_->finish_migration(args.eid);
+    iface_->finish_migration(args.eid, args.from, args.to);
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
       this->eventHandler_->handlerError(ctx, "ClientService.finish_migration");

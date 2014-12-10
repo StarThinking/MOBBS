@@ -24,7 +24,7 @@
 #include <thrift/transport/TTransportUtils.h>
 
 #include "thrift/gen-cpp/MonitorServer.h"
-#include "client/ClientService.h"
+#include "client_service/ClientService.h"
 
 using namespace std;
 using namespace apache::thrift;
@@ -44,8 +44,8 @@ int main(int argc, char** argv) {
 
   try {
     transport->open();
-    client.begin_migration("a", 0, 1);
-    //client.finish_migration("a");
+    //client.begin_migration("a", 0, 1);
+    client.finish_migration("a", 0, 1);
     transport->close();
     /*
     cout << "get: " << argv[1] << endl;
