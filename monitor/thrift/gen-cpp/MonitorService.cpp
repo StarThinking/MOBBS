@@ -4,16 +4,16 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "MonitorServer.h"
+#include "MonitorService.h"
 
 namespace monitor {
 
 
-MonitorServer_lock_and_get_pool_args::~MonitorServer_lock_and_get_pool_args() throw() {
+MonitorService_finish_lock_args::~MonitorService_finish_lock_args() throw() {
 }
 
 
-uint32_t MonitorServer_lock_and_get_pool_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t MonitorService_finish_lock_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -53,10 +53,10 @@ uint32_t MonitorServer_lock_and_get_pool_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t MonitorServer_lock_and_get_pool_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t MonitorService_finish_lock_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
-  xfer += oprot->writeStructBegin("MonitorServer_lock_and_get_pool_args");
+  xfer += oprot->writeStructBegin("MonitorService_finish_lock_args");
 
   xfer += oprot->writeFieldBegin("eid", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->eid);
@@ -69,14 +69,14 @@ uint32_t MonitorServer_lock_and_get_pool_args::write(::apache::thrift::protocol:
 }
 
 
-MonitorServer_lock_and_get_pool_pargs::~MonitorServer_lock_and_get_pool_pargs() throw() {
+MonitorService_finish_lock_pargs::~MonitorService_finish_lock_pargs() throw() {
 }
 
 
-uint32_t MonitorServer_lock_and_get_pool_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t MonitorService_finish_lock_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
-  xfer += oprot->writeStructBegin("MonitorServer_lock_and_get_pool_pargs");
+  xfer += oprot->writeStructBegin("MonitorService_finish_lock_pargs");
 
   xfer += oprot->writeFieldBegin("eid", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString((*(this->eid)));
@@ -89,11 +89,11 @@ uint32_t MonitorServer_lock_and_get_pool_pargs::write(::apache::thrift::protocol
 }
 
 
-MonitorServer_lock_and_get_pool_result::~MonitorServer_lock_and_get_pool_result() throw() {
+MonitorService_finish_lock_result::~MonitorService_finish_lock_result() throw() {
 }
 
 
-uint32_t MonitorServer_lock_and_get_pool_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t MonitorService_finish_lock_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -111,20 +111,7 @@ uint32_t MonitorServer_lock_and_get_pool_result::read(::apache::thrift::protocol
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->success);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -133,28 +120,23 @@ uint32_t MonitorServer_lock_and_get_pool_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t MonitorServer_lock_and_get_pool_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t MonitorService_finish_lock_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("MonitorServer_lock_and_get_pool_result");
+  xfer += oprot->writeStructBegin("MonitorService_finish_lock_result");
 
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
-    xfer += oprot->writeI32(this->success);
-    xfer += oprot->writeFieldEnd();
-  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
 
-MonitorServer_lock_and_get_pool_presult::~MonitorServer_lock_and_get_pool_presult() throw() {
+MonitorService_finish_lock_presult::~MonitorService_finish_lock_presult() throw() {
 }
 
 
-uint32_t MonitorServer_lock_and_get_pool_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t MonitorService_finish_lock_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -172,20 +154,7 @@ uint32_t MonitorServer_lock_and_get_pool_presult::read(::apache::thrift::protoco
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32((*(this->success)));
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -195,11 +164,11 @@ uint32_t MonitorServer_lock_and_get_pool_presult::read(::apache::thrift::protoco
 }
 
 
-MonitorServer_release_lock_args::~MonitorServer_release_lock_args() throw() {
+MonitorService_report_client_info_args::~MonitorService_report_client_info_args() throw() {
 }
 
 
-uint32_t MonitorServer_release_lock_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t MonitorService_report_client_info_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -220,9 +189,9 @@ uint32_t MonitorServer_release_lock_args::read(::apache::thrift::protocol::TProt
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->eid);
-          this->__isset.eid = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ci.read(iprot);
+          this->__isset.ci = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -239,13 +208,13 @@ uint32_t MonitorServer_release_lock_args::read(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t MonitorServer_release_lock_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t MonitorService_report_client_info_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
-  xfer += oprot->writeStructBegin("MonitorServer_release_lock_args");
+  xfer += oprot->writeStructBegin("MonitorService_report_client_info_args");
 
-  xfer += oprot->writeFieldBegin("eid", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->eid);
+  xfer += oprot->writeFieldBegin("ci", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->ci.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -255,17 +224,17 @@ uint32_t MonitorServer_release_lock_args::write(::apache::thrift::protocol::TPro
 }
 
 
-MonitorServer_release_lock_pargs::~MonitorServer_release_lock_pargs() throw() {
+MonitorService_report_client_info_pargs::~MonitorService_report_client_info_pargs() throw() {
 }
 
 
-uint32_t MonitorServer_release_lock_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t MonitorService_report_client_info_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
-  xfer += oprot->writeStructBegin("MonitorServer_release_lock_pargs");
+  xfer += oprot->writeStructBegin("MonitorService_report_client_info_pargs");
 
-  xfer += oprot->writeFieldBegin("eid", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->eid)));
+  xfer += oprot->writeFieldBegin("ci", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->ci)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -275,11 +244,11 @@ uint32_t MonitorServer_release_lock_pargs::write(::apache::thrift::protocol::TPr
 }
 
 
-MonitorServer_release_lock_result::~MonitorServer_release_lock_result() throw() {
+MonitorService_report_client_info_result::~MonitorService_report_client_info_result() throw() {
 }
 
 
-uint32_t MonitorServer_release_lock_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t MonitorService_report_client_info_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -306,11 +275,11 @@ uint32_t MonitorServer_release_lock_result::read(::apache::thrift::protocol::TPr
   return xfer;
 }
 
-uint32_t MonitorServer_release_lock_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t MonitorService_report_client_info_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("MonitorServer_release_lock_result");
+  xfer += oprot->writeStructBegin("MonitorService_report_client_info_result");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -318,11 +287,11 @@ uint32_t MonitorServer_release_lock_result::write(::apache::thrift::protocol::TP
 }
 
 
-MonitorServer_release_lock_presult::~MonitorServer_release_lock_presult() throw() {
+MonitorService_report_client_info_presult::~MonitorService_report_client_info_presult() throw() {
 }
 
 
-uint32_t MonitorServer_release_lock_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t MonitorService_report_client_info_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -349,18 +318,18 @@ uint32_t MonitorServer_release_lock_presult::read(::apache::thrift::protocol::TP
   return xfer;
 }
 
-int32_t MonitorServerClient::lock_and_get_pool(const std::string& eid)
+void MonitorServiceClient::finish_lock(const std::string& eid)
 {
-  send_lock_and_get_pool(eid);
-  return recv_lock_and_get_pool();
+  send_finish_lock(eid);
+  recv_finish_lock();
 }
 
-void MonitorServerClient::send_lock_and_get_pool(const std::string& eid)
+void MonitorServiceClient::send_finish_lock(const std::string& eid)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("lock_and_get_pool", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("finish_lock", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  MonitorServer_lock_and_get_pool_pargs args;
+  MonitorService_finish_lock_pargs args;
   args.eid = &eid;
   args.write(oprot_);
 
@@ -369,7 +338,7 @@ void MonitorServerClient::send_lock_and_get_pool(const std::string& eid)
   oprot_->getTransport()->flush();
 }
 
-int32_t MonitorServerClient::recv_lock_and_get_pool()
+void MonitorServiceClient::recv_finish_lock()
 {
 
   int32_t rseqid = 0;
@@ -389,70 +358,12 @@ int32_t MonitorServerClient::recv_lock_and_get_pool()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("lock_and_get_pool") != 0) {
+  if (fname.compare("finish_lock") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  int32_t _return;
-  MonitorServer_lock_and_get_pool_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    return _return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "lock_and_get_pool failed: unknown result");
-}
-
-void MonitorServerClient::release_lock(const std::string& eid)
-{
-  send_release_lock(eid);
-  recv_release_lock();
-}
-
-void MonitorServerClient::send_release_lock(const std::string& eid)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("release_lock", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  MonitorServer_release_lock_pargs args;
-  args.eid = &eid;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-void MonitorServerClient::recv_release_lock()
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("release_lock") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  MonitorServer_release_lock_presult result;
+  MonitorService_finish_lock_presult result;
   result.read(iprot_);
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
@@ -460,7 +371,60 @@ void MonitorServerClient::recv_release_lock()
   return;
 }
 
-bool MonitorServerProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
+void MonitorServiceClient::report_client_info(const ClientInfo& ci)
+{
+  send_report_client_info(ci);
+  recv_report_client_info();
+}
+
+void MonitorServiceClient::send_report_client_info(const ClientInfo& ci)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("report_client_info", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  MonitorService_report_client_info_pargs args;
+  args.ci = &ci;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+void MonitorServiceClient::recv_report_client_info()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("report_client_info") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  MonitorService_report_client_info_presult result;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  return;
+}
+
+bool MonitorServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
   if (pfn == processMap_.end()) {
@@ -479,38 +443,37 @@ bool MonitorServerProcessor::dispatchCall(::apache::thrift::protocol::TProtocol*
   return true;
 }
 
-void MonitorServerProcessor::process_lock_and_get_pool(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void MonitorServiceProcessor::process_finish_lock(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("MonitorServer.lock_and_get_pool", callContext);
+    ctx = this->eventHandler_->getContext("MonitorService.finish_lock", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "MonitorServer.lock_and_get_pool");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "MonitorService.finish_lock");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "MonitorServer.lock_and_get_pool");
+    this->eventHandler_->preRead(ctx, "MonitorService.finish_lock");
   }
 
-  MonitorServer_lock_and_get_pool_args args;
+  MonitorService_finish_lock_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "MonitorServer.lock_and_get_pool", bytes);
+    this->eventHandler_->postRead(ctx, "MonitorService.finish_lock", bytes);
   }
 
-  MonitorServer_lock_and_get_pool_result result;
+  MonitorService_finish_lock_result result;
   try {
-    result.success = iface_->lock_and_get_pool(args.eid);
-    result.__isset.success = true;
+    iface_->finish_lock(args.eid);
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "MonitorServer.lock_and_get_pool");
+      this->eventHandler_->handlerError(ctx, "MonitorService.finish_lock");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("lock_and_get_pool", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("finish_lock", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -519,51 +482,51 @@ void MonitorServerProcessor::process_lock_and_get_pool(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "MonitorServer.lock_and_get_pool");
+    this->eventHandler_->preWrite(ctx, "MonitorService.finish_lock");
   }
 
-  oprot->writeMessageBegin("lock_and_get_pool", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("finish_lock", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "MonitorServer.lock_and_get_pool", bytes);
+    this->eventHandler_->postWrite(ctx, "MonitorService.finish_lock", bytes);
   }
 }
 
-void MonitorServerProcessor::process_release_lock(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void MonitorServiceProcessor::process_report_client_info(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("MonitorServer.release_lock", callContext);
+    ctx = this->eventHandler_->getContext("MonitorService.report_client_info", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "MonitorServer.release_lock");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "MonitorService.report_client_info");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "MonitorServer.release_lock");
+    this->eventHandler_->preRead(ctx, "MonitorService.report_client_info");
   }
 
-  MonitorServer_release_lock_args args;
+  MonitorService_report_client_info_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "MonitorServer.release_lock", bytes);
+    this->eventHandler_->postRead(ctx, "MonitorService.report_client_info", bytes);
   }
 
-  MonitorServer_release_lock_result result;
+  MonitorService_report_client_info_result result;
   try {
-    iface_->release_lock(args.eid);
+    iface_->report_client_info(args.ci);
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "MonitorServer.release_lock");
+      this->eventHandler_->handlerError(ctx, "MonitorService.report_client_info");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("release_lock", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("report_client_info", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -572,24 +535,24 @@ void MonitorServerProcessor::process_release_lock(int32_t seqid, ::apache::thrif
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "MonitorServer.release_lock");
+    this->eventHandler_->preWrite(ctx, "MonitorService.report_client_info");
   }
 
-  oprot->writeMessageBegin("release_lock", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("report_client_info", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "MonitorServer.release_lock", bytes);
+    this->eventHandler_->postWrite(ctx, "MonitorService.report_client_info", bytes);
   }
 }
 
-::boost::shared_ptr< ::apache::thrift::TProcessor > MonitorServerProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
-  ::apache::thrift::ReleaseHandler< MonitorServerIfFactory > cleanup(handlerFactory_);
-  ::boost::shared_ptr< MonitorServerIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
-  ::boost::shared_ptr< ::apache::thrift::TProcessor > processor(new MonitorServerProcessor(handler));
+::boost::shared_ptr< ::apache::thrift::TProcessor > MonitorServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
+  ::apache::thrift::ReleaseHandler< MonitorServiceIfFactory > cleanup(handlerFactory_);
+  ::boost::shared_ptr< MonitorServiceIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
+  ::boost::shared_ptr< ::apache::thrift::TProcessor > processor(new MonitorServiceProcessor(handler));
   return processor;
 }
 } // namespace

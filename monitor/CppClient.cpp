@@ -23,8 +23,8 @@
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
 
-#include "thrift/gen-cpp/MonitorServer.h"
-#include "client_service/ClientService.h"
+#include "thrift/client_service/ClientService.h"
+#include "thrift/monitor_service/MonitorService.h"
 
 using namespace std;
 using namespace apache::thrift;
@@ -40,12 +40,25 @@ int main(int argc, char** argv) {
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   //MonitorServerClient client(protocol);
-  ClientServiceClient client(protocol);
+  //ClientServiceClient client(protocol);
+	MonitorServiceClient client(protocol);
 
   try {
     transport->open();
     //client.begin_migration("a", 0, 1);
-    client.finish_migration("a", 0, 1);
+    //client.finish_migration("a", 0, 1);
+		client.finish_lock("aa");
+		ClientInfo ci;
+		ExtentInfo ei1;
+		ei1.m_eid = "abc";
+		ei1.m_pool = 0;
+		ExtentInfo ei2;
+		ei2.m_eid = "ccc";
+		ei2.m_pool = 1;
+		ci.m_extents.push_back(ei1);
+		ci.m_extents.push_back(ei2);
+		ci.m_ip = "10.0.0.10";
+		client.report_client_info(ci);
     transport->close();
     /*
     cout << "get: " << argv[1] << endl;
