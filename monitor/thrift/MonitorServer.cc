@@ -5,6 +5,9 @@
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
 
+#include <map>
+#include <string>
+
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
@@ -32,9 +35,9 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void report_client_info(const ClientInfo& ci) {
     // Your implementation goes here
-		for(int i = 0; i < ci.m_extents.size(); i ++)
+		for(map<string, ExtentInfo>::const_iterator it = ci.m_extents.begin(); it != ci.m_extents.end(); it ++)
 		{
-			ExtentInfo ei = ci.m_extents[i];
+			ExtentInfo ei = it->second;
     	m_analyzer->m_extent_pool[ei.m_eid] = ei.m_pool;
     	cout << "got extent info: eid " << ei.m_eid << " pool " << ei.m_pool << endl;
 		}

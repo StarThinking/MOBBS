@@ -61,9 +61,13 @@ namespace librbd {
 		m_analyzer->start_analyse();
 	}
 
-	// start client server
 	if(!DO_MIGRATION)
 	{
+		// start gather
+		m_gather = new Gather(this);
+		m_gather->start();
+
+		// start client server
 		m_client_server = new ClientServer(this);
 		m_client_server->start();
 	}
@@ -80,6 +84,8 @@ namespace librbd {
 	}
 	if(!DO_MIGRATION)
 	{
+		m_gather->stop();
+		delete(m_gather);
 		m_client_server->stop();
 		delete(m_client_server);
 	}

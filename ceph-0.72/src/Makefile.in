@@ -698,7 +698,8 @@ am_librbd_la_OBJECTS = librbd/librbd.lo librbd/AioCompletion.lo \
 	librbd/LibrbdWriteback.lo librbd/WatchCtx.lo \
 	librbd/MOBBS/MOBBS.lo librbd/MOBBS/Migrater.lo \
 	librbd/MOBBS/Analyzer.lo librbd/MOBBS/ConfigParser.lo \
-	librbd/MOBBS/Mapper.lo librbd/MOBBS/thrift/ClientServer.lo \
+	librbd/MOBBS/Mapper.lo librbd/MOBBS/Gather.lo \
+	librbd/MOBBS/thrift/ClientServer.lo \
 	librbd/MOBBS/thrift/gen-cpp/ClientService.lo
 librbd_la_OBJECTS = $(am_librbd_la_OBJECTS)
 librbd_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -2787,7 +2788,8 @@ am__noinst_HEADERS_DIST = arch/intel.h arch/neon.h arch/probe.h \
 	librbd/parent_types.h librbd/SnapInfo.h librbd/WatchCtx.h \
 	librbd/MOBBS/MOBBS.h librbd/MOBBS/Migrater.h \
 	librbd/MOBBS/Analyzer.h librbd/MOBBS/ConfigParser.h \
-	librbd/MOBBS/Mapper.h librbd/MOBBS/thrift/ClientServer.h \
+	librbd/MOBBS/Mapper.h librbd/MOBBS/Gather.h \
+	librbd/MOBBS/thrift/ClientServer.h \
 	librbd/MOBBS/thrift/gen-cpp/ClientService.h rgw/logrotate.conf \
 	rgw/rgw_acl.h rgw/rgw_acl_s3.h rgw/rgw_acl_swift.h \
 	rgw/rgw_client_io.h rgw/rgw_fcgi.h rgw/rgw_xml.h \
@@ -3490,7 +3492,8 @@ noinst_HEADERS = arch/intel.h arch/neon.h arch/probe.h \
 	librbd/parent_types.h librbd/SnapInfo.h librbd/WatchCtx.h \
 	librbd/MOBBS/MOBBS.h librbd/MOBBS/Migrater.h \
 	librbd/MOBBS/Analyzer.h librbd/MOBBS/ConfigParser.h \
-	librbd/MOBBS/Mapper.h librbd/MOBBS/thrift/ClientServer.h \
+	librbd/MOBBS/Mapper.h librbd/MOBBS/Gather.h \
+	librbd/MOBBS/thrift/ClientServer.h \
 	librbd/MOBBS/thrift/gen-cpp/ClientService.h rgw/logrotate.conf \
 	rgw/rgw_acl.h rgw/rgw_acl_s3.h rgw/rgw_acl_swift.h \
 	rgw/rgw_client_io.h rgw/rgw_fcgi.h rgw/rgw_xml.h \
@@ -3966,13 +3969,14 @@ librbd_la_SOURCES = \
 	librbd/MOBBS/Analyzer.cc \
 	librbd/MOBBS/ConfigParser.cc \
 	librbd/MOBBS/Mapper.cc \
+	librbd/MOBBS/Gather.cc \
 	librbd/MOBBS/thrift/ClientServer.cc \
 	librbd/MOBBS/thrift/gen-cpp/ClientService.cpp
 
 librbd_la_LIBADD = \
 	$(LIBRADOS) $(LIBOSDC) \
 	libcls_rbd_client.la libcls_lock_client.la \
-	-lthrift \
+	-lthrift -lmonitorservice\
 	$(PTHREAD_LIBS) $(EXTRALIBS)
 
 librbd_la_LDFLAGS = ${AM_LDFLAGS} -version-info 1:0:0 -export-symbols-regex '^rbd_.*'
@@ -5863,6 +5867,8 @@ librbd/MOBBS/Analyzer.lo: librbd/MOBBS/$(am__dirstamp) \
 librbd/MOBBS/ConfigParser.lo: librbd/MOBBS/$(am__dirstamp) \
 	librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
 librbd/MOBBS/Mapper.lo: librbd/MOBBS/$(am__dirstamp) \
+	librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
+librbd/MOBBS/Gather.lo: librbd/MOBBS/$(am__dirstamp) \
 	librbd/MOBBS/$(DEPDIR)/$(am__dirstamp)
 librbd/MOBBS/thrift/$(am__dirstamp):
 	@$(MKDIR_P) librbd/MOBBS/thrift
@@ -8252,6 +8258,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/$(DEPDIR)/librbd.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Analyzer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/ConfigParser.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Gather.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/MOBBS.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Mapper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@librbd/MOBBS/$(DEPDIR)/Migrater.Plo@am__quote@

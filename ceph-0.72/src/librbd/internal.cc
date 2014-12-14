@@ -2916,6 +2916,7 @@ reprotect_and_return_err:
 	// MOBBS: choose a pool to store the object
 	ictx->m_mapper->lock_extent(p->oid.name);
 	int pool = ictx->m_mapper->get_pool(p->oid.name);
+	ictx->m_gather->increase_io_count(p->oid.name, IO_WRITE);
 	// MOBBS
 	AioWrite *req = new AioWrite(ictx, pool, p->oid.name, p->objectno, p->offset,
 				     objectx, object_overlap,
@@ -3091,6 +3092,7 @@ reprotect_and_return_err:
 	// MOBBS
 	ictx->m_mapper->lock_extent(q->oid.name);
 	int pool = ictx->m_mapper->get_pool(q->oid.name);
+	ictx->m_gather->increase_io_count(q->oid.name, IO_READ);
 	// MOBBS
 
 	AioRead *req = new AioRead(ictx, pool, q->oid.name, 

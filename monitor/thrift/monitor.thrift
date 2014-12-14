@@ -8,7 +8,7 @@ struct ExtentInfo {
 }
 
 struct ClientInfo {
-  1:list<ExtentInfo> m_extents,
+  1:map<string, ExtentInfo> m_extents,
   2:string m_ip,
 }
 

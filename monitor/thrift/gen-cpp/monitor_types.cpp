@@ -168,7 +168,7 @@ ClientInfo::~ClientInfo() throw() {
 }
 
 
-void ClientInfo::__set_m_extents(const std::vector<ExtentInfo> & val) {
+void ClientInfo::__set_m_extents(const std::map<std::string, ExtentInfo> & val) {
   this->m_extents = val;
 }
 
@@ -176,8 +176,8 @@ void ClientInfo::__set_m_ip(const std::string& val) {
   this->m_ip = val;
 }
 
-const char* ClientInfo::ascii_fingerprint = "702D09A374F9BE15C62A731AA31AFFA2";
-const uint8_t ClientInfo::binary_fingerprint[16] = {0x70,0x2D,0x09,0xA3,0x74,0xF9,0xBE,0x15,0xC6,0x2A,0x73,0x1A,0xA3,0x1A,0xFF,0xA2};
+const char* ClientInfo::ascii_fingerprint = "33AFF3AC9E3748A53B1105C6A3865716";
+const uint8_t ClientInfo::binary_fingerprint[16] = {0x33,0xAF,0xF3,0xAC,0x9E,0x37,0x48,0xA5,0x3B,0x11,0x05,0xC6,0xA3,0x86,0x57,0x16};
 
 uint32_t ClientInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -200,19 +200,22 @@ uint32_t ClientInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
+        if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->m_extents.clear();
             uint32_t _size2;
-            ::apache::thrift::protocol::TType _etype5;
-            xfer += iprot->readListBegin(_etype5, _size2);
-            this->m_extents.resize(_size2);
+            ::apache::thrift::protocol::TType _ktype3;
+            ::apache::thrift::protocol::TType _vtype4;
+            xfer += iprot->readMapBegin(_ktype3, _vtype4, _size2);
             uint32_t _i6;
             for (_i6 = 0; _i6 < _size2; ++_i6)
             {
-              xfer += this->m_extents[_i6].read(iprot);
+              std::string _key7;
+              xfer += iprot->readString(_key7);
+              ExtentInfo& _val8 = this->m_extents[_key7];
+              xfer += _val8.read(iprot);
             }
-            xfer += iprot->readListEnd();
+            xfer += iprot->readMapEnd();
           }
           this->__isset.m_extents = true;
         } else {
@@ -244,15 +247,16 @@ uint32_t ClientInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ClientInfo");
 
-  xfer += oprot->writeFieldBegin("m_extents", ::apache::thrift::protocol::T_LIST, 1);
+  xfer += oprot->writeFieldBegin("m_extents", ::apache::thrift::protocol::T_MAP, 1);
   {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->m_extents.size()));
-    std::vector<ExtentInfo> ::const_iterator _iter7;
-    for (_iter7 = this->m_extents.begin(); _iter7 != this->m_extents.end(); ++_iter7)
+    xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->m_extents.size()));
+    std::map<std::string, ExtentInfo> ::const_iterator _iter9;
+    for (_iter9 = this->m_extents.begin(); _iter9 != this->m_extents.end(); ++_iter9)
     {
-      xfer += (*_iter7).write(oprot);
+      xfer += oprot->writeString(_iter9->first);
+      xfer += _iter9->second.write(oprot);
     }
-    xfer += oprot->writeListEnd();
+    xfer += oprot->writeMapEnd();
   }
   xfer += oprot->writeFieldEnd();
 
@@ -273,15 +277,15 @@ void swap(ClientInfo &a, ClientInfo &b) {
   swap(a.__isset, b.__isset);
 }
 
-ClientInfo::ClientInfo(const ClientInfo& other8) {
-  m_extents = other8.m_extents;
-  m_ip = other8.m_ip;
-  __isset = other8.__isset;
+ClientInfo::ClientInfo(const ClientInfo& other10) {
+  m_extents = other10.m_extents;
+  m_ip = other10.m_ip;
+  __isset = other10.__isset;
 }
-ClientInfo& ClientInfo::operator=(const ClientInfo& other9) {
-  m_extents = other9.m_extents;
-  m_ip = other9.m_ip;
-  __isset = other9.__isset;
+ClientInfo& ClientInfo::operator=(const ClientInfo& other11) {
+  m_extents = other11.m_extents;
+  m_ip = other11.m_ip;
+  __isset = other11.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const ClientInfo& obj) {

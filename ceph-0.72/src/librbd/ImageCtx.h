@@ -29,6 +29,7 @@
 #include "librbd/MOBBS/Migrater.h"
 #include "librbd/MOBBS/Analyzer.h"
 #include "librbd/MOBBS/Mapper.h"
+#include "librbd/MOBBS/Gather.h"
 #include "librbd/MOBBS/thrift/ClientServer.h"
 #include <pthread.h>
 
@@ -43,6 +44,8 @@ namespace librbd {
 
   class Mapper;
 
+	class Gather;
+
   class ClientServer;
 
   struct ImageCtx {
@@ -50,6 +53,7 @@ namespace librbd {
     Analyzer* m_analyzer;
     Migrater* m_migrater;
     Mapper* m_mapper;
+		Gather* m_gather;
     ClientServer* m_client_server;
 
     void initialize_MOBBS();

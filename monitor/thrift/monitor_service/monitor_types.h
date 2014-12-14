@@ -93,8 +93,8 @@ typedef struct _ClientInfo__isset {
 class ClientInfo {
  public:
 
-  static const char* ascii_fingerprint; // = "702D09A374F9BE15C62A731AA31AFFA2";
-  static const uint8_t binary_fingerprint[16]; // = {0x70,0x2D,0x09,0xA3,0x74,0xF9,0xBE,0x15,0xC6,0x2A,0x73,0x1A,0xA3,0x1A,0xFF,0xA2};
+  static const char* ascii_fingerprint; // = "33AFF3AC9E3748A53B1105C6A3865716";
+  static const uint8_t binary_fingerprint[16]; // = {0x33,0xAF,0xF3,0xAC,0x9E,0x37,0x48,0xA5,0x3B,0x11,0x05,0xC6,0xA3,0x86,0x57,0x16};
 
   ClientInfo(const ClientInfo&);
   ClientInfo& operator=(const ClientInfo&);
@@ -102,12 +102,12 @@ class ClientInfo {
   }
 
   virtual ~ClientInfo() throw();
-  std::vector<ExtentInfo>  m_extents;
+  std::map<std::string, ExtentInfo>  m_extents;
   std::string m_ip;
 
   _ClientInfo__isset __isset;
 
-  void __set_m_extents(const std::vector<ExtentInfo> & val);
+  void __set_m_extents(const std::map<std::string, ExtentInfo> & val);
 
   void __set_m_ip(const std::string& val);
 
