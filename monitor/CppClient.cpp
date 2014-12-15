@@ -36,7 +36,7 @@ using namespace librbd;
 
 
 int main(int argc, char** argv) {
-  boost::shared_ptr<TTransport> socket(new TSocket("localhost", 9090));
+  boost::shared_ptr<TTransport> socket(new TSocket("10.0.0.10", 9090));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   //MonitorServerClient client(protocol);
@@ -55,8 +55,8 @@ int main(int argc, char** argv) {
 		ExtentInfo ei2;
 		ei2.m_eid = "ccc";
 		ei2.m_pool = 1;
-		ci.m_extents.push_back(ei1);
-		ci.m_extents.push_back(ei2);
+		ci.m_extents["abc"] = ei1;
+		ci.m_extents["ccc"] = ei2;
 		ci.m_ip = "10.0.0.10";
 		client.report_client_info(ci);
     transport->close();

@@ -28,6 +28,7 @@ namespace librbd
 		bool m_is_gathering;
 		void* m_client_info;
 		ImageCtx* m_ictx;
+		pthread_mutex_t m_lock = PTHREAD_MUTEX_INITIALIZER;
 	};
 }
 

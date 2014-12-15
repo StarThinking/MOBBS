@@ -46,9 +46,21 @@ void* gathering(void* argv)
 	Gather* gather = (Gather*)argv;
 	while(gather->m_is_gathering)
 	{
-		client.report_client_info(*((monitor::ClientInfo*)gather->m_client_info));
-		((monitor::ClientInfo*)gather->m_client_info)->m_extents.clear();
-		sleep(10);
+		try
+		{
+			pthread_mutex_lock(&gather->m_lock);
+			monitor::ClientInfo ci(*((monitor::ClientInfo*)gather->m_client_info));
+			((monitor::ClientInfo*)gather->m_client_info)->m_extents.clear();
+			pthread_mutex_unlock(&gather->m_lock);
+			transport->open();
+			client.report_client_info(ci);
+			transport->close();
+		}
+		catch(TException& tx)
+		{
+			take_log("Gather failed to connect to monitor");
+		}
+		sleep(60);
 	}
 
 	return NULL;
@@ -61,6 +73,7 @@ void Gather::stop()
 
 void Gather::increase_io_count(string eid, IOType io_type)
 {
+	pthread_mutex_lock(&m_lock);
 	monitor::ClientInfo* ci = (monitor::ClientInfo*)m_client_info;
 	map<string, monitor::ExtentInfo>::iterator it = ci->m_extents.find(eid);
 	if(it == ci->m_extents.end())
@@ -80,4 +93,5 @@ void Gather::increase_io_count(string eid, IOType io_type)
 	{
 		ci->m_extents[eid].m_wio ++;
 	}
+	pthread_mutex_unlock(&m_lock);
 }
