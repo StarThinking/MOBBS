@@ -11,6 +11,7 @@ gen-cpp/libmonitorservice.so: $(ALL_OBJECT)
 install:
 	cp *_service/*.so /usr/lib/
 	cp -r monitor_service ../../ceph-0.72/src/librbd/MOBBS/thrift
+	cp -r monitor_service ../../storage/thrift
 
 clean:
 	rm -rf monitor_service

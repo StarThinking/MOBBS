@@ -13,9 +13,11 @@ namespace monitor
   {
   public:
     map<string, int> m_extent_pool;
+		bool m_analyzing;
     
     Analyzer();
-
+		void start();
+		void stop();
   };
 }
 

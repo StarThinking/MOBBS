@@ -8,6 +8,7 @@ using namespace monitor;
 Monitor::Monitor()
 {
 	m_analyzer = new Analyzer();
+	m_analyzer->start();
 	m_monitor_server = new MonitorServer(m_analyzer);
 	m_monitor_server->start();
 }
