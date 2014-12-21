@@ -17,6 +17,7 @@ class MonitorServiceIf {
   virtual ~MonitorServiceIf() {}
   virtual void finish_lock(const std::string& eid) = 0;
   virtual void report_client_info(const ClientInfo& ci) = 0;
+  virtual void finish_migration(const std::string& eid) = 0;
 };
 
 class MonitorServiceIfFactory {
@@ -50,6 +51,9 @@ class MonitorServiceNull : virtual public MonitorServiceIf {
     return;
   }
   void report_client_info(const ClientInfo& /* ci */) {
+    return;
+  }
+  void finish_migration(const std::string& /* eid */) {
     return;
   }
 };
@@ -258,6 +262,108 @@ class MonitorService_report_client_info_presult {
   friend std::ostream& operator<<(std::ostream& out, const MonitorService_report_client_info_presult& obj);
 };
 
+typedef struct _MonitorService_finish_migration_args__isset {
+  _MonitorService_finish_migration_args__isset() : eid(false) {}
+  bool eid :1;
+} _MonitorService_finish_migration_args__isset;
+
+class MonitorService_finish_migration_args {
+ public:
+
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+
+  MonitorService_finish_migration_args(const MonitorService_finish_migration_args&);
+  MonitorService_finish_migration_args& operator=(const MonitorService_finish_migration_args&);
+  MonitorService_finish_migration_args() : eid() {
+  }
+
+  virtual ~MonitorService_finish_migration_args() throw();
+  std::string eid;
+
+  _MonitorService_finish_migration_args__isset __isset;
+
+  void __set_eid(const std::string& val);
+
+  bool operator == (const MonitorService_finish_migration_args & rhs) const
+  {
+    if (!(eid == rhs.eid))
+      return false;
+    return true;
+  }
+  bool operator != (const MonitorService_finish_migration_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const MonitorService_finish_migration_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const MonitorService_finish_migration_args& obj);
+};
+
+
+class MonitorService_finish_migration_pargs {
+ public:
+
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+
+
+  virtual ~MonitorService_finish_migration_pargs() throw();
+  const std::string* eid;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const MonitorService_finish_migration_pargs& obj);
+};
+
+
+class MonitorService_finish_migration_result {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  MonitorService_finish_migration_result(const MonitorService_finish_migration_result&);
+  MonitorService_finish_migration_result& operator=(const MonitorService_finish_migration_result&);
+  MonitorService_finish_migration_result() {
+  }
+
+  virtual ~MonitorService_finish_migration_result() throw();
+
+  bool operator == (const MonitorService_finish_migration_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const MonitorService_finish_migration_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const MonitorService_finish_migration_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const MonitorService_finish_migration_result& obj);
+};
+
+
+class MonitorService_finish_migration_presult {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+
+  virtual ~MonitorService_finish_migration_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+  friend std::ostream& operator<<(std::ostream& out, const MonitorService_finish_migration_presult& obj);
+};
+
 class MonitorServiceClient : virtual public MonitorServiceIf {
  public:
   MonitorServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -289,6 +395,9 @@ class MonitorServiceClient : virtual public MonitorServiceIf {
   void report_client_info(const ClientInfo& ci);
   void send_report_client_info(const ClientInfo& ci);
   void recv_report_client_info();
+  void finish_migration(const std::string& eid);
+  void send_finish_migration(const std::string& eid);
+  void recv_finish_migration();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -306,11 +415,13 @@ class MonitorServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   ProcessMap processMap_;
   void process_finish_lock(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_report_client_info(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_finish_migration(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   MonitorServiceProcessor(boost::shared_ptr<MonitorServiceIf> iface) :
     iface_(iface) {
     processMap_["finish_lock"] = &MonitorServiceProcessor::process_finish_lock;
     processMap_["report_client_info"] = &MonitorServiceProcessor::process_report_client_info;
+    processMap_["finish_migration"] = &MonitorServiceProcessor::process_finish_migration;
   }
 
   virtual ~MonitorServiceProcessor() {}
@@ -355,6 +466,15 @@ class MonitorServiceMultiface : virtual public MonitorServiceIf {
       ifaces_[i]->report_client_info(ci);
     }
     ifaces_[i]->report_client_info(ci);
+  }
+
+  void finish_migration(const std::string& eid) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->finish_migration(eid);
+    }
+    ifaces_[i]->finish_migration(eid);
   }
 
 };

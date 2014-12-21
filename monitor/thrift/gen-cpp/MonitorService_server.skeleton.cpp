@@ -32,6 +32,11 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
     printf("report_client_info\n");
   }
 
+  void finish_migration(const std::string& eid) {
+    // Your implementation goes here
+    printf("finish_migration\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

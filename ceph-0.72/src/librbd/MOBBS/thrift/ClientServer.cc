@@ -3,6 +3,7 @@
 
 #include "ClientServer.h"
 #include "gen-cpp/ClientService.h"
+#include "monitor_service/MonitorService.h"
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
@@ -80,6 +81,22 @@ void* lock_process(void* argv)
 	char my_log2[100];
 	sprintf(my_log2, "extent locked: eid %s", eid.c_str());
 	take_log(my_log2);
+
+  boost::shared_ptr<TTransport> socket(new TSocket("10.0.0.10", 9090));
+	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+	monitor::MonitorServiceClient client(protocol);
+	try
+	{
+		transport->open();
+		client.finish_lock(eid);
+		transport->close();
+	}
+	catch(TException& tx)
+	{
+		take_log("Failed to connect to monitor after lock");
+	}
+
 	return NULL;
 }
 

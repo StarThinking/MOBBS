@@ -15,4 +15,5 @@ struct ClientInfo {
 service MonitorService {
 	void finish_lock(1:string eid),
 	void report_client_info(1:ClientInfo ci),
+	void finish_migration(1:string eid);
 }

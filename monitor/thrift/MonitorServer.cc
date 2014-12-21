@@ -30,7 +30,8 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void finish_lock(const std::string& eid) {
     // Your implementation goes here
-    cout << "got lock: "  << eid << endl;
+		cout << "got lock: " << eid << endl;
+		m_analyzer->command_migration(eid);
   }
 
   void report_client_info(const ClientInfo& ci) {
@@ -38,9 +39,19 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 		for(map<string, ExtentInfo>::const_iterator it = ci.m_extents.begin(); it != ci.m_extents.end(); it ++)
 		{
 			ExtentInfo ei = it->second;
-    	m_analyzer->m_extent_pool[ei.m_eid] = ei.m_pool;
-    	cout << "got extent info: eid " << ei.m_eid << " pool " << ei.m_pool << endl;
+			ExtentDetail ed;
+			ed.m_client = ci.m_ip;
+			ed.m_storage = "10.0.0.20";
+			ed.m_eid = ei.m_eid;
+			ed.m_pool = ei.m_pool;
+    	m_analyzer->m_extents[ei.m_eid] = ed;
 		}
+  }
+
+  void finish_migration(const std::string& eid) {
+    // Your implementation goes here
+    printf("finish_migration\n");
+		m_analyzer->finish_migration(eid);
   }
 
 };

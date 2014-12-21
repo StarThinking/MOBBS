@@ -1,5 +1,5 @@
 all: Monitor.o Analyzer.o thrift/MonitorServer.o MOBBS.o
-	g++ Monitor.o Analyzer.o thrift/MonitorServer.o MOBBS.o -o Monitor -lpthread -lthrift -lmonitorservice -lstorageservice
+	g++ Monitor.o Analyzer.o thrift/MonitorServer.o MOBBS.o -o Monitor -lpthread -lthrift -lmonitorservice -lstorageservice -lclientservice
 
 MOBBS.o: MOBBS.h
 	gcc -c MOBBS.c -o MOBBS.o

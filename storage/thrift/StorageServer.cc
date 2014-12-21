@@ -19,14 +19,18 @@ using namespace std;
 
 class StorageServiceHandler : virtual public StorageServiceIf {
  public:
-  StorageServiceHandler() {
+  StorageServiceHandler(Migrater* migrater) {
     // Your initialization goes here
+		m_migrater = migrater;
   }
 
   void do_migration(const std::string& eid, const int32_t from, const int32_t to) {
     // Your implementation goes here
     printf("do_migration: %s %d %d\n", eid.c_str(), from, to);
+		m_migrater->finish_migration(eid);
   }
+
+	Migrater* m_migrater;
 
 };
 
@@ -46,7 +50,7 @@ void* listening(void* argv)
 
 void StorageServer::start() {
   int port = 9090;
-  shared_ptr<StorageServiceHandler> handler(new StorageServiceHandler());
+  shared_ptr<StorageServiceHandler> handler(new StorageServiceHandler(m_migrater));
   shared_ptr<TProcessor> processor(new StorageServiceProcessor(handler));
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
