@@ -8,6 +8,7 @@
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
+#include <thrift/transport/TSocket.h>
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -97,6 +98,7 @@ void* lock_process(void* argv)
 		take_log("Failed to connect to monitor after lock");
 	}
 
+	delete(lpp);
 	return NULL;
 }
 
