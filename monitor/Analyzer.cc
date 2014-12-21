@@ -29,8 +29,9 @@ void* analyzing(void* argv)
 		map<string, ExtentDetail>::iterator it;
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
 		{
+			cout << "start migration " << it->second.m_eid << endl;
 			analyzer->apply_migration(it->second.m_eid);
-			sleep(1);
+			sleep(10);
 		}
 	}
 }

@@ -50,7 +50,7 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void finish_migration(const std::string& eid) {
     // Your implementation goes here
-    printf("finish_migration\n");
+		cout << "finifsh migration " << eid << endl;
 		m_analyzer->finish_migration(eid);
   }
 
