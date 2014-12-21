@@ -34,4 +34,6 @@ void Migrater::finish_migration(string eid)
 	{
 		cout << "Fail to connect monitor" << endl;
 	}
+
+	cout << "finish migration: " << eid << endl;
 }

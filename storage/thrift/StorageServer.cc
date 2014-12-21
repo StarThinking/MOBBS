@@ -17,6 +17,23 @@ using boost::shared_ptr;
 using namespace  ::storage;
 using namespace std;
 
+struct MigratingParams
+{
+	Migrater* m_migrater;
+	string m_eid;
+	int m_from;
+	int m_to;
+};
+
+void* migrating(void* argv)
+{
+	MigratingParams* mp = (MigratingParams*)argv;
+	mp->m_migrater->finish_migration(mp->m_eid);
+	delete(mp);
+	
+	return NULL;
+}
+
 class StorageServiceHandler : virtual public StorageServiceIf {
  public:
   StorageServiceHandler(Migrater* migrater) {
@@ -27,7 +44,13 @@ class StorageServiceHandler : virtual public StorageServiceIf {
   void do_migration(const std::string& eid, const int32_t from, const int32_t to) {
     // Your implementation goes here
     printf("do_migration: %s %d %d\n", eid.c_str(), from, to);
-		m_migrater->finish_migration(eid);
+    MigratingParams* mp = new MigratingParams;
+    mp->m_migrater = m_migrater;
+    mp->m_eid = eid;
+    mp->m_from = from;
+    mp->m_to = to;
+    pthread_t pid;
+    pthread_create(&pid, NULL, migrating, mp);
   }
 
 	Migrater* m_migrater;
