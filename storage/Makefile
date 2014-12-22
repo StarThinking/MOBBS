@@ -1,5 +1,5 @@
 ALL_O=Migrater.o thrift/StorageServer.o Storage.o
-LIBRARY=-lthrift -lpthread -lmonitorservice -lstorageservice
+LIBRARY=-lthrift -lpthread -lmonitorservice -lstorageservice -lrados
 
 all: $(ALL_O)
 	g++ $(ALL_O) -o Storage $(LIBRARY)

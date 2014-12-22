@@ -28,6 +28,7 @@ struct MigratingParams
 void* migrating(void* argv)
 {
 	MigratingParams* mp = (MigratingParams*)argv;
+	mp->m_migrater->do_migration(mp->m_eid, mp->m_from, mp->m_to);
 	mp->m_migrater->finish_migration(mp->m_eid);
 	delete(mp);
 	
