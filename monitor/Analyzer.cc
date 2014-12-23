@@ -24,16 +24,19 @@ Analyzer::Analyzer()
 void* analyzing(void* argv)
 {
 	Analyzer* analyzer = (Analyzer*)argv;
+	int count = 0;
 	while(analyzer->m_analyzing)
 	{
 		map<string, ExtentDetail>::iterator it;
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
 		{	
-			if(it->second.m_pool == 1) continue;
+			//if(it->second.m_pool == 0) continue;
 			cout << "start migration " << it->second.m_eid << endl;
 			analyzer->apply_migration(it->second.m_eid);
-			sleep(10);
+			count ++;
+			if(count >= 10) return NULL;
 		}
+		sleep(10);
 	}
 }
 
