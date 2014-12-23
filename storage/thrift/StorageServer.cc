@@ -20,6 +20,7 @@ using namespace std;
 void* migrating(void* argv)
 {
 	MigratingParams* mp = (MigratingParams*)argv;
+  printf("do migration: %s %d %d\n", mp->m_eid.c_str(), mp->m_from, mp->m_to);
 	mp->m_migrater->do_migration(mp->m_eid, mp->m_from, mp->m_to);
 	mp->m_migrater->finish_migration(mp->m_eid);
 	delete(mp);
@@ -37,7 +38,7 @@ class StorageServiceHandler : virtual public StorageServiceIf {
 
   void do_migration(const std::string& eid, const int32_t from, const int32_t to) {
     // Your implementation goes here
-    printf("do_migration: %s %d %d\n", eid.c_str(), from, to);
+    printf("migration request: %s %d %d\n", eid.c_str(), from, to);
     MigratingParams* mp = new MigratingParams;
     mp->m_migrater = m_migrater;
     mp->m_eid = eid;
@@ -57,7 +58,7 @@ class StorageServiceHandler : virtual public StorageServiceIf {
 StorageServer::StorageServer(Migrater* migrater)
 {
 	m_migrater = migrater;
-	m_thread_pool = new MobbsUtil::ThreadPool(1);
+	m_thread_pool = new MobbsUtil::ThreadPool(3);
 	m_listening = false;
 }
 
