@@ -20,34 +20,26 @@ using boost::shared_ptr;
 using namespace  ::librbd;
 using namespace std;
 
-class ClientServiceHandler;
-
-struct LockProcessParams
-{
-	ClientServiceHandler* m_csh_ptr;
-	string m_eid;
-	int m_from;
-	int m_to;
-};
-
-void* lock_process(void* argv);
-void* listenning(void* argv);
-
 class ClientServiceHandler : virtual public ClientServiceIf {
  public:
-  ClientServiceHandler(ImageCtx* ictx):m_ictx(ictx) {
+  ClientServiceHandler(ClientServer* client_server) {
     // Your initialization goes here
+		m_client_server = client_server;
+		m_ictx = client_server->m_ictx;
   }
 
   void begin_migration(const std::string& eid, const int32_t from, const int32_t to) {
     // Your implementation goes here
-    pthread_t pid;
     LockProcessParams* lpp = new LockProcessParams;
-    lpp->m_csh_ptr = this;
+    lpp->m_ictx = m_ictx;
     lpp->m_eid = eid;
     lpp->m_from = from;
     lpp->m_to = to;
-    pthread_create(&pid, NULL, lock_process, lpp);
+
+		pthread_mutex_lock(&m_client_server->m_mutex);
+		m_client_server->m_queue.push(lpp);
+		pthread_cond_signal(&m_client_server->m_cond);
+		pthread_mutex_unlock(&m_client_server->m_mutex);
   }
 
   void finish_migration(const std::string& eid, const int32_t from, const int32_t to) {
@@ -60,15 +52,21 @@ class ClientServiceHandler : virtual public ClientServiceIf {
 	take_log(my_log2);
   }
 
+	ClientServer* m_client_server;
   ImageCtx* m_ictx;
 
 };
 
+
+void* lock_process(void* argv);
+void* listenning(void* argv);
+void* dispatching(void* argv);
+
+
 void* lock_process(void* argv)
 {
 	LockProcessParams* lpp = (LockProcessParams*)argv;
-	ClientServiceHandler* csh = lpp->m_csh_ptr;
-	ImageCtx* ictx = csh->m_ictx;
+	ImageCtx* ictx = lpp->m_ictx;
 	string eid = lpp->m_eid;
 	int from = lpp->m_from;
 	int to = lpp->m_to;
@@ -102,24 +100,36 @@ void* lock_process(void* argv)
 	return NULL;
 }
 
-ClientServer::ClientServer(ImageCtx* ictx):m_ictx(ictx)
-{}
+ClientServer::ClientServer(ImageCtx* ictx)
+{
+	m_ictx = ictx;
+	m_thread_pool = new MobbsUtil::ThreadPool(1);
+	m_listening = false;
+}
+
+ClientServer::~ClientServer()
+{
+	delete(m_thread_pool);
+}
 
 void ClientServer::start()
 {
   	int port = THRIFT_PORT;
-  	shared_ptr<ClientServiceHandler> handler(new ClientServiceHandler(m_ictx));
+  	shared_ptr<ClientServiceHandler> handler(new ClientServiceHandler(this));
   	shared_ptr<TProcessor> processor(new ClientServiceProcessor(handler));
   	shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   	shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   	shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   	m_server = new TSimpleServer(processor, serverTransport, transportFactory, protocolFactory);
+	m_listening = true;
 	int ret = pthread_create(&m_pid, NULL, listenning, this);
 	if(ret != 0) 
 	{
 		std::cout << "fail to start client server" << std::endl;
 	}
+	pthread_t pid;
+	pthread_create(&pid, NULL, dispatching, this);
 }
 
 void* listenning(void* argv) {
@@ -134,8 +144,38 @@ void* listenning(void* argv) {
   return NULL;
 }
 
+void* dispatching(void* argv)
+{
+	ClientServer* cs = (ClientServer*)argv;
+	while(cs->m_listening)
+	{
+		pthread_mutex_lock(&cs->m_mutex);
+		while(cs->m_queue.empty())
+		{
+			pthread_cond_wait(&cs->m_cond, &cs->m_mutex);
+			if(!cs->m_listening)
+			{
+				pthread_mutex_unlock(&cs->m_mutex);
+				return NULL;
+			}
+		}
+
+		LockProcessParams* lpp = cs->m_queue.front();
+		cs->m_queue.pop();
+		pthread_mutex_unlock(&cs->m_mutex);
+
+		cs->m_thread_pool->create_thread(lock_process, lpp);
+	}
+	return NULL;
+}
+
 void ClientServer::stop()
 {
+	m_listening = false;
 	((TSimpleServer*)m_server)->stop();
   	delete((TSimpleServer*)m_server);
+
+		pthread_mutex_lock(&m_mutex);
+		pthread_cond_signal(&m_cond);
+		pthread_mutex_unlock(&m_mutex);
 }

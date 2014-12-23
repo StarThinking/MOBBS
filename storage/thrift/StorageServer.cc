@@ -17,14 +17,6 @@ using boost::shared_ptr;
 using namespace  ::storage;
 using namespace std;
 
-struct MigratingParams
-{
-	Migrater* m_migrater;
-	string m_eid;
-	int m_from;
-	int m_to;
-};
-
 void* migrating(void* argv)
 {
 	MigratingParams* mp = (MigratingParams*)argv;
@@ -37,9 +29,10 @@ void* migrating(void* argv)
 
 class StorageServiceHandler : virtual public StorageServiceIf {
  public:
-  StorageServiceHandler(Migrater* migrater) {
+  StorageServiceHandler(StorageServer* storage_server) {
     // Your initialization goes here
-		m_migrater = migrater;
+		m_storage_server = storage_server;
+		m_migrater = storage_server->m_migrater;
   }
 
   void do_migration(const std::string& eid, const int32_t from, const int32_t to) {
@@ -50,17 +43,27 @@ class StorageServiceHandler : virtual public StorageServiceIf {
     mp->m_eid = eid;
     mp->m_from = from;
     mp->m_to = to;
-    pthread_t pid;
-    pthread_create(&pid, NULL, migrating, mp);
+
+		pthread_mutex_lock(&m_storage_server->m_mutex);
+		m_storage_server->m_queue.push(mp);
+		pthread_cond_signal(&m_storage_server->m_cond);
+		pthread_mutex_unlock(&m_storage_server->m_mutex);
   }
 
 	Migrater* m_migrater;
-
+	StorageServer* m_storage_server;
 };
 
 StorageServer::StorageServer(Migrater* migrater)
 {
 	m_migrater = migrater;
+	m_thread_pool = new MobbsUtil::ThreadPool(1);
+	m_listening = false;
+}
+
+StorageServer::~StorageServer()
+{
+	delete(m_thread_pool);
 }
 
 void* listening(void* argv)
@@ -72,22 +75,56 @@ void* listening(void* argv)
 	return NULL;
 }
 
+void* dispatching(void* argv)
+{
+	StorageServer* ss = (StorageServer*)argv;
+	while(ss->m_listening)
+	{
+		pthread_mutex_lock(&ss->m_mutex);
+		while(ss->m_queue.empty())
+		{
+			pthread_cond_wait(&ss->m_cond, &ss->m_mutex);
+			if(!ss->m_listening) 
+			{
+				pthread_mutex_unlock(&ss->m_mutex);
+				return NULL;
+			}
+		}
+
+		MigratingParams* mp = ss->m_queue.front();
+		ss->m_queue.pop();
+		pthread_mutex_unlock(&ss->m_mutex);
+
+		ss->m_thread_pool->create_thread(migrating, mp);
+	}
+
+	return NULL;
+}
+
 void StorageServer::start() {
   int port = 9090;
-  shared_ptr<StorageServiceHandler> handler(new StorageServiceHandler(m_migrater));
+  shared_ptr<StorageServiceHandler> handler(new StorageServiceHandler(this));
   shared_ptr<TProcessor> processor(new StorageServiceProcessor(handler));
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   m_server = new TSimpleServer(processor, serverTransport, transportFactory, protocolFactory);
+	m_listening = true;
   pthread_t pid;
 	pthread_create(&pid, NULL, listening, this);
+	pthread_t pid2;
+	pthread_create(&pid2, NULL, dispatching, this);
 }
 
 void StorageServer::stop()
 {
+	m_listening = false;
 	((TSimpleServer*)m_server)->stop();
 	delete((TSimpleServer*)m_server);
+
+	pthread_mutex_lock(&m_mutex);
+	pthread_cond_signal(&m_cond);
+	pthread_mutex_unlock(&m_mutex);
 }
 
