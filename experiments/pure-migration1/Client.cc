@@ -54,6 +54,9 @@ Client::Client()
 	pthread_create(&pid, NULL, listening, NULL);
 }
 
+Client::~Client()
+{}
+
 void Client::apply_migration(string eid, int from, int to, string ip)
 {
 	boost::shared_ptr<TTransport> socket(new TSocket(ip, 9090));
