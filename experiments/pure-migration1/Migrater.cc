@@ -116,5 +116,6 @@ Migrater::Migrater()
 Migrater::~Migrater()
 {}
 
-
+void Migrater::finish_migration(string eid)
+{}
 
