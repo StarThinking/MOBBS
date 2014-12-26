@@ -13,7 +13,7 @@ void* apply_storage0(void* argv)
 	{
 		char eid[100];
 		sprintf(eid, "auto-generated-%d", i);
-		client->apply_migration(eid, 0, 1, "10.0.0.20");
+		client->apply_migration(eid, 1, 0, "10.0.0.20");
 	}
 	return NULL;
 }
@@ -25,7 +25,7 @@ void* apply_storage1(void* argv)
 	{
 		char eid[100];
 		sprintf(eid, "auto-generated-%d", i);
-		client->apply_migration(eid, 0, 1, "10.0.0.21");
+		client->apply_migration(eid, 1, 0, "10.0.0.21");
 	}
 	return NULL;
 }
