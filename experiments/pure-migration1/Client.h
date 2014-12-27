@@ -13,6 +13,7 @@ namespace experiment
 		Client();
 		~Client();
 		void apply_migration(string eid, int from, int to, string ip);
+		string eid_to_ip(string eid, int pool);
 	};
 
 }
