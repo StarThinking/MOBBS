@@ -41,10 +41,12 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 			ExtentInfo ei = it->second;
 			ExtentDetail ed;
 			ed.m_client = ci.m_ip;
-			ed.m_storage = "10.0.0.20";
+			ed.m_storage = m_analyzer->extent_to_osd(ei.m_eid, ei.m_pool);
 			ed.m_eid = ei.m_eid;
 			ed.m_pool = ei.m_pool;
     	m_analyzer->m_extents[ei.m_eid] = ed;
+
+			cout << "eid:" << ed.m_eid << " storage:" << ed.m_storage << endl;
 		}
   }
 

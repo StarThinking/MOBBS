@@ -30,7 +30,7 @@ namespace monitor
 		void command_migration(string eid);
 		void finish_migration(string eid);
 
-		string extent_to_osd(string eid);
+		string extent_to_osd(string eid, int pool);
   };
 }
 
