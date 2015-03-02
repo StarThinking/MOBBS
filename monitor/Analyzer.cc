@@ -26,19 +26,38 @@ Analyzer::Analyzer()
 void* analyzing(void* argv)
 {
 	Analyzer* analyzer = (Analyzer*)argv;
-	int count = 0;
 	while(analyzer->m_analyzing)
 	{
+		//pthread_mutex_lock(&analyzer->m_extents_lock);
 		map<string, ExtentDetail>::iterator it;
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
 		{	
-			//if(it->second.m_pool == 0) continue;
-			cout << "start migration " << it->second.m_eid << endl;
-			analyzer->apply_migration(it->second.m_eid);
-			count ++;
-			if(count >= 10) return NULL;
+			if(it->second.m_pool == 1) continue;
+			analyzer->m_migration_queue.push(it->second.m_eid);
+			//cout << "start migration " << it->second.m_eid << endl;
+			//analyzer->apply_migration(it->second.m_eid);
 		}
+		//pthread_mutex_unlock(&analyzer->m_extents_lock);
 		sleep(10);
+	}
+}
+
+void* dispatching(void* argv)
+{
+	Analyzer* analyzer = (Analyzer*)argv;
+	while(analyzer->m_analyzing)
+	{
+		while(!analyzer->m_migration_queue.empty())
+		{
+			string eid = analyzer->m_migration_queue.front();
+			analyzer->m_migration_queue.pop();
+			if(analyzer->m_extents[eid].m_storage == "")
+			{
+				analyzer->m_extents[eid].m_storage = analyzer->extent_to_osd(eid, analyzer->m_extents[eid].m_pool);
+			}
+			cout << "start migration " << eid << endl;
+			analyzer->apply_migration(eid);
+		}
 	}
 }
 
@@ -47,6 +66,8 @@ void Analyzer::start()
 	pthread_t pid;
 	m_analyzing = true;
 	pthread_create(&pid, NULL, analyzing, this);
+	pthread_t pid1;
+	pthread_create(&pid1, NULL, dispatching, this);
 }
 
 void Analyzer::stop()
@@ -79,6 +100,7 @@ void Analyzer::apply_migration(string eid)
 void Analyzer::command_migration(string eid)
 {
 	string storage_ip = m_extents[eid].m_storage;
+	cout << eid << " connect storage:" << storage_ip << endl;
   boost::shared_ptr<TTransport> socket(new TSocket(storage_ip, 9090));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
@@ -94,7 +116,8 @@ void Analyzer::command_migration(string eid)
 	}
 	catch(TException& tx)
 	{
-		cout << "Fail to connect storage:" << storage_ip << endl;
+		cout << eid << "Fail to connect storage:" << storage_ip << endl;
+		//cout << eid << "storage ip: " << storage_ip << "  " << tx.what() << endl;
 	}
 }
 
