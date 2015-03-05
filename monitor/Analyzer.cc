@@ -28,16 +28,23 @@ void* analyzing(void* argv)
 	Analyzer* analyzer = (Analyzer*)argv;
 	while(analyzer->m_analyzing)
 	{
-		//pthread_mutex_lock(&analyzer->m_extents_lock);
+		pthread_mutex_lock(&analyzer->m_extents_lock);
 		map<string, ExtentDetail>::iterator it;
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
 		{	
-			if(it->second.m_pool == 1) continue;
-			analyzer->m_migration_queue.push(it->second.m_eid);
+			if(it->second.m_pool == 0) continue;
+			pthread_mutex_lock(&analyzer->m_migration_lock);
+			set<string>::iterator sit = analyzer->m_migration_set.find(it->second.m_eid);
+			if(sit == analyzer->m_migration_set.end())
+			{
+				analyzer->m_migration_set.insert(it->second.m_eid);
+				analyzer->m_migration_queue.push(it->second.m_eid);
+			}
+			pthread_mutex_unlock(&analyzer->m_migration_lock);
 			//cout << "start migration " << it->second.m_eid << endl;
 			//analyzer->apply_migration(it->second.m_eid);
 		}
-		//pthread_mutex_unlock(&analyzer->m_extents_lock);
+		pthread_mutex_unlock(&analyzer->m_extents_lock);
 		sleep(10);
 	}
 }
@@ -49,8 +56,10 @@ void* dispatching(void* argv)
 	{
 		while(!analyzer->m_migration_queue.empty())
 		{
+			pthread_mutex_lock(&analyzer->m_migration_lock);
 			string eid = analyzer->m_migration_queue.front();
 			analyzer->m_migration_queue.pop();
+			pthread_mutex_unlock(&analyzer->m_migration_lock);
 			if(analyzer->m_extents[eid].m_storage == "")
 			{
 				analyzer->m_extents[eid].m_storage = analyzer->extent_to_osd(eid, analyzer->m_extents[eid].m_pool);
@@ -136,6 +145,11 @@ void Analyzer::finish_migration(string eid)
 		int to = (from + 1) % 2;
 		client.finish_migration(eid, from, to);
 		m_extents[eid].m_pool = to;
+
+		pthread_mutex_lock(&m_migration_lock);
+		m_migration_set.erase(eid);
+		pthread_mutex_unlock(&m_migration_lock);
+
 		transport->close();
 	}
 	catch(TException& tx)
