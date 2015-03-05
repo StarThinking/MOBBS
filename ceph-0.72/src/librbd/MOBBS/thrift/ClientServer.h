@@ -33,6 +33,8 @@ namespace librbd
 		pthread_mutex_t m_mutex = PTHREAD_MUTEX_INITIALIZER;
 		pthread_cond_t m_cond = PTHREAD_COND_INITIALIZER;
 		MobbsUtil::ThreadPool* m_thread_pool;
+		int m_max_locks;
+		int m_cur_locks;
 	};
 }
 

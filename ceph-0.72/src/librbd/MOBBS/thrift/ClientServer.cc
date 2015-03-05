@@ -47,6 +47,11 @@ class ClientServiceHandler : virtual public ClientServiceIf {
  	m_ictx->m_mapper->set_pool(eid, to);
 	m_ictx->m_mapper->release_extent(eid);
 
+	pthread_mutex_lock(&m_client_server->m_mutex);
+	m_client_server->m_cur_locks --;
+	pthread_cond_signal(&m_client_server->m_cond);
+	pthread_mutex_unlock(&m_client_server->m_mutex);
+
 	char my_log2[100];
 	sprintf(my_log2, "finish migration: eid %s from %d to %d", eid.c_str(), from, to);
 	take_log(my_log2);
@@ -54,7 +59,7 @@ class ClientServiceHandler : virtual public ClientServiceIf {
 
 	ClientServer* m_client_server;
   ImageCtx* m_ictx;
-
+	
 };
 
 
@@ -72,7 +77,7 @@ void* lock_process(void* argv)
 	int to = lpp->m_to;
 
 	char my_log1[100];
-	sprintf(my_log1, "migration request: eid %s from %d to %d", eid.c_str(), from, to);
+	sprintf(my_log1, "migration request lala: eid %s from %d to %d", eid.c_str(), from, to);
 	take_log(my_log1);
 
 	ictx->m_mapper->lock_extent(eid);
@@ -105,6 +110,8 @@ ClientServer::ClientServer(ImageCtx* ictx)
 	m_ictx = ictx;
 	m_thread_pool = new MobbsUtil::ThreadPool(1);
 	m_listening = false;
+	m_max_locks = 10;
+	m_cur_locks = 0;
 }
 
 ClientServer::~ClientServer()
@@ -150,7 +157,7 @@ void* dispatching(void* argv)
 	while(cs->m_listening)
 	{
 		pthread_mutex_lock(&cs->m_mutex);
-		while(cs->m_queue.empty())
+		while(cs->m_queue.empty() || cs->m_max_locks <= cs->m_cur_locks)
 		{
 			pthread_cond_wait(&cs->m_cond, &cs->m_mutex);
 			if(!cs->m_listening)
@@ -160,6 +167,7 @@ void* dispatching(void* argv)
 			}
 		}
 
+		cs->m_cur_locks ++;
 		LockProcessParams* lpp = cs->m_queue.front();
 		cs->m_queue.pop();
 		pthread_mutex_unlock(&cs->m_mutex);
