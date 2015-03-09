@@ -30,7 +30,7 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void finish_lock(const std::string& eid) {
     // Your implementation goes here
-		cout << "got lock: " << eid << endl;
+		//cout << "got lock: " << eid << endl;
 		m_analyzer->command_migration(eid);
   }
 
@@ -49,11 +49,12 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 				ed.m_storage = "";
 				ed.m_eid = ei.m_eid;
 				ed.m_pool = ei.m_pool;
+				ed.m_weight += ei.m_rio / 10000 + ei.m_wio / 10000;
     		m_analyzer->m_extents[ei.m_eid] = ed;
 			}
 			else
 			{
-				//eit->second.m_pool = ei.m_pool;
+				eit->second.m_weight += ei.m_rio / 10000 + ei.m_wio / 10000;
 			}
 		}
 		pthread_mutex_unlock(&m_analyzer->m_extents_lock);
@@ -61,7 +62,7 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void finish_migration(const std::string& eid) {
     // Your implementation goes here
-		cout << "finifsh migration " << eid << endl;
+		//cout << "finifsh migration " << eid << endl;
 		m_analyzer->finish_migration(eid);
   }
 

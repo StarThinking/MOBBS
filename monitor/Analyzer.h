@@ -18,6 +18,27 @@ namespace monitor
 		int m_pool;
 		string m_storage;
 		string m_client;
+		double m_weight;
+	};
+
+	struct ExtentNode
+	{
+		ExtentDetail* m_ed;
+		ExtentNode* m_next;
+		ExtentNode* m_prev;
+	};
+
+	class ExtentQueue
+	{
+		public:
+			ExtentNode* m_head, *m_tail;
+			int m_length;
+
+			ExtentQueue();
+			~ExtentQueue();
+			ExtentDetail* pop_head();
+			ExtentDetail* pop_tail();
+			int insert(ExtentDetail* ed_ptr);
 	};
 
   class Analyzer

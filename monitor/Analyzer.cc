@@ -26,26 +26,93 @@ Analyzer::Analyzer()
 void* analyzing(void* argv)
 {
 	Analyzer* analyzer = (Analyzer*)argv;
+	int ssd_size = 200;
+	int ssd_cur_size = 0;
 	while(analyzer->m_analyzing)
 	{
+		cout << "begin analyze" << endl; 
+		ExtentQueue ssd_queue, hdd_queue;
 		pthread_mutex_lock(&analyzer->m_extents_lock);
 		map<string, ExtentDetail>::iterator it;
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
-		{	
-			if(it->second.m_pool == 0) continue;
+		{
+			it->second.m_weight /= 1000;
+			cout << it->second.m_eid << "  weight: " << it->second.m_weight << endl;
+			if(it->second.m_pool == 0) hdd_queue.insert(&it->second);
+			else ssd_queue.insert(&it->second);
+		}
+		ssd_cur_size = ssd_queue.m_length;
+		cout << "hdd_queue: " << hdd_queue.m_length << "  ssd_queue: " << ssd_queue.m_length << "  ssd_size: " << ssd_size << endl;
+
+		int hdd_to_ssd = 0;
+		int ssd_to_hdd = 0;
+		ExtentNode* hdd_queue_ptr = hdd_queue.m_head;
+		ExtentNode* ssd_queue_ptr = ssd_queue.m_tail;
+		while(ssd_cur_size > ssd_size)
+		{
+			if(ssd_queue_ptr == NULL) break;
 			pthread_mutex_lock(&analyzer->m_migration_lock);
-			set<string>::iterator sit = analyzer->m_migration_set.find(it->second.m_eid);
+			ExtentDetail* sed = ssd_queue_ptr->m_ed;
+			set<string>::iterator sit = analyzer->m_migration_set.find(sed->m_eid);
 			if(sit == analyzer->m_migration_set.end())
 			{
-				analyzer->m_migration_set.insert(it->second.m_eid);
-				analyzer->m_migration_queue.push(it->second.m_eid);
+				analyzer->m_migration_set.insert(sed->m_eid);
+				analyzer->m_migration_queue.push(sed->m_eid);
+				ssd_queue_ptr = ssd_queue_ptr->m_prev;
+				ssd_cur_size --;
+				ssd_to_hdd ++;
 			}
 			pthread_mutex_unlock(&analyzer->m_migration_lock);
-			//cout << "start migration " << it->second.m_eid << endl;
-			//analyzer->apply_migration(it->second.m_eid);
 		}
+
+		while(hdd_queue_ptr != NULL)
+		{
+			ExtentDetail* hed = hdd_queue_ptr->m_ed;
+			hdd_queue_ptr = hdd_queue_ptr->m_next;
+			if(ssd_cur_size < ssd_size)
+			{
+				pthread_mutex_lock(&analyzer->m_migration_lock);
+				set<string>::iterator sit = analyzer->m_migration_set.find(hed->m_eid);
+				if(sit == analyzer->m_migration_set.end())
+				{
+					analyzer->m_migration_set.insert(hed->m_eid);
+					analyzer->m_migration_queue.push(hed->m_eid);
+					ssd_cur_size ++;
+					hdd_to_ssd ++;
+				}
+				pthread_mutex_unlock(&analyzer->m_migration_lock);
+			}
+			else
+			{
+				if(ssd_queue_ptr == NULL) break;
+				ExtentDetail* sed = ssd_queue_ptr->m_ed;
+				if(hed->m_weight > sed->m_weight)
+				{
+					pthread_mutex_lock(&analyzer->m_migration_lock);
+					set<string>::iterator sit = analyzer->m_migration_set.find(hed->m_eid);
+					set<string>::iterator sit2 = analyzer->m_migration_set.find(sed->m_eid);
+					if(sit == analyzer->m_migration_set.end() && sit2 == analyzer->m_migration_set.end())
+					{	
+						ssd_queue_ptr = ssd_queue_ptr->m_prev;
+						analyzer->m_migration_set.insert(hed->m_eid);
+						analyzer->m_migration_queue.push(hed->m_eid);
+						analyzer->m_migration_set.insert(sed->m_eid);
+						analyzer->m_migration_queue.push(sed->m_eid);
+
+						hdd_to_ssd ++;
+						ssd_to_hdd ++;
+					}
+					pthread_mutex_unlock(&analyzer->m_migration_lock);
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		cout << "hdd_to_ssd: " << hdd_to_ssd << "  ssd_to_hdd: " << ssd_to_hdd << endl;
 		pthread_mutex_unlock(&analyzer->m_extents_lock);
-		sleep(10);
+		sleep(60);
 	}
 }
 
@@ -64,7 +131,7 @@ void* dispatching(void* argv)
 			{
 				analyzer->m_extents[eid].m_storage = analyzer->extent_to_osd(eid, analyzer->m_extents[eid].m_pool);
 			}
-			cout << "start migration " << eid << endl;
+			//cout << "start migration " << eid << endl;
 			analyzer->apply_migration(eid);
 		}
 	}
@@ -109,7 +176,7 @@ void Analyzer::apply_migration(string eid)
 void Analyzer::command_migration(string eid)
 {
 	string storage_ip = m_extents[eid].m_storage;
-	cout << eid << " connect storage:" << storage_ip << endl;
+	//cout << eid << " connect storage:" << storage_ip << endl;
   boost::shared_ptr<TTransport> socket(new TSocket(storage_ip, 9090));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
@@ -210,4 +277,100 @@ string Analyzer::extent_to_osd(string eid, int pool)
 	regfree(&reg);
 
 	return ip;
+}
+
+ExtentQueue::ExtentQueue()
+{
+	m_length = 0;
+	m_head = NULL;
+	m_tail = NULL;
+}
+
+ExtentQueue::~ExtentQueue()
+{
+	ExtentNode* p;
+	for(p = m_head; p != NULL; p = p->m_next)
+	{
+		delete(p);
+	}
+}
+
+int ExtentQueue::insert(ExtentDetail* ed_ptr)
+{
+	ExtentNode* p = m_head;
+	ExtentNode* t = p;
+	int pos = 0;
+	if(m_head == NULL)
+	{
+		m_head = new ExtentNode();
+		m_head->m_ed = ed_ptr;
+		m_head->m_next = NULL;
+		m_head->m_prev = NULL;
+		m_tail = m_head;
+		m_length ++;
+		return pos;
+	}
+	while(p != NULL)
+	{
+		if(ed_ptr->m_weight < p->m_ed->m_weight)
+		{
+			t = p;
+			p = p->m_next;
+			pos ++;
+		}
+		else
+		{
+			if(pos == 0)
+			{
+				m_head = new ExtentNode();
+				m_head->m_ed = ed_ptr;
+				m_head->m_next = p;
+				m_head->m_prev = NULL;
+				p->m_prev = m_head;
+				m_length++;
+				return pos;
+			}
+			t->m_next = new ExtentNode();
+			t->m_next->m_ed = ed_ptr;
+			t->m_next->m_next = p;
+			t->m_next->m_prev = t;
+			p->m_prev = t->m_next;
+			m_length ++;
+			return pos;
+		}
+	}
+	t->m_next = new ExtentNode();
+	t->m_next->m_ed = ed_ptr;
+	t->m_next->m_next = p;
+	t->m_next->m_prev = t;
+	m_length ++;
+	m_tail = t->m_next;
+	return pos;
+}
+
+ExtentDetail* ExtentQueue::pop_head()
+{
+	if(m_head == NULL) return NULL;
+	ExtentNode* node = m_head;
+	m_head = node->m_next;
+	ExtentDetail* ed = node->m_ed;
+	m_length --;
+	if(m_length == 0) m_tail = NULL;
+	delete(node);
+	return ed;
+}
+
+ExtentDetail* ExtentQueue::pop_tail()
+{
+	if(m_tail == NULL) return NULL;
+	ExtentNode* node = m_tail;
+	m_tail = node->m_prev;
+	ExtentDetail* ed = node->m_ed;
+	m_length --;
+	if(m_length == 0)
+	{
+		m_head = NULL;
+	}
+	delete(node);
+	return ed;
 }
