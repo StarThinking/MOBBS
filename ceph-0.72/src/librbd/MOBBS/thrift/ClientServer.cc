@@ -77,7 +77,7 @@ void* lock_process(void* argv)
 	int to = lpp->m_to;
 
 	char my_log1[100];
-	sprintf(my_log1, "migration request lala: eid %s from %d to %d", eid.c_str(), from, to);
+	sprintf(my_log1, "migration request: eid %s from %d to %d", eid.c_str(), from, to);
 	take_log(my_log1);
 
 	ictx->m_mapper->lock_extent(eid);
