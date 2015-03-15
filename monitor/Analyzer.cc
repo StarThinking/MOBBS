@@ -28,19 +28,28 @@ void* analyzing(void* argv)
 	Analyzer* analyzer = (Analyzer*)argv;
 	int ssd_size = 200;
 	int ssd_cur_size = 0;
+	int max_migration_size = 10;
 	while(analyzer->m_analyzing)
 	{
 		cout << "begin analyze" << endl; 
+		cout << "current migration queue size: " << analyzer->m_migration_set.size() << endl;
+		if(analyzer->m_migration_set.size() > 0)
+		{
+			cout << "Waiting for last migrations" << endl;
+			sleep(5);
+			continue;
+		}
+
 		ExtentQueue ssd_queue, hdd_queue;
 		pthread_mutex_lock(&analyzer->m_extents_lock);
 		map<string, ExtentDetail>::iterator it;
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
 		{
-			it->second.m_weight /= 1000;
-			cout << it->second.m_eid << "  weight: " << it->second.m_weight << endl;
+			//cout << it->second.m_eid << "  weight: " << it->second.m_weight << endl;
 			if(it->second.m_pool == 0) hdd_queue.insert(&it->second);
 			else ssd_queue.insert(&it->second);
 		}
+
 		ssd_cur_size = ssd_queue.m_length;
 		cout << "hdd_queue: " << hdd_queue.m_length << "  ssd_queue: " << ssd_queue.m_length << "  ssd_size: " << ssd_size << endl;
 
@@ -50,23 +59,27 @@ void* analyzing(void* argv)
 		ExtentNode* ssd_queue_ptr = ssd_queue.m_tail;
 		while(ssd_cur_size > ssd_size)
 		{
+			if(analyzer->m_migration_set.size() >= max_migration_size) break;
 			if(ssd_queue_ptr == NULL) break;
 			pthread_mutex_lock(&analyzer->m_migration_lock);
 			ExtentDetail* sed = ssd_queue_ptr->m_ed;
+			ssd_queue_ptr = ssd_queue_ptr->m_prev;
 			set<string>::iterator sit = analyzer->m_migration_set.find(sed->m_eid);
 			if(sit == analyzer->m_migration_set.end())
 			{
 				analyzer->m_migration_set.insert(sed->m_eid);
 				analyzer->m_migration_queue.push(sed->m_eid);
-				ssd_queue_ptr = ssd_queue_ptr->m_prev;
 				ssd_cur_size --;
 				ssd_to_hdd ++;
 			}
 			pthread_mutex_unlock(&analyzer->m_migration_lock);
 		}
 
+		int cloop = 0;
 		while(hdd_queue_ptr != NULL)
 		{
+			if(analyzer->m_migration_set.size() >= max_migration_size) break;
+
 			ExtentDetail* hed = hdd_queue_ptr->m_ed;
 			hdd_queue_ptr = hdd_queue_ptr->m_next;
 			if(ssd_cur_size < ssd_size)
@@ -110,9 +123,16 @@ void* analyzing(void* argv)
 				}
 			}
 		}
+
+		map<string, ExtentDetail>::iterator it2;
+		for(it2 = analyzer->m_extents.begin(); it2 != analyzer->m_extents.end(); it2 ++)
+		{
+			it2->second.m_weight /= 10;
+			if(it2->second.m_weight < 1) it2->second.m_weight = 0;
+		}
 		cout << "hdd_to_ssd: " << hdd_to_ssd << "  ssd_to_hdd: " << ssd_to_hdd << endl;
 		pthread_mutex_unlock(&analyzer->m_extents_lock);
-		sleep(60);
+		sleep(10);
 	}
 }
 
