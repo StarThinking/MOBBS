@@ -34,8 +34,8 @@ typedef struct _ExtentInfo__isset {
 class ExtentInfo {
  public:
 
-  static const char* ascii_fingerprint; // = "9284B42FBE364FECA7AF8E76C1F488A2";
-  static const uint8_t binary_fingerprint[16]; // = {0x92,0x84,0xB4,0x2F,0xBE,0x36,0x4F,0xEC,0xA7,0xAF,0x8E,0x76,0xC1,0xF4,0x88,0xA2};
+  static const char* ascii_fingerprint; // = "3B9489F6E4053822D2FC62187C08252F";
+  static const uint8_t binary_fingerprint[16]; // = {0x3B,0x94,0x89,0xF6,0xE4,0x05,0x38,0x22,0xD2,0xFC,0x62,0x18,0x7C,0x08,0x25,0x2F};
 
   ExtentInfo(const ExtentInfo&);
   ExtentInfo& operator=(const ExtentInfo&);
@@ -45,8 +45,8 @@ class ExtentInfo {
   virtual ~ExtentInfo() throw();
   std::string m_eid;
   int32_t m_pool;
-  int32_t m_rio;
-  int32_t m_wio;
+  double m_rio;
+  double m_wio;
 
   _ExtentInfo__isset __isset;
 
@@ -54,9 +54,9 @@ class ExtentInfo {
 
   void __set_m_pool(const int32_t val);
 
-  void __set_m_rio(const int32_t val);
+  void __set_m_rio(const double val);
 
-  void __set_m_wio(const int32_t val);
+  void __set_m_wio(const double val);
 
   bool operator == (const ExtentInfo & rhs) const
   {
@@ -93,8 +93,8 @@ typedef struct _ClientInfo__isset {
 class ClientInfo {
  public:
 
-  static const char* ascii_fingerprint; // = "33AFF3AC9E3748A53B1105C6A3865716";
-  static const uint8_t binary_fingerprint[16]; // = {0x33,0xAF,0xF3,0xAC,0x9E,0x37,0x48,0xA5,0x3B,0x11,0x05,0xC6,0xA3,0x86,0x57,0x16};
+  static const char* ascii_fingerprint; // = "82AD1197D4804B1E4C90E140BAC827A4";
+  static const uint8_t binary_fingerprint[16]; // = {0x82,0xAD,0x11,0x97,0xD4,0x80,0x4B,0x1E,0x4C,0x90,0xE1,0x40,0xBA,0xC8,0x27,0xA4};
 
   ClientInfo(const ClientInfo&);
   ClientInfo& operator=(const ClientInfo&);

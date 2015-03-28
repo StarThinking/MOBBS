@@ -3,8 +3,8 @@ namespace cpp monitor
 struct ExtentInfo {
   1:string m_eid,
   2:i32 m_pool,
-  3:i32 m_rio,
-  4:i32 m_wio,
+  3:double m_rio,
+  4:double m_wio,
 }
 
 struct ClientInfo {

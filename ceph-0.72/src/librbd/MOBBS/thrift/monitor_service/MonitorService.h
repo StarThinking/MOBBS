@@ -168,8 +168,8 @@ typedef struct _MonitorService_report_client_info_args__isset {
 class MonitorService_report_client_info_args {
  public:
 
-  static const char* ascii_fingerprint; // = "3FCCDBB00721D5D44F3427D2E0602B41";
-  static const uint8_t binary_fingerprint[16]; // = {0x3F,0xCC,0xDB,0xB0,0x07,0x21,0xD5,0xD4,0x4F,0x34,0x27,0xD2,0xE0,0x60,0x2B,0x41};
+  static const char* ascii_fingerprint; // = "C94DDEBA1D1AA612098BB8C33170EF7F";
+  static const uint8_t binary_fingerprint[16]; // = {0xC9,0x4D,0xDE,0xBA,0x1D,0x1A,0xA6,0x12,0x09,0x8B,0xB8,0xC3,0x31,0x70,0xEF,0x7F};
 
   MonitorService_report_client_info_args(const MonitorService_report_client_info_args&);
   MonitorService_report_client_info_args& operator=(const MonitorService_report_client_info_args&);
@@ -205,8 +205,8 @@ class MonitorService_report_client_info_args {
 class MonitorService_report_client_info_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "3FCCDBB00721D5D44F3427D2E0602B41";
-  static const uint8_t binary_fingerprint[16]; // = {0x3F,0xCC,0xDB,0xB0,0x07,0x21,0xD5,0xD4,0x4F,0x34,0x27,0xD2,0xE0,0x60,0x2B,0x41};
+  static const char* ascii_fingerprint; // = "C94DDEBA1D1AA612098BB8C33170EF7F";
+  static const uint8_t binary_fingerprint[16]; // = {0xC9,0x4D,0xDE,0xBA,0x1D,0x1A,0xA6,0x12,0x09,0x8B,0xB8,0xC3,0x31,0x70,0xEF,0x7F};
 
 
   virtual ~MonitorService_report_client_info_pargs() throw();

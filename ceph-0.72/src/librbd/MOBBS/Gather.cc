@@ -60,7 +60,7 @@ void* gathering(void* argv)
 		{
 			take_log("Gather failed to connect to monitor");
 		}
-		sleep(60);
+		sleep(10);
 	}
 
 	return NULL;

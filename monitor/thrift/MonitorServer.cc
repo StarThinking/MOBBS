@@ -30,27 +30,41 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void finish_lock(const std::string& eid) {
     // Your implementation goes here
-		cout << "got lock: " << eid << endl;
+		//cout << "got lock: " << eid << endl;
 		m_analyzer->command_migration(eid);
   }
 
   void report_client_info(const ClientInfo& ci) {
     // Your implementation goes here
+		cout << "new report" << endl;
+		pthread_mutex_lock(&m_analyzer->m_extents_lock);
 		for(map<string, ExtentInfo>::const_iterator it = ci.m_extents.begin(); it != ci.m_extents.end(); it ++)
 		{
 			ExtentInfo ei = it->second;
-			ExtentDetail ed;
-			ed.m_client = ci.m_ip;
-			ed.m_storage = "10.0.0.20";
-			ed.m_eid = ei.m_eid;
-			ed.m_pool = ei.m_pool;
-    	m_analyzer->m_extents[ei.m_eid] = ed;
+			map<string, ExtentDetail>::iterator eit = m_analyzer->m_extents.find(ei.m_eid);
+			if(eit == m_analyzer->m_extents.end())
+			{
+				ExtentDetail ed;
+				ed.m_client = ci.m_ip;
+				//ed.m_storage = m_analyzer->extent_to_osd(ei.m_eid, ei.m_pool);
+				ed.m_storage = "";
+				ed.m_eid = ei.m_eid;
+				ed.m_pool = ei.m_pool;
+				ed.m_weight += ei.m_rio + ei.m_wio;
+    		m_analyzer->m_extents[ei.m_eid] = ed;
+			}
+			else
+			{
+				eit->second.m_weight += ei.m_rio + ei.m_wio;
+			}
 		}
+		pthread_mutex_unlock(&m_analyzer->m_extents_lock);
+		cout << "end report" << endl;
   }
 
   void finish_migration(const std::string& eid) {
     // Your implementation goes here
-		cout << "finifsh migration " << eid << endl;
+		//cout << "finifsh migration " << eid << endl;
 		m_analyzer->finish_migration(eid);
   }
 

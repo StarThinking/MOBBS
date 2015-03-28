@@ -26,16 +26,16 @@ void ExtentInfo::__set_m_pool(const int32_t val) {
   this->m_pool = val;
 }
 
-void ExtentInfo::__set_m_rio(const int32_t val) {
+void ExtentInfo::__set_m_rio(const double val) {
   this->m_rio = val;
 }
 
-void ExtentInfo::__set_m_wio(const int32_t val) {
+void ExtentInfo::__set_m_wio(const double val) {
   this->m_wio = val;
 }
 
-const char* ExtentInfo::ascii_fingerprint = "9284B42FBE364FECA7AF8E76C1F488A2";
-const uint8_t ExtentInfo::binary_fingerprint[16] = {0x92,0x84,0xB4,0x2F,0xBE,0x36,0x4F,0xEC,0xA7,0xAF,0x8E,0x76,0xC1,0xF4,0x88,0xA2};
+const char* ExtentInfo::ascii_fingerprint = "3B9489F6E4053822D2FC62187C08252F";
+const uint8_t ExtentInfo::binary_fingerprint[16] = {0x3B,0x94,0x89,0xF6,0xE4,0x05,0x38,0x22,0xD2,0xFC,0x62,0x18,0x7C,0x08,0x25,0x2F};
 
 uint32_t ExtentInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -74,16 +74,16 @@ uint32_t ExtentInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->m_rio);
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->m_rio);
           this->__isset.m_rio = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->m_wio);
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->m_wio);
           this->__isset.m_wio = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -114,12 +114,12 @@ uint32_t ExtentInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeI32(this->m_pool);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("m_rio", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->m_rio);
+  xfer += oprot->writeFieldBegin("m_rio", ::apache::thrift::protocol::T_DOUBLE, 3);
+  xfer += oprot->writeDouble(this->m_rio);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("m_wio", ::apache::thrift::protocol::T_I32, 4);
-  xfer += oprot->writeI32(this->m_wio);
+  xfer += oprot->writeFieldBegin("m_wio", ::apache::thrift::protocol::T_DOUBLE, 4);
+  xfer += oprot->writeDouble(this->m_wio);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -176,8 +176,8 @@ void ClientInfo::__set_m_ip(const std::string& val) {
   this->m_ip = val;
 }
 
-const char* ClientInfo::ascii_fingerprint = "33AFF3AC9E3748A53B1105C6A3865716";
-const uint8_t ClientInfo::binary_fingerprint[16] = {0x33,0xAF,0xF3,0xAC,0x9E,0x37,0x48,0xA5,0x3B,0x11,0x05,0xC6,0xA3,0x86,0x57,0x16};
+const char* ClientInfo::ascii_fingerprint = "82AD1197D4804B1E4C90E140BAC827A4";
+const uint8_t ClientInfo::binary_fingerprint[16] = {0x82,0xAD,0x11,0x97,0xD4,0x80,0x4B,0x1E,0x4C,0x90,0xE1,0x40,0xBA,0xC8,0x27,0xA4};
 
 uint32_t ClientInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
 

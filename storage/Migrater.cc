@@ -52,7 +52,8 @@ void Migrater::do_migration(string eid, int from, int to)
     if( ret < 0 ) 
     {
     	std::cout << "fail to read" << std::endl;
-	exit(ret);
+			//exit(ret);
+			goto END;
     }
 
     // writing
@@ -72,7 +73,7 @@ void Migrater::do_migration(string eid, int from, int to)
 	exit(ret);
     }
 		*/
-		
+		END:
 		io_ctx_from.close();
 		io_ctx_to.close();
 		cluster.shutdown();

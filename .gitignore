@@ -4,6 +4,7 @@
 
 .*
 !.gitignore
+*nohup.out
 
 ceph-0.72/autom4te.cache/
 ceph-0.72/config.log
