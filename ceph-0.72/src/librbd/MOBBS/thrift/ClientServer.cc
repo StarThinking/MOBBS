@@ -110,7 +110,7 @@ ClientServer::ClientServer(ImageCtx* ictx)
 	m_ictx = ictx;
 	m_thread_pool = new MobbsUtil::ThreadPool(1);
 	m_listening = false;
-	m_max_locks = 10;
+	m_max_locks = 1;
 	m_cur_locks = 0;
 }
 
