@@ -36,7 +36,6 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 
   void report_client_info(const ClientInfo& ci) {
     // Your implementation goes here
-		cout << "new report" << endl;
 		pthread_mutex_lock(&m_analyzer->m_extents_lock);
 		for(map<string, ExtentInfo>::const_iterator it = ci.m_extents.begin(); it != ci.m_extents.end(); it ++)
 		{
@@ -59,7 +58,6 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 			}
 		}
 		pthread_mutex_unlock(&m_analyzer->m_extents_lock);
-		cout << "end report" << endl;
   }
 
   void finish_migration(const std::string& eid) {

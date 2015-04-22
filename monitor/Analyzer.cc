@@ -26,7 +26,7 @@ Analyzer::Analyzer()
 void* analyzing(void* argv)
 {
 	Analyzer* analyzer = (Analyzer*)argv;
-	int ssd_size = 200;
+	int ssd_size = 1024;
 	int ssd_cur_size = 0;
 	int max_migration_size = 10;
 	while(analyzer->m_analyzing)
