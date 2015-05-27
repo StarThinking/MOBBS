@@ -1,4 +1,5 @@
 #include "Migrater.h"
+#include "mobbs_util/ClusterUtil.h"
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
@@ -15,7 +16,11 @@ using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 
 Migrater::Migrater()
-{}
+{
+	m_monitors.push_back("10.0.0.10");
+	m_monitors.push_back("10.0.0.20");
+	m_monitors.push_back("10.0.0.21");
+}
 
 void Migrater::do_migration(string eid, int from, int to)
 {
@@ -88,7 +93,8 @@ void Migrater::do_migration(string eid, int from, int to)
 
 void Migrater::finish_migration(string eid)
 {
-	boost::shared_ptr<TTransport> socket(new TSocket("10.0.0.10", 9090));
+	int index = MobbsUtil::extent2Monitor(eid, m_monitors.size());
+	boost::shared_ptr<TTransport> socket(new TSocket(m_monitors[index], 9090));
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 
