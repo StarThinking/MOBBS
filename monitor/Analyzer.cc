@@ -197,7 +197,7 @@ void Analyzer::command_migration(string eid)
 {
 	string storage_ip = m_extents[eid].m_storage;
 	//cout << eid << " connect storage:" << storage_ip << endl;
-  boost::shared_ptr<TTransport> socket(new TSocket(storage_ip, 9090));
+  boost::shared_ptr<TTransport> socket(new TSocket(storage_ip, 9091));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 
