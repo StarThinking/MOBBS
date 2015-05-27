@@ -103,7 +103,7 @@ void* dispatching(void* argv)
 }
 
 void StorageServer::start() {
-  int port = 9090;
+  int port = 9091;
   shared_ptr<StorageServiceHandler> handler(new StorageServiceHandler(this));
   shared_ptr<TProcessor> processor(new StorageServiceProcessor(handler));
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
