@@ -1,11 +1,13 @@
 #include "Gather.h"
 #include "thrift/monitor_service/MonitorService.h"
+#include "mobbs_util/ClusterUtil.h"
 #include <iostream>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
 
 #include <unistd.h>
+#include <vector>
 
 using namespace std;
 using namespace apache::thrift;
@@ -17,15 +19,24 @@ void* gathering(void* argv);
 
 Gather::Gather(ImageCtx* ictx)
 {
-	m_client_info = new monitor::ClientInfo();
+	m_monitors.push_back("10.0.0.10");
+	m_monitors.push_back("10.0.0.20");
+	m_monitors.push_back("10.0.0.21");
+
+	m_client_info = new vector<monitor::ClientInfo>;
+	for(int i = 0; i < (signed)m_monitors.size(); i ++)
+	{
+		monitor::ClientInfo ci;
+		ci.m_ip = "10.0.0.30";
+		((vector<monitor::ClientInfo>*)m_client_info)->push_back(ci);
+	}
 	m_is_gathering = false;
-	((monitor::ClientInfo*)m_client_info)->m_ip = "10.0.0.30";
 	m_ictx = ictx;
 }
 
 Gather::~Gather()
 {
-	delete((monitor::ClientInfo*)m_client_info);
+	delete((vector<monitor::ClientInfo>*)m_client_info);
 }
 
 void Gather::start()
@@ -37,24 +48,47 @@ void Gather::start()
 void* gathering(void* argv)
 {
 	take_log("start gathering client information");
-
-	boost::shared_ptr<TTransport> socket(new TSocket("10.0.0.10", 9090));
-  boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
-	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  monitor::MonitorServiceClient client(protocol);
+	
+	vector<monitor::MonitorServiceClient> clients;
+	vector<boost::shared_ptr<TTransport> > sockets;
+	vector<boost::shared_ptr<TTransport> > transports;
+	vector<boost::shared_ptr<TProtocol> > protocols;
 
 	Gather* gather = (Gather*)argv;
+	int mons = gather->m_monitors.size();
+
+	for(int i = 0; i < mons; i ++)
+	{
+		boost::shared_ptr<TTransport> socket(new TSocket(gather->m_monitors[i], 9090));
+		sockets.push_back(socket);
+  	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+		transports.push_back(transport);
+		boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+		protocols.push_back(protocol);
+  	monitor::MonitorServiceClient client(protocol);
+		clients.push_back(client);
+	}
+
 	while(gather->m_is_gathering)
 	{
 		try
 		{
 			pthread_mutex_lock(&gather->m_lock);
-			monitor::ClientInfo ci(*((monitor::ClientInfo*)gather->m_client_info));
-			((monitor::ClientInfo*)gather->m_client_info)->m_extents.clear();
+			vector<monitor::ClientInfo> cis;
+			for(int i = 0; i < mons; i ++)
+			{
+				monitor::ClientInfo ci((*((vector<monitor::ClientInfo>*)gather->m_client_info))[i]);
+				cis.push_back(ci);
+				(*((vector<monitor::ClientInfo>*)gather->m_client_info))[i].m_extents.clear();
+			}
 			pthread_mutex_unlock(&gather->m_lock);
-			transport->open();
-			client.report_client_info(ci);
-			transport->close();
+
+			for(int i = 0; i < mons; i ++)
+			{
+				transports[i]->open();
+				clients[i].report_client_info(cis[i]);
+				transports[i]->close();
+			}
 		}
 		catch(TException& tx)
 		{
@@ -74,7 +108,8 @@ void Gather::stop()
 void Gather::increase_io_count(string eid, IOType io_type)
 {
 	pthread_mutex_lock(&m_lock);
-	monitor::ClientInfo* ci = (monitor::ClientInfo*)m_client_info;
+	int index = MobbsUtil::extent2Monitor(eid, (signed)m_monitors.size());
+	monitor::ClientInfo* ci = &(*(vector<monitor::ClientInfo>*)m_client_info)[index];
 	map<string, monitor::ExtentInfo>::iterator it = ci->m_extents.find(eid);
 	if(it == ci->m_extents.end())
 	{

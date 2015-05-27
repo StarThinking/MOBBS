@@ -6,6 +6,7 @@
 #include "librbd/ImageCtx.h"
 
 #include <pthread.h>
+#include <vector>
 
 namespace librbd
 {
@@ -27,6 +28,7 @@ namespace librbd
 		pthread_t m_pid;
 		bool m_is_gathering;
 		void* m_client_info;
+		std::vector<std::string> m_monitors;
 		ImageCtx* m_ictx;
 		pthread_mutex_t m_lock = PTHREAD_MUTEX_INITIALIZER;
 	};

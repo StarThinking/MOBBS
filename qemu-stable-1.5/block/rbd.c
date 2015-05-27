@@ -527,6 +527,7 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
         }
     }
 
+		
     r = rados_connect(s->cluster);
     if (r < 0) {
         error_report("error connecting");
@@ -571,6 +572,7 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags)
 
 
     qemu_opts_del(opts);
+		
     return 0;
 
 failed:
