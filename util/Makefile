@@ -1,9 +1,9 @@
-ALL_OBJECT=ThreadPool.cc
+ALL_OBJECT=ThreadPool.cc ClusterUtil.cc
 
 all: libMobbsUtil.so
 
 libMobbsUtil.so: $(ALL_OBJECT)
-	g++ -shared -fPIC $< -o libMobbsUtil.so
+	g++ -shared -fPIC $(ALL_OBJECT) -o libMobbsUtil.so
 
 install:
 	cp *.so /usr/lib
