@@ -4,6 +4,7 @@
 #include "ClientServer.h"
 #include "gen-cpp/ClientService.h"
 #include "monitor_service/MonitorService.h"
+#include "../mobbs_util/ClusterUtil.h"
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
@@ -86,7 +87,8 @@ void* lock_process(void* argv)
 	sprintf(my_log2, "extent locked: eid %s", eid.c_str());
 	take_log(my_log2);
 
-  boost::shared_ptr<TTransport> socket(new TSocket("10.0.0.10", 9090));
+	int index = MobbsUtil::extent2Monitor(eid, ictx->m_gather->m_monitors.size());
+  boost::shared_ptr<TTransport> socket(new TSocket(ictx->m_gather->m_monitors[index], 9090));
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 	monitor::MonitorServiceClient client(protocol);

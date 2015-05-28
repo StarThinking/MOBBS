@@ -193,9 +193,10 @@ void Mapper::load_extent_map()
 	{
 		s_bl = bl.c_str();
 	}
-	while(1)
+	while(s_bl != "")
 	{
 		int index1 = s_bl.find("/!/");
+		cout << index1 << endl;
 		if(index1 < 0) break;
 		string key_value = s_bl.substr(0, index1);
 		int index2 = key_value.find("/#/");
@@ -207,5 +208,4 @@ void Mapper::load_extent_map()
 	}
 
 	rados.shutdown();
-
 }
