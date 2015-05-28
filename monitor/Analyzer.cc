@@ -147,7 +147,6 @@ void* dispatching(void* argv)
 			string eid = analyzer->m_migration_queue.front();
 			analyzer->m_migration_queue.pop();
 			pthread_mutex_unlock(&analyzer->m_migration_lock);
-			cout << eid << ": " << endl;
 			if(eid == "") continue;
 			if(analyzer->m_extents[eid].m_storage == "")
 			{
@@ -157,7 +156,6 @@ void* dispatching(void* argv)
 			{
 				cout << "WARNING: NO STORAGE IP !!!" << endl;
 			}
-			cout << " connect storage:" << analyzer->m_extents[eid].m_storage << endl;
 			//cout << "start migration " << eid << endl;
 			analyzer->apply_migration(eid);
 		}

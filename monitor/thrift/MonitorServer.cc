@@ -40,6 +40,7 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 		for(map<string, ExtentInfo>::const_iterator it = ci.m_extents.begin(); it != ci.m_extents.end(); it ++)
 		{
 			ExtentInfo ei = it->second;
+			//cout << "!!!" << ei.m_eid << endl;
 			map<string, ExtentDetail>::iterator eit = m_analyzer->m_extents.find(ei.m_eid);
 			if(eit == m_analyzer->m_extents.end())
 			{
