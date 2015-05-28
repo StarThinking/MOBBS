@@ -147,6 +147,8 @@ void* dispatching(void* argv)
 			string eid = analyzer->m_migration_queue.front();
 			analyzer->m_migration_queue.pop();
 			pthread_mutex_unlock(&analyzer->m_migration_lock);
+			cout << eid << ": " << endl;
+			if(eid == "") continue;
 			if(analyzer->m_extents[eid].m_storage == "")
 			{
 				analyzer->m_extents[eid].m_storage = analyzer->extent_to_osd(eid, analyzer->m_extents[eid].m_pool);
@@ -155,6 +157,7 @@ void* dispatching(void* argv)
 			{
 				cout << "WARNING: NO STORAGE IP !!!" << endl;
 			}
+			cout << " connect storage:" << analyzer->m_extents[eid].m_storage << endl;
 			//cout << "start migration " << eid << endl;
 			analyzer->apply_migration(eid);
 		}
@@ -200,6 +203,13 @@ void Analyzer::apply_migration(string eid)
 void Analyzer::command_migration(string eid)
 {
 	string storage_ip = m_extents[eid].m_storage;
+	/*
+	if(m_extents[eid].m_storage == "")
+	{
+		m_extents[eid].m_storage = extent_to_osd(eid, m_extents[eid].m_pool);
+		storage_ip = m_extents[eid].m_storage;
+	}
+	*/
 	//cout << eid << " connect storage:" << storage_ip << endl;
   boost::shared_ptr<TTransport> socket(new TSocket(storage_ip, 9091));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
