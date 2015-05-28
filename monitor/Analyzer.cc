@@ -151,6 +151,10 @@ void* dispatching(void* argv)
 			{
 				analyzer->m_extents[eid].m_storage = analyzer->extent_to_osd(eid, analyzer->m_extents[eid].m_pool);
 			}
+			if(analyzer->m_extents[eid].m_storage == "") 
+			{
+				cout << "WARNING: NO STORAGE IP !!!" << endl;
+			}
 			//cout << "start migration " << eid << endl;
 			analyzer->apply_migration(eid);
 		}
