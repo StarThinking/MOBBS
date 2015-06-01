@@ -1,4 +1,5 @@
 #include "Analyzer.h"
+#include "mobbs_util/ClusterUtil.h"
 
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TSocket.h>
@@ -46,6 +47,10 @@ void* analyzing(void* argv)
 		for(it = analyzer->m_extents.begin(); it != analyzer->m_extents.end(); it ++)
 		{
 			//cout << it->second.m_eid << "  weight: " << it->second.m_weight << endl;
+			char log[10];
+			sprintf(log, "%lf", it->second.m_weight);
+			MobbsUtil::takeLog("/root/weight.log", log);
+
 			if(it->second.m_pool == 0) hdd_queue.insert(&it->second);
 			else ssd_queue.insert(&it->second);
 		}

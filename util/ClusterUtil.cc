@@ -1,5 +1,7 @@
 #include <string>
 #include <stdio.h>
+#include <iostream>
+#include <fstream>
 
 #include "ClusterUtil.h"
 
@@ -12,4 +14,11 @@ int MobbsUtil::extent2Monitor(const string& eid, int base)
 	int des;
 	sscanf(src.c_str(), "%x", &des);
 	return des % base;
+}
+
+void MobbsUtil::takeLog(const std::string& filename, const std::string content)
+{
+	ofstream of(filename.c_str(), ios_base::app);
+	of << content << std::endl;
+	of.close();
 }
