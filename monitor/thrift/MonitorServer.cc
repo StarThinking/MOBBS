@@ -57,6 +57,8 @@ class MonitorServiceHandler : virtual public MonitorServiceIf {
 			{
 				eit->second.m_weight += ei.m_rio + ei.m_wio;
 			}
+			cout << eit->second.m_eid << " --- " << eit->second.m_weight << endl;
+
 		}
 		pthread_mutex_unlock(&m_analyzer->m_extents_lock);
   }
