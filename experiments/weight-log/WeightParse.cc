@@ -9,9 +9,10 @@ int main()
 {
 	string filename("weight.log");
 	ifstream is(filename.c_str());
-	int sum = 0, n = 0;
+	int sum = 0, n = 0, n2 = 0;
 	vector<double> weights;
 	while(!is.eof()) {
+		n2 ++;
 		double tmp;
 		is >> tmp;
 		if(tmp == 0) continue;
@@ -30,7 +31,7 @@ int main()
 	}
 	double var = t1 / n;
 	double dev = sqrt(var);
-	cout << "sum: " << sum << endl;
+	cout << "sum(active/total): " << sum << "(" << n << "/" << n2 << ")" << endl;
 	cout << "avg: " << avg << endl;
 	cout << "var: " << var << endl;
 	cout << "dev: " << dev << endl;
